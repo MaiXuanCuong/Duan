@@ -1,0 +1,97 @@
+@extends('admin.layouts.master')
+@section('content')
+    <!doctype html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+        </script>
+    </body>
+
+    </html>
+
+    <!-- CSS -->
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css"> --}}
+    </head>
+
+    <body>
+        <div class="flex-center position-ref full-height">
+            <div class="content">
+                <div class="title m-b-md">
+                    <h1>Thêm Đơn Hàng</h1>
+                </div>
+                <form class="text-left" method="post" action="{{ route('orders.store') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="inputTitle">Tên Khách Hàng</label>
+                        <input type="text" class="form-control" id="inputTitle" name="name" value="{{ $request->name ?? old('name') }}">
+                        @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTitle">Địa Chỉ Giao Hàng</label>
+                        <input type="text" class="form-control" id="inputTitle" name="address" value="{{ $request->address ?? old('address') }}">
+                        @error('address')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTitle">Số Điện Thoại</label>
+                        <input type="text" class="form-control" id="inputTitle" name="phone" value="{{ $request->phone ?? old('phone') }}">
+                        @error('phone')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTitle">Số Lượng</label>
+                        <input type="number" class="form-control" id="inputTitle" name="quantity" value="{{ $request->quantity ?? old('quantity') }}">
+                        @error('quantity')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTitle">Cấu Hình</label>
+                        <input type="text" class="form-control" id="inputTitle" name="configuration" value="{{ $request->configuration ?? old('configuration') }}">
+                        @error('configuration')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTitle">Màu Sản Phẩm</label>
+                        <input type="text" class="form-control" id="inputTitle" name="color" value="{{ $request->color ?? old('color') }}">
+                        @error('color')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div><div class="form-group">
+                        <label for="inputTitle">Ghi Chú</label>
+                        <input type="text" class="form-control" id="inputTitle" placeholder="Có Thể Bỏ Qua" name="note" value="{{ $request->note ?? old('note') }}">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <a class="btn btn-danger" href="{{ route('orders') }}">Hủy</a>
+                </form>
+            </div>
+        </div>
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+        </script>
+    </body>
+
+    </html>
+@endsection
