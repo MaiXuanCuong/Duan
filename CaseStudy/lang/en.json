@@ -1,0 +1,10 @@
+{
+    "PRD_ADD_SS" : "Add product :name successfully",
+    "PRD_ADD_ERR" : "Add product :name failed",
+    "CATE_ADD_SS" : "Add category :name successfully",
+    "CATE_ADD_ERR" : "Add category :name failed",
+    "LOGIN_SS" : "Login successfully, Hello :name !",
+    "LOGIN_ERR" : "Login failed, Account does not exist!",
+    "REGISTER_SS" : "Register Account :name successfully",
+    "REGISTER_ERR" : "Register Account :name failed"
+}

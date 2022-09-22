@@ -1,0 +1,10 @@
+{
+    "PRD_ADD_SS" : "Thêm Sản Phẩm :name Thành Công!",
+    "PRD_ADD_ERR" : "Thêm Sản Phẩm :name Không Thành Công!",
+    "CATE_ADD_SS" : "Thêm Danh Mục :name Thành Côn",
+    "CATE_ADD_ERR" : "Thêm Danh Mục :name Không Thành Công",
+    "LOGIN_SS" : "Đăng Nhập Thành Công, Xin Chào :name !",
+    "LOGIN_ERR" : "Đăng Nhập Không Thành Công, Sai TK Hoặc MK!",
+    "REGISTER_SS" : "Đăng Ký Tài Khoản :name Thành Công",
+    "REGISTER_ERR" : "Đăng Ký Tài Khoản :name Không Thành Công"
+}

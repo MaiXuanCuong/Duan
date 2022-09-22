@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
@@ -95,4 +96,17 @@ Route::prefix('orders')->group(function(){
 });
 
 
+});
+Route::get("thanh_cong", function(){
+    $language = session()->get('language');
+    App::setlocale($language);// thay đổi ngôn ngữ
+    echo __('messages.msg_ok',['name' => '123']);
+    echo '<br>';
+    echo __('MSG_OK');
+    echo '<br>';
+    echo __('MSG_ERROR');
+});
+Route::get('change_lang/{language}', function ($language) {
+    session(['language' => $language]);
+    return redirect("thanh_cong");
 });

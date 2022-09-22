@@ -70,13 +70,16 @@ class ProductsController extends Controller
         // dd($products->user_id);
 
         try {
+           
             $products->save();
-            alert()->success('Thêm Sản Phẩm: ' . $request->name, 'Thành Công');
+            // alert()->success('Thêm Sản Phẩm: ' . $request->name, 'Thành Công');
+            toast(__('messages.msg_prd_add_ss',['name' => $request->name]),'success','top-right');
             return redirect()->route('products');
         } catch (\Exception$e) {
             $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
-            alert()->error('Thêm Sản Phẩm: ' . $request->name, 'Không Thành Công!');
+            // alert()->error('Thêm Sản Phẩm: ' . $request->name, 'Không Thành Công!');
+            toast(__('messages.msg_prd_add_err',['name' => $request->name]),'success','top-right');
             // return redirect()->route('products');
             return view('admin.products.add', $params);
         }
@@ -130,14 +133,16 @@ class ProductsController extends Controller
             if(isset($path)){
                 Storage::delete($images);
             }
-            alert()->success('Lưu Sản Phẩm: ' . $request->name, 'Thành Công');
+            // alert()->success('Lưu Sản Phẩm: ' . $request->name, 'Thành Công');
+            toast(__('messages.msg_prd_up_err',['name' => $request->name]),'success','top-right');
             return redirect()->route('products');
 
         } catch (\Exception $e) {
             // $products = Product::find($id);
             $images = $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
-            alert()->error('Lưu Sản Phẩm: ' . $request->name, 'Không Thành Công!');
+            // alert()->error('Lưu Sản Phẩm: ' . $request->name, 'Không Thành Công!');
+            toast(__('messages.msg_prd_up_err',['name' => $request->name]),'success','top-right');
             return redirect()->route('products.edit',$products->id);
         }
         return redirect()->route('products');
