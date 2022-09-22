@@ -49,7 +49,7 @@
             </td>
             <td>
 
-               <img width="100px" height="120px" src="{{ $item->image }}" alt="">    
+               <img width="100px" height="120px" src="{{asset($item->image)}}" alt="">    
             </td>
           
             <td>

@@ -59,6 +59,7 @@ class ProductsController extends Controller
             $path = 'storage/' . $request->file($fieldName)->storeAs('public/images', $fileName);
             $path = str_replace('public/', '', $path);
             $products->image = $path;
+            // dd($path);
         }
 
         $products->color = $request->color;
@@ -113,7 +114,6 @@ class ProductsController extends Controller
             $path = 'storage/' . $request->file($fieldName)->storeAs('public/images', $fileName);
             $path = str_replace('public/', '', $path);
             $products->image = $path;
-          
         }
         $item = Product::findOrFail($id);
         if (isset($item->image) && isset($path)) {
@@ -133,7 +133,7 @@ class ProductsController extends Controller
             alert()->success('Lưu Sản Phẩm: ' . $request->name, 'Thành Công');
             return redirect()->route('products');
 
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             // $products = Product::find($id);
             $images = $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
