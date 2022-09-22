@@ -196,7 +196,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">{{-- href="users-profile.html" --}}
                 <i class="bi bi-gear"></i>
-                <span>Cài Đặt Tài Khoản</span>
+                <span>Cài Đặt Ngôn Ngữ</span>
               </a>
             </li>
             <li>

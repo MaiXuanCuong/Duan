@@ -11,14 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductsController extends Controller
 {
-    //
     public function index()
     {
-        // $items = Product::all();
         $items = Product::paginate(5);
-
-        // dd($items[0]->category->name);
-        // $items = Product::all();
         return view('admin.products.index', compact('items'));
     }
     public function create()
@@ -29,9 +24,6 @@ class ProductsController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        // $array = $request->toArray();
-        // if(count($array) == 11){
-        // dd($request->toArray());
         $categories = Category::all();
         $items = Product::all();
         $params = [
@@ -43,13 +35,9 @@ class ProductsController extends Controller
         $products->name = $request->name;
         $products->price = $request->price;
         $products->describe = $request->describe;
-        // dd($request);
         $products->configuration = $request->configuration;
         $products->quantity = $request->quantity;
         $products->specifications = $request->specifications;
-
-        // $products->image = $request->inputFile ;
-        // $request->file('inputFile')->store('public/images');
         $fieldName = 'inputFile';
         if ($request->hasFile($fieldName)) {
             $fullFileNameOrigin = $request->file($fieldName)->getClientOriginalName();
@@ -59,7 +47,6 @@ class ProductsController extends Controller
             $path = 'storage/' . $request->file($fieldName)->storeAs('public/images', $fileName);
             $path = str_replace('public/', '', $path);
             $products->image = $path;
-            // dd($path);
         }
 
         $products->color = $request->color;
@@ -67,8 +54,6 @@ class ProductsController extends Controller
         $products->garbage_can = 1;
         $products->category_id = $request->category_id;
         $products->user_id = Auth()->user()->id;
-        // dd($products->user_id);
-
         try {
            
             $products->save();
@@ -79,14 +64,10 @@ class ProductsController extends Controller
             $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
             // alert()->error('Thêm Sản Phẩm: ' . $request->name, 'Không Thành Công!');
-            toast(__('messages.msg_prd_add_err',['name' => $request->name]),'success','top-right');
+            toast(__('messages.msg_prd_add_err',['name' => $request->name]),'error','top-right');
             // return redirect()->route('products');
             return view('admin.products.add', $params);
         }
-        // toast('Your Post as been submited!','success','top-right');
-        // }
-        //  Session::flash('success', 'Thêm thành công '.$request->name);
-        // return redirect()->route('products.add');
     }
     public function edit($id)
     {
@@ -96,19 +77,14 @@ class ProductsController extends Controller
     }
     public function update(UpdateProductRequest $request, $id)
     {
-        // dd($request->name);
-       
         $products = Product::find($id);
         $products->name = $request->name;
         $products->price = $request->price;
         $products->describe = $request->describe;
         $products->configuration = $request->configuration;
-
-        // dd($request);
         $products->quantity = $request->quantity;
         $products->specifications = $request->specifications;
         $fieldName = 'inputFile';
-
         if ($request->hasFile($fieldName)) {
             $fullFileNameOrigin = $request->file($fieldName)->getClientOriginalName();
             $fileNameOrigin = pathinfo($fullFileNameOrigin, PATHINFO_FILENAME);
@@ -126,7 +102,6 @@ class ProductsController extends Controller
         $products->price_product = $request->price_product;
         $products->garbage_can = 1;
         $products->category_id = $request->category_id;
-
         // Session::flash('success', 'Chỉnh sửa thành công '.$request->name);
         try {
             $products->save();
@@ -134,7 +109,7 @@ class ProductsController extends Controller
                 Storage::delete($images);
             }
             // alert()->success('Lưu Sản Phẩm: ' . $request->name, 'Thành Công');
-            toast(__('messages.msg_prd_up_err',['name' => $request->name]),'success','top-right');
+            toast(__('messages.msg_prd_up_ss',['name' => $request->name]),'success','top-right');
             return redirect()->route('products');
 
         } catch (\Exception $e) {
@@ -142,7 +117,7 @@ class ProductsController extends Controller
             $images = $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
             // alert()->error('Lưu Sản Phẩm: ' . $request->name, 'Không Thành Công!');
-            toast(__('messages.msg_prd_up_err',['name' => $request->name]),'success','top-right');
+            toast(__('messages.msg_prd_up_err',['name' => $request->name]),'error','top-right');
             return redirect()->route('products.edit',$products->id);
         }
         return redirect()->route('products');
@@ -153,11 +128,13 @@ class ProductsController extends Controller
        
         try {
             $item->delete();
-            alert()->success('Xóa Sản Phẩm: ' . $item->name, 'Thành Công');
+            // alert()->success('Xóa Sản Phẩm: ' . $item->name, 'Thành Công');
+            toast(__('messages.msg_prd_dele_ss',['name' => $item->name]),'success','top-right');
             return redirect()->route('products');
 
         } catch (\Exception$e) {
-            alert()->error('Xóa Sản Phẩm: ' . $item->name, 'Không Thành Công!');
+            // alert()->error('Xóa Sản Phẩm: ' . $item->name, 'Không Thành Công!');
+            toast(__('messages.msg_prd_dele_err',['name' => $item->name]),'error','top-right');
             return redirect()->route('products');
         }
         // Session::flash('success', 'Xóa thành công '.$item->name);
@@ -190,17 +167,17 @@ class ProductsController extends Controller
       
         $item = Product::withTrashed()->where('id', $id)->forceDelete();
         try {
-            alert()->success('Xóa Sản Phẩm: ' . $product->name, 'Thành Công');
+            // alert()->success('Xóa Sản Phẩm: ' . $product->name, 'Thành Công');
+            toast(__('messages.msg_prd_dele_ss',['name' => $item->name]),'success','top-right');
             Storage::delete($images);
             DB::commit();
             return redirect()->route('products.deleted');
         } catch (\Exception$e) {
-            alert()->error('Xóa Sản Phẩm: ' . $product->name, 'Không Thành Công!');
+            // alert()->error('Xóa Sản Phẩm: ' . $product->name, 'Không Thành Công!');
+            toast(__('messages.msg_prd_dele_err',['name' => $item->name]),'error','top-right');
             DB::rollBack();
             return redirect()->route('products.deleted');
         }
     }
-
-
 
 }

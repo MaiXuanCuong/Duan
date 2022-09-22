@@ -53,10 +53,12 @@ class CategoriesController extends Controller
         // Session::flash('success', 'Thêm thành công '.$request->name);
         try {
             $categories->save();
-            alert()->success('Thêm Danh Mục: '.$request->name,'Thành Công');
+            // alert()->success('Thêm Danh Mục: '.$request->name,'Thành Công');
+            toast(__('messages.msg_cate_add_ss',['name' => $request->name]),'success','top-right');
             return redirect()->route('categories');
         } catch (\Exception $e) {
-            alert()->error('Thêm Danh Mục: '.$request->name, 'Không Thành Công!');
+            // alert()->error('Thêm Danh Mục: '.$request->name, 'Không Thành Công!');
+            toast(__('messages.msg_cate_add_err',['name' => $request->name]),'error','top-right');
             return view('admin.categories.add',compact('request'));
         }
     }
@@ -69,7 +71,9 @@ class CategoriesController extends Controller
         $item->name = $request->name;
         try {
             $item->save();
-            alert()->success('Lưu Danh Mục: '.$request->name,' Thành Công');
+            // alert()->success('Lưu Danh Mục: '.$request->name,' Thành Công');
+            toast(__('messages.msg_cate_up_err',['name' => $request->name]),'success','top-right');
+
             return redirect()->route('categories');
              // alert('Title','Lorem Lorem Lorem', 'success');
             // alert()->info('Title','Lorem Lorem Lorem');
@@ -77,7 +81,9 @@ class CategoriesController extends Controller
             // alert()->question('Title','Lorem Lorem Lorem');
             // alert()->html('<i>HTML</i> <u>example</u>'," You can use <b>bold text</b>, <a href='//github.com'>links</a> and other HTML tags ",'success');
         } catch (\Exception $e) {
-            alert()->error('Lưu Danh Mục: '.$request->name, 'Không Thành Công!');
+            // alert()->error('Lưu Danh Mục: '.$request->name, 'Không Thành Công!');
+            toast(__('messages.msg_cate_up_err',['name' => $request->name]),'error','top-right');
+
             return redirect()->route('categories.edit',$item->id);
         }
     }
@@ -87,10 +93,12 @@ class CategoriesController extends Controller
         $item->delete();
 
             if(!$item->delete()){
-                alert()->success('Xóa Danh Mục: '.$item->name, 'Thành Công');
+                // alert()->success('Xóa Danh Mục: '.$item->name, 'Thành Công');
+                toast(__('messages.msg_cate_dele_err',['name' => $item->name]),'success','top-right');
             }
         } catch (\Exception $e) {
-            alert()->error('Xóa Danh Mục: '.$item->name, 'Không Thành Công!');
+            // alert()->error('Xóa Danh Mục: '.$item->name, 'Không Thành Công!');
+            toast(__('messages.msg_cate_dele_err',['name' => $item->name]),'error','top-right');
             return redirect()->route('categories');
 
         }

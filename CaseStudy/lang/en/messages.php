@@ -16,6 +16,8 @@
         "msg_login_err" => "Login failed, Account does not exist!",
         "msg_register_ss" => "Register Account :name successfully",
         "msg_register_err" => "Register Account :name failed",
+        "msg_update_ss" => "Update successfully",
+        "msg_update_err" => "Update failed",
     ]
 
 

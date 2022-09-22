@@ -1,20 +1,6 @@
 @extends('admin.layouts.master')
 @section('content')
 
-  <script type="text/javascript">
-    function readURL(input) {
-	if (input.files && input.files[0]) {
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-   	        $('#imgSrc').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);            
-        }
-    }
-    $("#imgUpload").change(function() {
-        readURL(this);  
-    });
-</script>
 <div class="flex-center position-ref full-height">
     <div class="content">
         <div class="title m-b-md">

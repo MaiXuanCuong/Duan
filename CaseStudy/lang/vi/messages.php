@@ -16,6 +16,8 @@
         "msg_login_err" => "Đăng Nhập Không Thành Công, Sai TK Hoặc MK!",
         "msg_register_ss" => "Đăng Ký Tài Khoản :name Thành Công",
         "msg_register_err" => "Đăng Ký Tài Khoản :name Không Thành Công",
+        "msg_update_ss" => "Cập Nhật Thành Công",
+        "msg_update_err" => "Cập Nhật không Thành Công",
     ]
 
 
