@@ -21,22 +21,17 @@ class AdminController extends Controller
         $admin->address = $request->address;
         $admin->email = $request->email;
         $admin->phone = $request->phone;
-        $admin->password = bcrypt($request->password);
+        $admin->password = bcrypt('admin');
         
         // Session::flash('success', 'Thêm thành công '.$request->name);
         try {
-            if($request->password == $request->password1){
                 // dd($admin);
                 $admin->save();
                 alert()->success('Thêm Tài Khoản: '.$request->name,'Thành Công');
-                return view('admin.user.login');
-            } else {
-                alert()->error('Thêm Tài Khoản: '.$request->name, 'Không Thành Công!');
-                return redirect()->route('admin.login');
-            }
+                return back()->withInput();
         } catch (\Exception $e) {
             alert()->error('Thêm Tài Khoản: '.$request->name, 'Không Thành Công!');
-            return redirect()->route('admin.login');
+            return back()->withInput();
         }
     }
     public function login(StoreLoginRequest $request){

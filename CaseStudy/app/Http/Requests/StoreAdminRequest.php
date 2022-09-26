@@ -28,8 +28,6 @@ class StoreAdminRequest extends FormRequest
             'email' => 'required',
             'address' => 'required',
             'phone' => 'required|min:9',
-            'password' => 'required|min:6',
-            'password1' => 'required|min:6',
             
            ];
             return $rules;
@@ -42,10 +40,6 @@ class StoreAdminRequest extends FormRequest
                 'address.required' => 'Hãy Nhập Địa Chỉ Của Bạn',
                 'phone.required' => 'Hãy Nhập Số Điện Thoại Của Bạn',
                 'phone.min' => 'Hãy Nhập Số Điện Thoại Lớn Hơn 9 Ký Tự',
-                'password.min' => 'Hãy Nhập Mật Khẩu Lớn Hơn 6 Ký Tự',
-                'password.required' => 'Hãy Nhập Mật Khẩu Của Bạn',
-                'password1.min' => 'Hãy Nhập Mật Khẩu Lớn Hơn 6 Ký Tự',
-                'password1.required' => 'Hãy Xác Nhận Mật Khẩu Của Bạn',
             ];
             return $messages;
         }

@@ -25,7 +25,7 @@ class StoreLoginRequest extends FormRequest
     {
         $rules =[
             'email' => 'required',
-            'password' => 'required|min:5',
+            'password' => 'required|min:4',
             
            ];
             return $rules;

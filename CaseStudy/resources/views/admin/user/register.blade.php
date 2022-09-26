@@ -20,47 +20,58 @@
               <h5 class="card-title">Thêm User</h5>
               {{-- <code></code> --}}
               <!-- Browser Default Validation -->
-              <form class="row g-3">
-                <div class="col-md-4">
-                  <label for="validationDefault01" class="form-label">Họ</label>
-                  <input type="text" class="form-control" id="validationDefault01" value="Nhập Họ" >
-                </div>
-                <div class="col-md-4">
-                  <label for="validationDefault02" class="form-label">Tên</label>
-                  <input type="text" class="form-control" id="validationDefault02" value="Nhập Tên" >
-                </div>
-                <div class="col-md-4">
-                  <label for="validationDefaultUsername" class="form-label">Email</label>
-                  <div class="input-group">
-                    <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                    <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" >
+              @include('sweetalert::alert')
+              <form class="mx-1 mx-md-4" method="post" action="{{ route('admin.register') }}">
+                @csrf
+                @method('POST')
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    @error('name')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                    <input type="text" id="form3Example1c" class="form-control" name="name" value="{{ old('name') }}" />
+                    <label class="form-label" for="form3Example1c">Họ Và Tên</label>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="validationDefault03" class="form-label">Địa Chỉ</label>
-                  <input type="text" class="form-control" id="validationDefault03" >
-                </div>
-                <div class="col-md-3">
-                  <label for="validationDefault04" class="form-label">Số Điện Thoại</label>
-                  <select class="form-select" id="validationDefault04" >
-                    <option selected disabled value="">Choose...</option>
-                    <option>...</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <label for="validationDefault05" class="form-label">Mật Khẩu</label>
-                  <input type="text" class="form-control" id="validationDefault05" >
-                </div>
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" >
-                    <label class="form-check-label" for="invalidCheck2">
-                      Đồng Ý Với Điều Khoản & Điều Kiện
-                    </label>
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class='fa fa-address-book fa-lg me-3 fa-fw'></i>
+                  <div class="form-outline flex-fill mb-0">
+                    @error('address')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                    <input type="text" id="form3Example1c" class="form-control" name="address" value="{{ old('address') }}" />
+                    <label class="form-label" for="form3Example1c">Địa Chỉ</label>
                   </div>
                 </div>
-                <div class="col-12">
-                  <button class="btn btn-primary" type="submit">Thêm</button>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                    <input type="email" id="form3Example3c" class="form-control" name="email" value="{{ old('email') }}"/>
+                    <label class="form-label" for="form3Example3c">Tài Khoản Email</label>
+                  </div>
+                </div>
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class='fa fa-phone fa-lg me-3 fa-fw'></i>
+                  <div class="form-outline flex-fill mb-0">
+                    @error('phone')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                    <input type="text" id="form3Example3c" class="form-control" name="phone" value="{{ old('phone') }}"/>
+                    <label class="form-label" for="form3Example3c">Số Điện Thoại</label>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  <button type="submit" class="btn btn-primary btn-lg">Đăng Ký</button>
+                  
+                </div>
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  <br><br><p class="small fw-bold mt-2 pt-1 mb-0">Đã Có Tài Khoản? <a href="{{ route('login') }}"
+                    class="link-danger">Đăng Nhập</a></p>
                 </div>
               </form>
               <!-- End Browser Default Validation -->
