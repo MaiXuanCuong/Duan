@@ -14,59 +14,48 @@ class PermissionTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   $permission = new Permission();
-        $permission->name = 'user_list';
-        $permission->display_name ='Danh Sách User' ;
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'user_add';
-        $permission->display_name ='Thêm User' ;
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name =  'user_edit';
-        $permission->display_name ='Sửa User' ;
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name =  'user_delete';
-        $permission->display_name = 'Xóa User';
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'role_list';
-        $permission->display_name ='Danh Sách Role' ;
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'role_add';
-        $permission->display_name ='Thêm Role';
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'role_edit';
-        $permission->display_name ='Sửa Role';
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name =  'role_delete';
-        $permission->display_name ='Xóa Role';
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'product_add';
-        $permission->display_name = 'Thêm Sản Phẩm' ;
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'product_edit';
-        $permission->display_name = 'Sửa Sản Phẩm' ;
-        $permission->save();
-
-        $permission = new Permission();
-        $permission->name = 'product_delete';
-        $permission->display_name = 'Xóa Sản Phẩm' ;
-        $permission->save();
+    {  
+        $parentNameGroups = [
+            'Category',
+            'Product',
+            'Employee',
+            'Customer',
+            'Role',
+            'Order',
+            'Review',
+            'Banner',
+        ];
+        foreach($parentNameGroups as $parentNameGroup){
+            $parentGroup = Permission::create([
+                'name' => $parentNameGroup, 
+                'group_name' => $parentNameGroup,
+                'group_key' => 0,
+            ]);
+           Permission::create([
+                'name' => 'List ' . $parentNameGroup,
+                'group_name' => 'List_'.$parentNameGroup,
+                'group_key' => $parentGroup->id,
+            ]);
+           Permission::create([
+                'name' => 'Show ' . $parentNameGroup,
+                'group_name' => 'Show_'.$parentNameGroup,
+                'group_key' => $parentGroup->id,
+            ]);
+           Permission::create([
+                'name' => 'Add ' . $parentNameGroup,
+                'group_name' => 'Add_'.$parentNameGroup,
+                'group_key' => $parentGroup->id,
+            ]);
+           Permission::create([
+                'name' => 'Edit ' . $parentNameGroup,
+                'group_name' => 'Edit_'.$parentNameGroup,
+                'group_key' => $parentGroup->id,
+            ]);
+           Permission::create([
+                'name' => 'Delete ' . $parentNameGroup,
+                'group_name' => 'Delete_'.$parentNameGroup,
+                'group_key' => $parentGroup->id,
+            ]);
+        }
     }
 }

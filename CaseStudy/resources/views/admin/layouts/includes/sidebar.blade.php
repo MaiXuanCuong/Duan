@@ -18,30 +18,37 @@
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
+              <i class="bi bi-circle"></i><span>Danh Sách User</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('users.add') }}">
+              <i class="bi bi-circle"></i><span>Thêm User</span>
             </a>
           </li>
           <li>
             <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
+              <i class="bi bi-circle"></i><span>Xem Quyền</span>
             </a>
           </li>
+
           <li>
+           
             <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Badges</span>
+              <i class="bi bi-circle"></i><span>Thêm Quyền</span>
             </a>
           </li>
           <li>
             <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Breadcrumbs</span>
+              <i class="bi bi-circle"></i><span>Sửa Quyền</span>
             </a>
           </li>
           <li>
             <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Buttons</span>
+              <i class="bi bi-circle"></i><span>Xóa Quyền</span>
             </a>
           </li>
-          <li>
+          {{-- <li>
             <a href="components-cards.html">
               <i class="bi bi-circle"></i><span>Cards</span>
             </a>
@@ -85,7 +92,7 @@
             <a href="components-tooltips.html">
               <i class="bi bi-circle"></i><span>Tooltips</span>
             </a>
-          </li>
+          </li> --}}
         </ul>
       </li><!-- End Components Nav -->
 
@@ -104,7 +111,7 @@
               <i class="bi bi-circle"></i><span>Thêm Danh Mục</span>
             </a>
           </li>
-          <li>
+          {{-- <li>
             <a href="forms-editors.html">
               <i class="bi bi-circle"></i><span>Form Editors</span>
             </a>
@@ -113,7 +120,7 @@
             <a href="forms-validation.html">
               <i class="bi bi-circle"></i><span>Form Validation</span>
             </a>
-          </li>
+          </li> --}}
         </ul>
       </li><!-- End Forms Nav -->
 
@@ -186,7 +193,7 @@
         </ul>
       </li><!-- End Icons Nav -->
 
-      <li class="nav-heading">Pages</li>
+      {{-- <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
@@ -235,7 +242,7 @@
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
-      </li><!-- End Blank Page Nav -->
+      </li><!-- End Blank Page Nav --> --}}
 
     </ul>
 

@@ -90,9 +90,19 @@ Route::prefix('orders')->group(function(){
     Route::get('/', [OrderController::class,'index'])->name('orders');
     Route::get('/add', [OrderController::class,'create'])->name('orders.add');
     
-    Route::post('/store', [OrderController::class, 'store'])->name('orders.store');
+    Route::post('/store', [OrderController::class, 'register'])->name('orders.register');
     Route::get('/show/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+});
+Route::prefix('users')->group(function(){
+    Route::get('/', [AdminController::class,'index'])->name('users');
+    Route::get('/add', [AdminController::class,'create'])->name('users.add');
+    
+    Route::post('/store', [AdminController::class, 'store'])->name('users.store');
+    Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('users.edit');
+    Route::put('/update/{id}', [AdminController::class, 'update'])->name('users.update');
+    Route::get('/show/{id}', [AdminController::class, 'show'])->name('users.show');
+    Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
 });
 
 

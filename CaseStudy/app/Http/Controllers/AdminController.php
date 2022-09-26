@@ -29,7 +29,7 @@ class AdminController extends Controller
                 // dd($admin);
                 $admin->save();
                 alert()->success('Thêm Tài Khoản: '.$request->name,'Thành Công');
-                return view('admin.login');
+                return view('admin.user.login');
             } else {
                 alert()->error('Thêm Tài Khoản: '.$request->name, 'Không Thành Công!');
                 return redirect()->route('admin.login');
@@ -63,9 +63,28 @@ class AdminController extends Controller
         if(Auth::check()){
             return redirect()->route('/');
         } else {
-            return view('admin.login');
+            return view('admin.user.login');
         }
     }
     //check mật khẩu
     //Hash::check($request->password,$item->pasword)
+    public function index(){
+
+    }
+    public function create(){
+        return view('admin.user.register');
+    }
+    public function edit(){
+
+    }
+    public function update(){
+
+    }
+    public function show(){
+
+    }
+    public function delete(){
+
+    }
+   
 }

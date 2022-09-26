@@ -17,6 +17,11 @@ class RoleTableSeeder extends Seeder
     {
         //
         $role = new Role();
+        $role->name = 'SuperAdmin';
+        $role->display_name = 'Chủ Tịch' ;
+        $role->save();
+
+        $role = new Role();
         $role->name = 'Admin';
         $role->display_name = 'Quản Trị Viên' ;
         $role->save();
@@ -27,7 +32,7 @@ class RoleTableSeeder extends Seeder
         $role->save();
 
         $role = new Role();
-        $role->name = 'assistant ';
+        $role->name = 'assistant';
         $role->display_name = 'Trợ Lý' ;
         $role->save();
     }

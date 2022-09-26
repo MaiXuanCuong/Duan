@@ -168,13 +168,13 @@ class ProductsController extends Controller
         $item = Product::withTrashed()->where('id', $id)->forceDelete();
         try {
             // alert()->success('Xóa Sản Phẩm: ' . $product->name, 'Thành Công');
-            toast(__('messages.msg_prd_dele_ss',['name' => $item->name]),'success','top-right');
+            toast(__('messages.msg_prd_dele_ss',['name' => $product->name]),'success','top-right');
             Storage::delete($images);
             DB::commit();
             return redirect()->route('products.deleted');
         } catch (\Exception$e) {
             // alert()->error('Xóa Sản Phẩm: ' . $product->name, 'Không Thành Công!');
-            toast(__('messages.msg_prd_dele_err',['name' => $item->name]),'error','top-right');
+            toast(__('messages.msg_prd_dele_err',['name' => $product->name]),'error','top-right');
             DB::rollBack();
             return redirect()->route('products.deleted');
         }
