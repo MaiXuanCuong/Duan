@@ -6,14 +6,7 @@
     <div  class="content container">
         <div class="title m-b-md">
             <h1>Sản Phẩm</h1>
-            <a class="btn btn-primary" href="{{ route('products.add') }}">Thêm Sản Phẩm</a>
-            <a class="btn btn-danger" href="{{ route('products.garbageCan') }}">Thùng rác</a>
-            @if (Session::has('success'))
-            <p class="text-success">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                {{ Session::get('success') }}
-            </p>
-        @endif
+            <a class="btn btn-primary" href="{{ route('products') }}">Trở Về</a>
         </div>
         <br>
         <table style="text-align:center ;background-color: rgba(255, 255, 255, 0)" class="table-hover table">
@@ -51,25 +44,12 @@
 
                <img width="100px" height="120px" src="{{asset($item->image)}}" alt="">    
             </td>
-          
-            <td>
-                <form action="{{ route('products.destroy',$item->id) }}" method="post">
-                    <i><a class="btn btn-primary" href="{{ route('products.edit',$item->id) }}">Sửa</a></i>
-                    @csrf
-                    @method('delete')
-                    <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>    
-                </form>
-                
-            </td>
-            
         </tr>
-        
         @endforeach
     </table>
         
     </div>
 </div>
-{{ $items->appends(request()->all())->links() }}
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

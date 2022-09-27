@@ -18,42 +18,52 @@ class PermissionTableSeeder extends Seeder
         $parentNameGroups = [
             'Category',
             'Product',
-            'Employee',
-            'Customer',
-            'Role',
-            'Order',
-            'Review',
-            'Banner',
+            // 'User',
+            // 'Customer',
+            // 'Role',
+            // 'Order',
+            // 'Review',
+            // 'Banner',    
         ];
         foreach($parentNameGroups as $parentNameGroup){
             $parentGroup = Permission::create([
-                'name' => $parentNameGroup, 
-                'group_name' => $parentNameGroup,
+                'group_name' => $parentNameGroup, 
+                'name' => $parentNameGroup,
                 'group_key' => 0,
             ]);
            Permission::create([
-                'name' => 'List ' . $parentNameGroup,
-                'group_name' => 'List_'.$parentNameGroup,
+                'group_name' => 'List ' . $parentNameGroup,
+                'name' => $parentNameGroup.'_viewAny',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'name' => 'Show ' . $parentNameGroup,
-                'group_name' => 'Show_'.$parentNameGroup,
+                'group_name' => 'Show ' . $parentNameGroup,
+                'name' => $parentNameGroup.'_view',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'name' => 'Add ' . $parentNameGroup,
-                'group_name' => 'Add_'.$parentNameGroup,
+                'group_name' => 'Add ' . $parentNameGroup,
+                'name' => $parentNameGroup.'_create',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'name' => 'Edit ' . $parentNameGroup,
-                'group_name' => 'Edit_'.$parentNameGroup,
+                'group_name' => 'Edit ' . $parentNameGroup,
+                'name' => $parentNameGroup.'_update',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'name' => 'Delete ' . $parentNameGroup,
-                'group_name' => 'Delete_'.$parentNameGroup,
+                'group_name' => 'Delete ' . $parentNameGroup,
+                'name' => $parentNameGroup.'_delete',
+                'group_key' => $parentGroup->id,
+            ]);
+            Permission::create([
+                'group_name' => 'Restore ' . $parentNameGroup,
+                'name' => $parentNameGroup.'_restore',
+                'group_key' => $parentGroup->id,
+            ]);
+            Permission::create([
+                'group_name' => 'ForceDelete' . $parentNameGroup,
+                'name' => $parentNameGroup.'_forceDelete',
                 'group_key' => $parentGroup->id,
             ]);
         }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('price_product');
             $table->string('configuration');
             $table->string('garbage_can');
+            $table->softDeletes(); // add
             $table->timestamps();
         });
     }

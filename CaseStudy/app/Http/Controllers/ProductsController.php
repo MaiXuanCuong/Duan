@@ -13,15 +13,20 @@ class ProductsController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Product::class);
         $items = Product::paginate(5);
         return view('admin.products.index', compact('items'));
     }
     public function create()
-    {
+    {   $this->authorize('create', Product::class);
         $categories = Category::all();
         return view('admin.products.add', compact('categories'));
     }
-
+    public function show($id){
+        $this->authorize('view', Product::class);
+        $items = Product::findOrFail($id);
+        return view('admin.products.show', compact('items'));
+    }
     public function store(StoreProductRequest $request)
     {
         $categories = Category::all();
@@ -72,6 +77,7 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $item = Product::find($id);
+        $this->authorize('update', $item);
         $categories = Category::all();
         return view('admin.products.edit', compact('item', 'categories'));
     }
@@ -125,7 +131,7 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $item = Product::findOrFail($id);
-       
+        $this->authorize('delete', $item);
         try {
             $item->delete();
             // alert()->success('Xóa Sản Phẩm: ' . $item->name, 'Thành Công');
@@ -140,43 +146,45 @@ class ProductsController extends Controller
         // Session::flash('success', 'Xóa thành công '.$item->name);
     }
 
-    public function deleted(){
+    public function garbageCan(){
         $items = Product::onlyTrashed()->paginate(5);
         return view('admin.products.Garbage_can', compact('items'));
      
     }
-    public function recover($id){
-       
+    public function restore($id){
         try {
-            $item = Product::withTrashed()->where('id', $id)->restore();
+            $item = Product::withTrashed()->where('id', $id);
+            $this->authorize('restore', $item);
+            $item->restore();
             $item = Product::findOrFail($id);
             alert()->success('Khôi Phục Sản Phẩm: ' . $item->name, 'Thành Công');
-            return redirect()->route('products.deleted');
+            return redirect()->route('products.garbageCan');
         } catch (\Exception$e) {
             alert()->error('Khôi Phục Sản Phẩm: ' . $item->name, 'Không Thành Công!');
-            return redirect()->route('products.deleted');
+            return redirect()->route('products.garbageCan');
         }
         //Xoá record vĩnh viễn: App\User::withTrashed()->where('id', 1)->forceDelete();
         //Để lấy lại record đã xoá bằng softDeletes: App\User::withTrashed()->where('id', 1)->restore();
     }
-    public function delete($id){
+    public function forceDelete($id){
         DB::beginTransaction();
-        $product = Product::onlyTrashed()->findOrFail($id);
+        $item = Product::onlyTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $item);
         // dd($product);
-        $images = str_replace('storage', 'public', $product->image);
+        $images = str_replace('storage', 'public', $item->image);
       
         $item = Product::withTrashed()->where('id', $id)->forceDelete();
         try {
             // alert()->success('Xóa Sản Phẩm: ' . $product->name, 'Thành Công');
-            toast(__('messages.msg_prd_dele_ss',['name' => $product->name]),'success','top-right');
+            toast(__('messages.msg_prd_dele_ss',['name' => $item->name]),'success','top-right');
             Storage::delete($images);
             DB::commit();
-            return redirect()->route('products.deleted');
+            return redirect()->route('products.garbageCan');
         } catch (\Exception$e) {
             // alert()->error('Xóa Sản Phẩm: ' . $product->name, 'Không Thành Công!');
-            toast(__('messages.msg_prd_dele_err',['name' => $product->name]),'error','top-right');
+            toast(__('messages.msg_prd_dele_err',['name' => $item->name]),'error','top-right');
             DB::rollBack();
-            return redirect()->route('products.deleted');
+            return redirect()->route('products.garbageCan');
         }
     }
 

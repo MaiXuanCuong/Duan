@@ -1,13 +1,11 @@
 @extends('admin.layouts.master')
 @section('content')
-
 <body>
 <div  class="flex-center position-ref full-height">
     <div  class="content container">
         <div class="title m-b-md">
-            <h1>Sản Phẩm</h1>
-            <a class="btn btn-primary" href="{{ route('products.add') }}">Thêm Sản Phẩm</a>
-            <a class="btn btn-danger" href="{{ route('products.garbageCan') }}">Thùng rác</a>
+            <h1>Thùng Rác</h1>
+            <a class="btn btn-primary" href="{{ route('categories') }}">Trở Về</a>
             @if (Session::has('success'))
             <p class="text-success">
                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -20,11 +18,9 @@
             <tr>
                 
                 <th ><i>STT</i></td>
-                <th width="30%" ><i>Sản Phẩm</i></th>
-                <th width="10%"><i>Danh Mục</i></th>
-                <th width="15%"><i>Giá</i></th>
-                <th width="30%"><i>Ảnh</i></th>
-                <th width="20%"><i>Thao Tác</i></th>
+                <th width="30%"><i>Tên Danh Mục</i></th>
+                <th width="40%"><i>Ảnh</i></th>
+                <th width="50%"><i>Thao Tác</i></th>
             </tr>
             
         @foreach($items as $key => $item)
@@ -40,21 +36,12 @@
                 <i>{{ $item->name }} </i>  
             </td>
             <td>
-
-                <i>{{ $item->category->name }}</i> 
-            </td>
-            <td>
-
-                <i>{{ $item->price }}  </i> 
-            </td>
-            <td>
-
-               <img width="100px" height="120px" src="{{asset($item->image)}}" alt="">    
+               <img width="100px" height="120px" src="{{ asset($item->image) }}" alt="">    
             </td>
           
             <td>
-                <form action="{{ route('products.destroy',$item->id) }}" method="post">
-                    <i><a class="btn btn-primary" href="{{ route('products.edit',$item->id) }}">Sửa</a></i>
+                <form action="{{ route('categories.forceDelete',$item->id) }}" method="post">
+                    <i><a class="btn btn-primary" href="{{ route('products.restore',$item->id) }}">Lấy lại</a></i>
                     @csrf
                     @method('delete')
                     <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>    
@@ -81,7 +68,6 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
 
 @endsection

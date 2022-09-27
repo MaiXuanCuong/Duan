@@ -51,8 +51,8 @@
             </td>
           
             <td>
-                <form action="{{ route('products.delete',$item->id) }}" method="post">
-                    <i><a class="btn btn-primary" href="{{ route('products.recover',$item->id) }}">Lấy lại</a></i>
+                <form action="{{ route('products.forceDelete',$item->id) }}" method="post">
+                    <i><a class="btn btn-primary" href="{{ route('products.restore',$item->id) }}">Lấy lại</a></i>
                     @csrf
                     @method('delete')
                     <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>    
