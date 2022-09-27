@@ -19,6 +19,8 @@ class ProductPolicy
     public function viewAny(User $user)
     {
         //
+        return $user->hasPermission('Product_viewAny');
+
     }
 
     /**
@@ -31,7 +33,8 @@ class ProductPolicy
     public function view(User $user, Product $product)
     {
         //
-        return $user->hasPermission('Product_viewAny');
+        return $user->hasPermission('Product_view');
+
     }
 
     /**
