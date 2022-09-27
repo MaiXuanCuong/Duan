@@ -7,6 +7,7 @@
                 <div class="title m-b-md">
                     <h1>Danh Mục</h1>
                     <a class="btn btn-primary" href="{{ route('categories.add') }}">Thêm Danh Mục</a>
+                    <a class="btn btn-danger" href="{{ route('categories.garbageCan') }}">Thùng rác</a>
                     @if (Session::has('success'))
                         <p class="text-success">
                             <i class="fa fa-check" aria-hidden="true"></i>
@@ -17,8 +18,9 @@
                 <br>
                 <table style="text-align: center; background-color: rgba(139, 249, 245, 0)" class="table-hover table border-primary">
                     <tr>
-                        <th width="30%"><i>STT</i></th>
-                        <th width="60%"><i>Tên Danh Mục</i></th>
+                        <th ><i>STT</i></th>
+                        <th width="30%"><i>Tên Danh Mục</i></th>
+                        <th width="30%"><i>Ảnh Danh Mục</i></th>
                         <th width="30%"><i>Thao Tác</i></th>
                     </tr>
                     @foreach ($items as $key => $item)
@@ -28,6 +30,9 @@
                             </td>
                             <td>
                                 <i> {{ $item->name }} </i>
+                            </td>
+                            <td>
+                                <img width="100px" height="120px" src="{{asset($item->image)}}" alt="">  
                             </td>
                             <td>
                                 <form action="{{ route('categories.destroy', $item->id) }}" method="post">

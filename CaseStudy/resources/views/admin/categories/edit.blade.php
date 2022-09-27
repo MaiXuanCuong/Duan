@@ -8,7 +8,7 @@
                 <div class="title m-b-md">
                     <h1>Chỉnh Sửa Danh Mục</h1>
                 </div>
-                <form class="text-left" method="post" action="{{ route('categories.update', $item->id) }}">
+                <form class="text-left" method="post" action="{{ route('categories.update', $item->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -18,6 +18,20 @@
                         @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="inputTitle">Ảnh Danh Mục</label><br>
+                        <input accept="image/*" type='file' id="imgInp" name="inputFile" /><br><br>
+                        <img type="hidden" width="90px" height="90px" id="blah1"
+                            src="{{ asset($item->image) ?? $request->inputFile }}" alt="" /> <br>
+                        @error('inputFile')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+
+                        {{-- <img width="100px" height="130px" src="{{ asset($item->image) }}" alt=""> --}}
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary">Lưu</button>

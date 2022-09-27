@@ -41,7 +41,7 @@
           
             <td>
                 <form action="{{ route('categories.forceDelete',$item->id) }}" method="post">
-                    <i><a class="btn btn-primary" href="{{ route('products.restore',$item->id) }}">Lấy lại</a></i>
+                    <i><a class="btn btn-primary" href="{{ route('categories.restore',$item->id) }}">Lấy lại</a></i>
                     @csrf
                     @method('delete')
                     <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>    

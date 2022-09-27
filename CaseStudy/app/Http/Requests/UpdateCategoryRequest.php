@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class StoreCategoryRequest extends FormRequest
     {
             //
             $rules = [
-                    'name' => 'required|min:3|unique:categories',
+                    'name' => 'required|min:3',
                     'inputFile' => 'required',
             ];
             return $rules;
@@ -35,7 +35,6 @@ class StoreCategoryRequest extends FormRequest
         $messages = [
             'name.min' => 'Tên phải Lớn hơn 3 ký tự',
             'name.required' => 'Hãy Nhập Tên Danh Mục!',
-            'name.unique' => 'Tên Danh Mục Đã Tồn Tại',
             'inputFile.required' => 'Vui Lòng Chọn Ảnh'
         ];
         return $messages;

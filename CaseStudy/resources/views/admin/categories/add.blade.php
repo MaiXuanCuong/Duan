@@ -8,7 +8,7 @@
                 <div class="title m-b-md">
                     <h1>Thêm Danh Mục</h1>
                 </div>
-                <form class="text-left" method="post" action="{{ route('categories.store') }}">
+                <form class="text-left" method="post" action="{{ route('categories.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="inputTitle">Tên Danh Mục</label>
@@ -17,7 +17,16 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    <div class="form-group">
+                        <label for="inputTitle">Ảnh Danh Mục</label><br>
+                        {{-- <input accept="image/*" type='file' id="imgInp" name="inputFile[]"  multiple/><br><br> --}}
+                        <input accept="image/*" type='file' id="imgInp" name="inputFile"/><br><br>
+                        <img type="hidden" width="90px" height="90px" id="blah" src="" alt="" /> <br>
+                        @error('inputFile')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                      @enderror
+                      </div>
+                      
                     <button type="submit" class="btn btn-primary">Thêm</button>
                     <a class="btn btn-danger" href="{{ route('categories') }}">Hủy</a>
                 </form>

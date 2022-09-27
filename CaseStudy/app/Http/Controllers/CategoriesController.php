@@ -9,14 +9,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Aler;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoriesController extends Controller
 {
-    //
     public function home(){
-
-        // $items = Category::all();
-        // return view('index',compact('items'));
         return view('index');
     }
     public function index(){
@@ -29,32 +26,9 @@ class CategoriesController extends Controller
         return view('admin.categories.add');
 
     }
-    
     public function store(StoreCategoryRequest $request){
-
-           // $roles = [
-        //     'name'          => 'required|min:3|unique:products',
-        //     'price'         => 'required',
-        //     'description'   => 'required',
-        // ];
-        // $messages = [
-        //     'min' => 'Bat buoc lon hon',
-        //     'name.required' => 'Ban chua nhap ten',
-        //     'price.required' => 'Ban chua nhap gia',
-        // ];
-        // // $request->validate($roles,$messages);//that bai => create
-        // $validator = Validator::make( $request->all(),$roles,$messages);
-
-        // // Neu that bai
-        // if ($validator->fails()) {
-        //     return redirect()->route('products.create')
-        //             ->withErrors($validator) //kem theo loi
-        //             ->withInput()//kem gia tri cu
-        //             ;
-        // }
-        
-        $categories = new Category();
-        $categories->name = $request->name;
+        $category = new Category();
+        $category->name = $request->name;
         $fieldName = 'inputFile';
         if ($request->hasFile($fieldName)) {
             $fullFileNameOrigin = $request->file($fieldName)->getClientOriginalName();
@@ -63,12 +37,13 @@ class CategoriesController extends Controller
             $fileName = $fileNameOrigin . '-' . rand() . '_' . time() . '.' . $extenshion;
             $path = 'storage/' . $request->file($fieldName)->storeAs('public/images', $fileName);
             $path = str_replace('public/', '', $path);
-            $categories->image = $path;
+            $category->image = $path;
+            // dd($category);
         }
-        
         // Session::flash('success', 'Thêm thành công '.$request->name);
         try {
-            $categories->save();
+            // dd($category);
+            $category->save();
             // alert()->success('Thêm Danh Mục: '.$request->name,'Thành Công');
             toast(__('messages.msg_cate_add_ss',['name' => $request->name]),'success','top-right');
             return redirect()->route('categories');
@@ -83,7 +58,7 @@ class CategoriesController extends Controller
         $this->authorize('update', Category::class);
         return view('admin.categories.edit',compact('item'));
     }
-    public function update(StoreCategoryRequest $request, $id){
+    public function update(UpdateCategoryRequest $request, $id){
         $category = Category::find($id);
         $category->name = $request->name;
         $fieldName = 'inputFile';
@@ -109,11 +84,6 @@ class CategoriesController extends Controller
             toast(__('messages.msg_cate_up_err',['name' => $request->name]),'success','top-right');
 
             return redirect()->route('categories');
-             // alert('Title','Lorem Lorem Lorem', 'success');
-            // alert()->info('Title','Lorem Lorem Lorem');
-            // alert()->warning('Title','Lorem Lorem Lorem');
-            // alert()->question('Title','Lorem Lorem Lorem');
-            // alert()->html('<i>HTML</i> <u>example</u>'," You can use <b>bold text</b>, <a href='//github.com'>links</a> and other HTML tags ",'success');
         } catch (\Exception $e) {
             $images = $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
@@ -160,20 +130,22 @@ class CategoriesController extends Controller
             alert()->error('Khôi Phục Sản Phẩm: ' . $item->name, 'Không Thành Công!');
             return redirect()->route('categories.garbageCan');
         }
-        //Xoá record vĩnh viễn: App\User::withTrashed()->where('id', 1)->forceDelete();
-        //Để lấy lại record đã xoá bằng softDeletes: App\User::withTrashed()->where('id', 1)->restore();
+       
     }
     public function forceDelete($id){
+     
         DB::beginTransaction();
         $item = Category::onlyTrashed()->findOrFail($id);
         $this->authorize('forceDelete', Category::class);
         // dd($Category);
         $images = str_replace('storage', 'public', $item->image);
-      
-        $item = Category::withTrashed()->where('id', $id)->forceDelete();
+        $items = Category::withTrashed()->where('id', $id)->forceDelete();
+
         try {
-            // alert()->success('Xóa Sản Phẩm: ' . $Category->name, 'Thành Công');
+            // alert()->success('Xóa Sản Phẩm: ' . $Category->name, 'Thành Công');ư
             toast(__('messages.msg_cate_dele_ss',['name' => $item->name]),'success','top-right');
+        // dd($id);
+
             Storage::delete($images);
             DB::commit();
             return redirect()->route('categories.garbageCan');
