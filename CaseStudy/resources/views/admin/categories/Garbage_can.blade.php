@@ -22,7 +22,7 @@
                 <th width="40%"><i>Ảnh</i></th>
                 <th width="50%"><i>Thao Tác</i></th>
             </tr>
-            
+            @if($items->count())
         @foreach($items as $key => $item)
          
         <tr>
@@ -40,18 +40,33 @@
             </td>
           
             <td>
-                <form action="{{ route('categories.forceDelete',$item->id) }}" method="post">
-                    <i><a class="btn btn-primary" href="{{ route('categories.restore',$item->id) }}">Lấy lại</a></i>
-                    @csrf
+                {{-- <form action="{{ route('categories.forceDelete',$item->id) }}" method="post"> --}}
+                    {{-- <i><a class="btn btn-primary" href="{{ route('categories.restore',$item->id) }}">Lấy lại</a></i> --}}
+                    <a href="{{ route('categories.restore',$item->id) }}"
+                        data-url="{{ route('categories.restore',$item->id) }}"
+                        class="btn btn-primary ajax_restore">
+                        Lấy Lại
+                    </a>
+                    <a href="{{ route('categories.forceDelete',$item->id) }}"
+                        data-url="{{ route('categories.forceDelete',$item->id) }}"
+                        class="btn btn-danger ajax_delete">
+                        Xóa
+                    </a>
+                    {{-- @csrf
                     @method('delete')
                     <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>    
-                </form>
+                </form> --}}
                 
             </td>
             
         </tr>
         
         @endforeach
+        @else
+        <tr>
+            <th colspan="4" class="text-center">Thùng Rác Trống!</th>
+        </tr>
+    @endif
     </table>
         
     </div>

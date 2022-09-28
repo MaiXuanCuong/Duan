@@ -15,14 +15,14 @@
                                 <div class="form-group">
                                     <label for="name">Tên nhóm quyền</label>
                                     <input name="name" value="{{ $role->name ?? old('name') }}" type="text" class="form-control"
-                                        id="name" placeholder="nhập họ tên">
+                                        id="name" placeholder="nhập Tên Nhóm">
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Tên Hiển Thị</label>
-                                    <input name="name" value="{{ $role->name ?? old('name') }}" type="text" class="form-control"
-                                        id="name" placeholder="nhập họ tên">
-                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                    <input name="display_name" value="{{ $role->display_name ?? old('display_name') }}" type="text" class="form-control"
+                                        id="name" placeholder="nhập Tên Hiện Thị">
+                                    <span class="text-danger">{{ $errors->first('display_name') }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -71,7 +71,7 @@
         </div>
     </div>
 @endsection
-@section('js')
+{{-- @section('js')
     <script>
         $('.checkbox_parent').on('click', function(){
             $(this).parents('.card').find('.checkbox_childrent').prop('checked', $(this).prop('checked'))
@@ -80,4 +80,4 @@
             $(this).parents('.form').find('.checkbox_all_childrent').prop('checked', $(this).prop('checked'))
         });
     </script>
-@endsection
+@endsection --}}

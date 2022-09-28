@@ -26,14 +26,16 @@ class RoleController extends Controller {
     }
     function store(Request $request) {
         $role = Role::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'display_name' => $request->display_name,
+
         ]);
-        $role->permisstions()->attach($request->permissions_id);
+        $role->permissions()->attach($request->permissions_id);
         return redirect()->route('role.index');
     }
     function edit($id) {
         $role = Role::find($id);
-        $permissions_checked = $role->permisstions;
+        $permissions_checked = $role->permissions;
         $parent_permissions = Permission::where('group_key', 0)->get();
 
         $params = [
@@ -49,13 +51,13 @@ class RoleController extends Controller {
             'name' => $request->name,
             'display_name' => $request->display_name,
         ]);
-        $role->permisstions()->sync($request->permissions_id);
+        $role->permissions()->sync($request->permissions_id);
         return redirect()->route('role.index');
     }
     function delete($id) {
         $role = Role::find($id);
-        Role::find($id)->delete();
         DB::table('permission_roles')->where('role_id', '=', $role->id)->delete();
+        Role::find($id)->delete();
 
         return response()->json([
             'code' => 200,

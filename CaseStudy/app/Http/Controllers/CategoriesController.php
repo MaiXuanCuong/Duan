@@ -106,12 +106,15 @@ class CategoriesController extends Controller
         } catch (\Exception $e) {
             // alert()->error('Xóa Danh Mục: '.$item->name, 'Không Thành Công!');
             toast(__('messages.msg_cate_dele_err',['name' => $item->name]),'error','top-right');
-            return redirect()->route('categories');
+            // return redirect()->route('categories');
 
         }
          
-        
-        return redirect()->route('categories');
+        return response()->json([
+            'code' => 200,
+            'message' => 'success'
+        ], status: 200);
+        // return redirect()->route('categories');
     }
     public function garbageCan(){
         $items = Category::onlyTrashed()->paginate(5);
@@ -124,12 +127,17 @@ class CategoriesController extends Controller
             $this->authorize('restore', Category::class);
             $item->restore();
             $item = Category::findOrFail($id);
-            alert()->success('Khôi Phục Sản Phẩm: ' . $item->name, 'Thành Công');
-            return redirect()->route('categories.garbageCan');
+                 return response()->json([
+            'code' => 200,
+            'message' => 'success'
+        ], status: 200);
+            // alert()->success('Khôi Phục Sản Phẩm: ' . $item->name, 'Thành Công');
+            // return redirect()->route('categories.garbageCan');
         } catch (\Exception$e) {
-            alert()->error('Khôi Phục Sản Phẩm: ' . $item->name, 'Không Thành Công!');
-            return redirect()->route('categories.garbageCan');
+            // alert()->error('Khôi Phục Sản Phẩm: ' . $item->name, 'Không Thành Công!');
+            // return redirect()->route('categories.garbageCan');
         }
+
        
     }
     public function forceDelete($id){
@@ -148,12 +156,18 @@ class CategoriesController extends Controller
 
             Storage::delete($images);
             DB::commit();
-            return redirect()->route('categories.garbageCan');
+            // return redirect()->route('categories.garbageCan');
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], status: 200);
         } catch (\Exception$e) {
             // alert()->error('Xóa Sản Phẩm: ' . $Category->name, 'Không Thành Công!');
             toast(__('messages.msg_cate_dele_err',['name' => $item->name]),'error','top-right');
             DB::rollBack();
-            return redirect()->route('categories.garbageCan');
+            // return redirect()->route('categories.garbageCan');
         }
+        
     }
+    
 }

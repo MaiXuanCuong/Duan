@@ -25,6 +25,7 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tên nhóm quyền</th>
+                    <th scope="col">Tên Hiển Thị</th>
                     <th scope="col">Tùy chọn</th>
                   </tr>
                 </thead>
@@ -34,13 +35,15 @@
                           <tr>
                             <td> {{ $role->id }} </td>
                             <td> {{ $role->name }} </td>
+                            <td> {{ $role->display_name }} </td>
                             <td>
-                              <a href="{{ route('role.edit', ['id' => $role->id]) }}" class="btn btn-primary">Sửa</a>
+                                 <a href="{{ route('role.edit', ['id' => $role->id]) }}" class="btn btn-primary">Sửa</a>
                               <a href="{{ route('role.delete', ['id' => $role->id]) }}"
                                   data-url="{{ route('role.delete', ['id' => $role->id]) }}"
                                   class="btn btn-danger ajax_delete">
                                   Xóa
                               </a>
+                             
                             </td>
                           </tr>
                       @endforeach
@@ -61,7 +64,7 @@
     </div>
 @endsection
 
-@section('js')
+{{-- @section('js')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('admin\product\index\index.js') }}"></script>
-@endsection
+@endsection --}}

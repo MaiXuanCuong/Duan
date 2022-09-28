@@ -53,11 +53,27 @@
   
   @include('admin.layouts.includes.footer')
   <!-- End Footer -->
-  @yield('js')
+  
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+ <!-- jQuery -->
+ <script src="{{asset('AdminLTE/plugins/jquery/jquery.min.js')}}"></script>
+ <!-- Bootstrap 4 -->
+ <script src="{{asset('AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+ <!-- AdminLTE App -->
+ <script src="{{asset('AdminLTE/dist/js/adminlte.min.js')}}"></script>
   <!-- Vendor JS Files -->
+  {{-- @yield('js') --}}
+  <script>
+    $('.checkbox_parent').on('click', function(){
+        $(this).parents('.card').find('.checkbox_childrent').prop('checked', $(this).prop('checked'))
+    });
+    $('.checkbox_all').on('click', function(){
+        $(this).parents('.form').find('.checkbox_all_childrent').prop('checked', $(this).prop('checked'))
+    });
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('admin\product\index\index.js') }}"></script>
   <script src="{{ asset('admin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{ asset('admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{ asset('admin/assets/vendor/chart.js')}}/chart.min.js')}}"></script>

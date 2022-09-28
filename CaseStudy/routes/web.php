@@ -43,10 +43,10 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function()
     Route::get('/', [CategoriesController::class,'index'])->name('categories');
     Route::get('/add', [CategoriesController::class,'create'])->name('categories.add');
     Route::post('/store', [CategoriesController::class, 'store'])->name('categories.store');
-    Route::delete('/destroy/{id}', [CategoriesController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/destroy/{id}', [CategoriesController::class, 'destroy'])->name('categories.destroy');
     Route::get('/garbageCan', [CategoriesController::class, 'garbageCan'])->name('categories.garbageCan'); 
     Route::get('/restore/{id}', [CategoriesController::class, 'restore'])->name('categories.restore'); 
-    Route::delete('/forceDelete/{id}', [CategoriesController::class, 'forceDelete'])->name('categories.forceDelete'); 
+    Route::get('/forceDelete/{id}', [CategoriesController::class, 'forceDelete'])->name('categories.forceDelete'); 
     Route::get('/edit/{id}', [CategoriesController::class, 'edit'])->name('categories.edit');
     Route::put('/update/{id}', [CategoriesController::class, 'update'])->name('categories.update');
 });
@@ -96,7 +96,7 @@ Route::prefix('users')->group(function(){
         Route::post('/store', [RoleController::class, 'store'])->name('role.store');
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
         Route::post('/update/{id}', [RoleController::class, 'update'])->name('role.update');
-        Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
+        Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
     });
 
 });
