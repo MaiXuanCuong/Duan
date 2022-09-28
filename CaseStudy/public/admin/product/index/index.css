@@ -1,0 +1,7 @@
+.pagination {
+    float: right;
+}
+.image_product{
+    height: 50px;
+    object-fit: cover;
+}

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CategoriesController;
 
 /*
@@ -89,6 +90,14 @@ Route::prefix('users')->group(function(){
     Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
 });
 
+  Route::prefix('role')->group(function(){
+        Route::get('/', [RoleController::class, 'index'])->name('role.index');
+        Route::get('/create', [RoleController::class, 'create'])->name('role.create');
+        Route::post('/store', [RoleController::class, 'store'])->name('role.store');
+        Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+        Route::post('/update/{id}', [RoleController::class, 'update'])->name('role.update');
+        Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
+    });
 
 });
 // Route::get("thanh_cong", function(){

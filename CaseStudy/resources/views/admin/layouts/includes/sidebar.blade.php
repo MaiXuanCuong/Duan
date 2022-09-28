@@ -38,7 +38,7 @@
               <i class="bi bi-circle"></i><span>Thêm Quyền</span>
             </a>
           </li>
-          <li>
+          {{-- <li>
             <a href="components-breadcrumbs.html">
               <i class="bi bi-circle"></i><span>Sửa Quyền</span>
             </a>
@@ -47,7 +47,7 @@
             <a href="components-buttons.html">
               <i class="bi bi-circle"></i><span>Xóa Quyền</span>
             </a>
-          </li>
+          </li> --}}
           {{-- <li>
             <a href="components-cards.html">
               <i class="bi bi-circle"></i><span>Cards</span>

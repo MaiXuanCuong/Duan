@@ -43,6 +43,7 @@
   @include('admin.layouts.includes.sidebar')
 
   <main id="main" class="main">
+    @section('title')
     @include('sweetalert::alert')
     @yield('content')
 
@@ -52,6 +53,7 @@
   
   @include('admin.layouts.includes.footer')
   <!-- End Footer -->
+  @yield('js')
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
