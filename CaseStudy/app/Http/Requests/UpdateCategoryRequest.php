@@ -26,7 +26,7 @@ class UpdateCategoryRequest extends FormRequest
             //
             $rules = [
                     'name' => 'required|min:3',
-                    'inputFile' => 'required',
+                    // 'inputFile' => 'required',
             ];
             return $rules;
         }
@@ -35,7 +35,7 @@ class UpdateCategoryRequest extends FormRequest
         $messages = [
             'name.min' => 'Tên phải Lớn hơn 3 ký tự',
             'name.required' => 'Hãy Nhập Tên Danh Mục!',
-            'inputFile.required' => 'Vui Lòng Chọn Ảnh'
+            // 'inputFile.required' => 'Vui Lòng Chọn Ảnh'
         ];
         return $messages;
     }

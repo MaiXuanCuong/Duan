@@ -36,8 +36,10 @@
                             </td>
                             <td>
                                 {{-- <form action="{{ route('categories.destroy', $item->id) }}" method="post"> --}}
-                                    <i><a class="btn btn-primary"
-                                            href="{{ route('categories.edit', $item->id) }}">Sửa</a></i>
+                                    <i>
+                                        <a class="btn btn-primary"
+                                            href="{{ route('categories.edit', $item->id) }}">Sửa</a>
+                                        </i>
                                     {{-- @csrf
                                     @method('delete')
                                     <button class="btn btn-danger"
