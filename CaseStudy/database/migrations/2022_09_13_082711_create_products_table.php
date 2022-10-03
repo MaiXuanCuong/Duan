@@ -20,11 +20,10 @@ return new class extends Migration
             $table->text('describe');
             $table->bigInteger('quantity');
             $table->text('specifications');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('color');
             $table->string('price_product');
             $table->string('configuration');
-            $table->string('garbage_can');
             $table->softDeletes(); // add
             $table->timestamps();
         });

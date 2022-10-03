@@ -6,7 +6,7 @@ namespace App\Models;
 use App\Models\Role;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\HasPermissions;
@@ -14,7 +14,7 @@ use App\Traits\HasPermissions;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasPermissions;
-    // use SoftDeletes;// add soft delete
+    use SoftDeletes;// add soft delete
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +50,15 @@ class User extends Authenticatable
     }
     public function products(){
         return $this->hasMany(Product::class,'user_id','id');
+    }
+    public function scopeSearch($query)
+    {
+        if ($key = request()->key) {
+            $query = $query->where('name', 'like', '%' . $key . '%')
+            ->orwhere('address', 'like', '%' . $key . '%')
+            ->orwhere('email', 'like', '%' . $key . '%')
+            ->orwhere('phone', 'like', '%' . $key . '%');
+        }
+        return $query;
     }
 }

@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 @section('content')
 <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>XC-Shop</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item"><b style="color: red">Trang Chủ</b></li>
+        <li class="breadcrumb-item active">XC-Shop</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->

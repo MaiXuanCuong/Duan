@@ -33,6 +33,11 @@ class CategoryPolicy
         //
         return $user->hasPermission('Category_view');
     }
+    public function viewGc(User $user)
+    {
+        //
+        return $user->hasPermission('Category_viewgc');
+    }
 
     /**
      * Determine whether the user can create models.

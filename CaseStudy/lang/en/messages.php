@@ -18,6 +18,13 @@
         "msg_register_err" => "Register Account :name failed",
         "msg_update_ss" => "Update successfully",
         "msg_update_err" => "Update failed",
+
+        "msg_user_add_ss" => "Add user :name successfully",
+        "msg_user_add_err" => "Add user :name failed",
+        "msg_user_up_ss" => "Update user :name successfully",
+        "msg_user_up_err" => "Update user :name failed",
+        "msg_user_dele_ss" => "Delete user :name successfully",
+        "msg_user_dele_err" => "Delete user :name failed",
     ]
 
 

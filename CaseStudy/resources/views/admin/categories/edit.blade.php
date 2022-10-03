@@ -1,12 +1,28 @@
 @extends('admin.layouts.master')
 @section('content')
-    </head>
-
+    @if (Auth::user()->hasPermission('Category_update'))
     <body>
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <h1>Chỉnh Sửa Danh Mục</h1>
+                    <div class="pagetitle">
+                        <h1>Chỉnh Sửa Danh Mục</h1>
+                        <nav>
+                          <ol class="breadcrumb">
+                            {{-- <li class="breadcrumb-item"><a href="{{ route('/') }}">Trang Chủ</a></li> --}}
+                            @if (Auth::user()->hasPermission('Category_viewAny'))
+                            <li class="breadcrumb-item"><a href="{{ route('categories') }}">Danh Mục</a></li>
+                            @endif
+                            @if (Auth::user()->hasPermission('Category_create'))
+                            <li class="breadcrumb-item"><a href="{{ route('categories.add') }}">Thêm Danh Mục</a></li>
+                            @endif
+                            @if (Auth::user()->hasPermission('Category_viewgc'))
+                            <li class="breadcrumb-item active"><a href="{{ route('categories.garbageCan') }}">Thùng Rác</a></li>
+                            @endif
+                          </ol>
+                        </nav>
+                      </div><!-- End Page Title -->
+                    </div><!-- End Page Title -->
                 </div>
                 <form class="text-left" method="post" action="{{ route('categories.update', $item->id) }}" enctype="multipart/form-data">
                     @csrf
@@ -52,4 +68,5 @@
     </body>
 
     </html>
+    @endif
 @endsection

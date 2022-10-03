@@ -16,7 +16,7 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         //\
-        for($i = 1 ; $i <= 16; $i++){
+        for($i = 1 ; $i <= 36; $i++){
             $user_role = new Permission_role();
             $user_role->role_id = 1;
             $user_role->permission_id = $i;

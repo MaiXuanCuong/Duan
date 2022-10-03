@@ -18,6 +18,13 @@
         "msg_register_err" => "Đăng Ký Tài Khoản :name Không Thành Công",
         "msg_update_ss" => "Cập Nhật Thành Công",
         "msg_update_err" => "Cập Nhật không Thành Công",
+
+        "msg_user_add_ss" => "Thêm Nhân Viên :name Thành Công!",
+        "msg_user_add_err" => "Thêm Nhân Viên :name Không Thành Công!",
+        "msg_user_up_ss" => "Cập Nhật Nhân Viên :name Thành Công!",
+        "msg_user_up_err" => "Cập Nhật Nhân Viên :name Không Thành Công!",
+        "msg_user_dele_ss" => "Xóa Nhân Viên :name Thành Công!",
+        "msg_user_dele_err" => "Xóa Nhân Viên :name Không Thành Công!",
     ]
 
 

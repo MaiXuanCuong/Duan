@@ -23,4 +23,14 @@ class Product extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
+    public function scopeSearch($query)
+    {
+        if ($key = request()->key) {
+            $query = $query->where('name', 'like', '%' . $key . '%')
+            ->orwhere('price', 'like', '%' . $key . '%')
+            ->orwhere('color', 'like', '%' . $key . '%')
+            ->orwhere('quantity', 'like', '%' . $key . '%');
+        }
+        return $query;
+    }
 }

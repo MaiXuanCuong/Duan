@@ -10,13 +10,25 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    {{-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Tìm Kiếm" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
-
+    </div><!-- End Search Bar --> --}}
+    <div class="col-md-6">
+      <form action="">
+          <div class="input-group">
+              <div class="form-outline">
+                  <input  type="search" name="key" value="{{ old('search') }}" id="search"
+                      class="form-control" placeholder="Search" />
+              </div>
+              <button type="submit" class="btn btn-primary" id="submit">
+                <i class="bi bi-search"></i>
+              </button>
+          </div>
+      </form>
+  </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -170,21 +182,23 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ asset('admin/assets/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
+            <img src="{{ asset(Auth()->user()->image) ?? asset('storage/images/macdinh.jpg')}}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{Auth()->user()->name}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Mai Xuân Cường</h6>
-              <span>Giám Đốc</span>
+              @if (isset(Auth()->user()->roles[0]['display_name']))
+              <span>{{ Auth()->user()->roles[0]['display_name'] }}</span>
+              @endif
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
                 <i class="bi bi-person"></i>
                 <span>Thông Tin Cá Nhân </span>
               </a>
@@ -192,13 +206,23 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            <ul class="sidebar-nav" id="sidebar-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-gear"></i></i><span>Language</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">{{-- href="users-profile.html" --}}
-                <i class="bi bi-gear"></i>
-                <span>Cài Đặt Ngôn Ngữ</span>
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('language','vi') }}">Vietnamese
               </a>
             </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('language','en') }}">English
+              </a>
+            </li>
+            </li>
+          </ul>
+
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -214,7 +238,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout') }}">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('users.logout') }}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Đăng Xuất</span>
               </a>

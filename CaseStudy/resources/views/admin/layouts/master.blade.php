@@ -35,6 +35,14 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    b{
+      color: red;
+    }
+    hr{
+      color:azure;
+    }
+  </style>
 </head>
 
 <body>
@@ -100,6 +108,77 @@
         });
     });
     
+</script>
+<script type="text/javascript">
+  $(function() {
+      $(document).on('change', '.province_id, .add_user', function() {
+          var province_id = $(this).val();
+          var district_name = $('.district_id').find('option:selected').text();
+          $.ajax({
+              url: "{{ route('user.GetDistricts') }}",
+              type: "GET",
+              data: {
+                  province_id: province_id
+              },
+              success: function(data) {
+                  console.log(data);
+                  var html = '<option value="">Open this select menu</option>';
+                  $.each(data, function(key, v) {
+                      console.log(v);
+                      html += '<option value=" ' + v.id + ' "> ' + v
+                          .name + '</option>';
+                  });
+                  $('.district_id').html(html);
+              }
+          })
+      });
+  });
+  $(function() {
+      $(document).on('change', '#district_id, .add_user', function() {
+          var district_id = $(this).val();
+          var ward_id = $(this).val();
+          $.ajax({
+              url: "{{ route('user.getWards') }}",
+              type: "GET",
+              data: {
+                  district_id: district_id
+              },
+              success: function(data) {
+                  console.log(data);
+                  var html = '<option value="">Open this select menu</option>';
+                  $.each(data, function(key, v) {
+                      html += '<option value =" ' + v.id + ' "> ' + v.name +
+                          '</option>';
+                  });
+                  $('#ward_id').html(html);
+              }
+          })
+      });
+  });
+</script>
+<script>
+  $(function() {
+      $('#search').on('keyup' , function() {
+          var search = $(this).val();
+          var url = $(this).data('url')
+          $.ajax({
+              type: "get",
+              url: url,
+              data: {
+                  search: search
+              },
+              dataType: 'json',
+              success: function(response) {
+                  $('#list_categories').html(response);
+              }
+          });
+      })
+  });
+  $("#search").keyup(function(){
+    setTimeout(() => {
+				$("#submit").click();
+			}, 2500);
+});
 </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>

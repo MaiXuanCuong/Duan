@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreLoginRequest;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -33,6 +34,7 @@ class CustomerController extends Controller
             alert()->success('Thêm Customer: '.$request->name,'Thành Công');
             return redirect()->route('customers');
         } catch (\Exception $e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             alert()->error('Thêm Customer: '.$request->name, 'Không Thành Công!');
             return view('admin.customers.add',compact('request'));
         }
@@ -94,6 +96,7 @@ class CustomerController extends Controller
             // alert()->question('Title','Lorem Lorem Lorem');
             // alert()->html('<i>HTML</i> <u>example</u>'," You can use <b>bold text</b>, <a href='//github.com'>links</a> and other HTML tags ",'success');
         } catch (\Exception $e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             alert()->error('Lưu Customer: '.$request->name, 'Không Thành Công!');
             return redirect()->route('customers.edit',$customer->id);
         }

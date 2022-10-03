@@ -20,50 +20,62 @@ class PermissionTableSeeder extends Seeder
             'Product',
             // 'User',
             // 'Customer',
-            // 'Role',
+            'Role',
+            'Admin',
             // 'Order',
             // 'Review',
             // 'Banner',    
         ];
-        foreach($parentNameGroups as $parentNameGroup){
+        $nameparent = [
+            'Danh Mục',
+            'Sản Phẩm',
+            'Chức Vụ',
+            'Quản Trị Viên',
+        ];
+        foreach($parentNameGroups as $key => $parentNameGroup){
             $parentGroup = Permission::create([
-                'group_name' => $parentNameGroup, 
+                'group_name' => $nameparent[$key], 
                 'name' => $parentNameGroup,
                 'group_key' => 0,
             ]);
            Permission::create([
-                'group_name' => 'List ' . $parentNameGroup,
+                'group_name' => 'Xem Trang '.$nameparent[$key],
                 'name' => $parentNameGroup.'_viewAny',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'group_name' => 'Show ' . $parentNameGroup,
+                'group_name' => 'Xem Chi Tiết '.$nameparent[$key],
                 'name' => $parentNameGroup.'_view',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'group_name' => 'Add ' . $parentNameGroup,
+                'group_name' => 'Thêm '.$nameparent[$key],
                 'name' => $parentNameGroup.'_create',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'group_name' => 'Edit ' . $parentNameGroup,
+                'group_name' => 'Chỉnh Sửa '.$nameparent[$key],
                 'name' => $parentNameGroup.'_update',
                 'group_key' => $parentGroup->id,
             ]);
            Permission::create([
-                'group_name' => 'Delete ' . $parentNameGroup,
+                'group_name' => 'Thêm Vào Thùng Rác '.$nameparent[$key],
                 'name' => $parentNameGroup.'_delete',
                 'group_key' => $parentGroup->id,
             ]);
             Permission::create([
-                'group_name' => 'Restore ' . $parentNameGroup,
+                'group_name' => 'Khôi Phục '.$nameparent[$key],
                 'name' => $parentNameGroup.'_restore',
                 'group_key' => $parentGroup->id,
             ]);
             Permission::create([
-                'group_name' => 'ForceDelete' . $parentNameGroup,
+                'group_name' => 'Xóa '.$nameparent[$key],
                 'name' => $parentNameGroup.'_forceDelete',
+                'group_key' => $parentGroup->id,
+            ]);
+            Permission::create([
+                'group_name' => 'Xem Thùng Rác '.$nameparent[$key],
+                'name' => $parentNameGroup.'_viewgc',
                 'group_key' => $parentGroup->id,
             ]);
         }
