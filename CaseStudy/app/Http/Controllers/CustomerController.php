@@ -40,37 +40,37 @@ class CustomerController extends Controller
         }
     }
 
-    // public function register(StoreRegisterRequest $request){
-    //     $customer = new Customer();
-    //     $customer->name = $request->name;
-    //     $customer->address = $request->address;
-    //     $customer->email = $request->email;
-    //     $customer->password = $request->password;
+    public function register(StoreRegisterRequest $request){
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->address = $request->address;
+        $customer->email = $request->email;
+        $customer->password = $request->password;
         
-    //     // Session::flash('success', 'Thêm thành công '.$request->name);
-    //     try {
-    //         $customer->save();
-    //         alert()->success('Thêm Customer: '.$request->name,'Thành Công');
-    //         return redirect()->route('customers');
-    //     } catch (\Exception $e) {
-    //         alert()->error('Thêm Customer: '.$request->name, 'Không Thành Công!');
-    //         return view('admin.customers.add',compact('request'));
-    //     }
-    // }
-    // public function login(StoreLoginRequest $request){
-    // $arr=[
-    //     'email'=>$request->email,
-    //    'password'=>$request->password
-    // ];
-    // if(Auth::attempt($arr))
-    // {
-    //     alert()->success('Đăng Nhập Thành Công!','Chào ' . Auth()->user()->name . ' đến với Shop!');
-    //     return redirect()->route('/');
-    // }else{
-    //     alert()->error('Đăng Nhập Không Thành Công!', 'Email hoặc mật khẩu không đúng!');
-    //     return redirect()->route('customer.login');
-    // }
-    // }
+        // Session::flash('success', 'Thêm thành công '.$request->name);
+        try {
+            $customer->save();
+            alert()->success('Thêm Customer: '.$request->name,'Thành Công');
+            return redirect()->route('customers');
+        } catch (\Exception $e) {
+            alert()->error('Thêm Customer: '.$request->name, 'Không Thành Công!');
+            return view('admin.customers.add',compact('request'));
+        }
+    }
+    public function login(StoreLoginRequest $request){
+    $arr=[
+        'email'=>$request->email,
+       'password'=>$request->password
+    ];
+    if(Auth::attempt($arr))
+    {
+        alert()->success('Đăng Nhập Thành Công!','Chào ' . Auth()->user()->name . ' đến với Shop!');
+        return redirect()->route('/');
+    }else{
+        alert()->error('Đăng Nhập Không Thành Công!', 'Email hoặc mật khẩu không đúng!');
+        return redirect()->route('customer.login');
+    }
+    }
     public function edit($id){
         $customer = Customer::find($id);
         return view('admin.customers.edit',compact('customer'));

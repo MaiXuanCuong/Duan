@@ -51,7 +51,9 @@
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Thay Đổi Mật Khẩu</button>
                 </li>
-
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-foget-password">Quên Mật Khẩu</button>
+                </li>
               </ul>
               <div class="tab-content pt-2">
 
@@ -163,7 +165,7 @@
                   <!-- Settings Form -->
                 
                 </div>
-
+                
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
                   <form class="mx-1 mx-md-4" method="post" action="{{ route('users.updatepassword') }}">
@@ -190,6 +192,37 @@
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Đổi Mật Khẩu</button>
+                    </div>
+                  </form><!-- End Change Password Form -->
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-foget-password">
+                  <!-- Change Password Form -->
+                  <form class="mx-1 mx-md-4" method="post" action="{{ route('users.fogetpassword') }}">
+                    @method('PUT')
+                    @csrf
+                    <div class="row mb-3">
+                      @if(!isset($token))
+                      <b>*Lưu Ý</b><i><p style="color: red">Nhập Email để lấy Mã & Quay Lại Đây Để Dùng Mã`</p></i>
+                      @endif
+                    @if(isset($token))
+                      <b>*Lưu Ý</b><i><p style="color: red">Nhập Email và Mã Để Được Cung Cấp Mật Khẩu</p></i>
+                      @endif
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Nhập Email Của Bạn</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="email" type="email" class="form-control" id="currentPassword" placeholder="Nhập Email">
+                      </div>
+                    </div>
+                    @if(isset($token))
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nhập Mã Xác Nhận</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="token" type="text" class="form-control" id="newPassword" placeholder="Nhập Mã Xác Nhận">
+                      </div>
+                    </div>
+                    @endif
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Xác Nhận</button>
                     </div>
                   </form><!-- End Change Password Form -->
                 </div>

@@ -45,14 +45,14 @@
                             <div class="top_nav_right">
                                 <ul class="top_nav_menu">
 
-                                  
+
                                     <li class="account">
                                         <a href="#">
                                             Tài Khoản Của Bạn
                                             <i class="fa fa-angle-down"></i>
                                         </a>
                                         <ul class="account_selection">
-                                            <li><a href="#"><i class="fa fa-sign-in"
+                                            <li><a href="{{ route('register') }}"><i class="fa fa-sign-in"
                                                         aria-hidden="true"></i>Login</a></li>
                                             <li><a href="#"><i class="fa fa-user-plus"
                                                         aria-hidden="true"></i>Register</a></li>
@@ -92,7 +92,7 @@
                                                 <button type="submit" class="btn btn-primary" id="submit">
                                                     <i class="fa fa-search" aria-hidden="true"></i>
                                                 </button>
-                                            </div>&emsp; 
+                                            </div>&emsp;
                                             <li class="checkout">
                                                 <a href="#">
                                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -102,12 +102,12 @@
                                         </div>
                                     </form>
                                 </ul>
-                        	</div>
+                        </div>
                         </nav>
                     </div>
                 </div>
             </div>
-    	</div>
+    </div>
 
     </header>
 
@@ -337,7 +337,7 @@
                             <div class="owl-item product_slider_item">
                                 @if (isset($Apple))
                                     @foreach ($Apple as $item)
-                                        @if ($item->id != rand(1, 5))
+                                        @if ($item->id != rand(0, $loop->count))
                                             <div class="product-item">
                                                 <div class="product discount">
                                                     <div class="product_image">
@@ -367,7 +367,7 @@
                             <div class="owl-item product_slider_item">
                                 @if (isset($Realme))
                                     @foreach ($Realme as $item)
-                                        @if ($item->id != rand(1, 5))
+                                        @if ($item->id != rand(0, $loop->count))
                                             <div class="product-item women">
                                                 <div class="product">
                                                     <div class="product_image">
@@ -396,7 +396,7 @@
                             <div class="owl-item product_slider_item">
                                 @if (isset($SamSung))
                                     @foreach ($SamSung as $item)
-                                        @if ($item->id != rand(1, 5))
+                                        @if ($item->id != rand(0, $loop->count))
                                             <div class="product-item women">
                                                 <div class="product">
                                                     <div class="product_image">
@@ -421,7 +421,7 @@
                             <div class="owl-item product_slider_item">
                                 @if (isset($Xiaomi))
                                     @foreach ($Xiaomi as $item)
-                                        @if ($item->id != rand(1, 5))
+                                        @if ($item->id != rand(0, $loop->count))
                                             <div class="product-item accessories">
                                                 <div class="product">
                                                     <div class="product_image">
@@ -448,7 +448,7 @@
                             <div class="owl-item product_slider_item">
                                 @if (isset($Apple))
                                     @foreach ($Apple as $item)
-                                        @if ($item->id != rand(1, 5))
+                                        @if ($item->id != rand(0, $loop->count))
                                             <div class="product-item">
                                                 <div class="product discount">
                                                     <div class="product_image">
@@ -684,14 +684,18 @@
             });
         });
         $("#search").keyup(function() {
-			setTimeout(() => {
-				$("#submit").click();
-			}, 2500);
+            $("#search").css("background-color", "yellow");
+            setTimeout(() => {
+                $("#submit").click();
+            }, 2500);
+
+        });
+        $("#search").keydown(function() {
+            $("#search").css("background-color", "pink");
         });
         $("#all").click(function() {
             $("#submit").click();
         });
-		
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>

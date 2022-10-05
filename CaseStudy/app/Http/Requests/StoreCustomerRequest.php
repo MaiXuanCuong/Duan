@@ -28,7 +28,7 @@ class StoreCustomerRequest extends FormRequest
        $rules =[
         'name' => 'required|min:3',
         'address' => 'required',
-        'email' => 'required',
+        'email' => 'required|email',
         
         'password' => 'required|min:5',
        ];
@@ -40,6 +40,7 @@ class StoreCustomerRequest extends FormRequest
             'name.min' => 'Hãy Nhập Tên Lớn Hơn 3 Ký Tự',
             'address.required' => 'Hãy Nhập Địa Chỉ',
             'email.required' => 'Hãy Nhập Địa Chỉ email',
+            'email.email' => 'Email Chưa Đúng Định Dạng',
             
             'password.required' => 'Hãy Nhập Mật Khẩu',
             'password.min' => 'Hãy Nhập Mật Khẩu Từ 6 Ký Tự',

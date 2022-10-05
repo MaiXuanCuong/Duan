@@ -27,7 +27,7 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="text" id="form3Example1c" class="form-control" />
+                        <input type="text" name="name" id="form3Example1c" class="form-control" />
                         <label class="form-label" for="form3Example1c">Họ Và Tên</label>
                       </div>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="email" id="form3Example3c" class="form-control" />
+                        <input type="email" name="email" id="form3Example3c" class="form-control" />
                         <label class="form-label" for="form3Example3c">Tài Khoản Email</label>
                       </div>
                     </div>
@@ -44,7 +44,7 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="form3Example4c" class="form-control" />
+                        <input type="password" name="password" id="form3Example4c" class="form-control" />
                         <label class="form-label" for="form3Example4c">Mật Khẩu </label>
                       </div>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="form3Example4cd" class="form-control" />
+                        <input type="password" name="checkpassword" id="form3Example4cd" class="form-control" />
                         <label class="form-label" for="form3Example4cd">Xác Nhận Mật Khẩu</label>
                       </div>
                     </div>

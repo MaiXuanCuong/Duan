@@ -93,7 +93,7 @@
                                                         {{-- <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>     --}}
                                                         {{-- </form> --}}
                                                         @if (Auth::user()->hasPermission('Product_delete'))
-                                                            <a href="{{ route('products.destroy', $item->id) }}"
+                                                            <a 
                                                                 data-url="{{ route('products.destroy', $item->id) }}"
                                                                 class="btn btn-danger ajax_delete">
                                                                 Xóa

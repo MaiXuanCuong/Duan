@@ -25,7 +25,7 @@ class StoreAdminRequest extends FormRequest
     {
         $rules =[
             'name' => 'required|min:3',
-            'email' => 'required',
+            'email' => 'required|email',
             'province_id' => 'required',
             'district_id' => 'required',
             'ward_id' => 'required',
@@ -40,6 +40,7 @@ class StoreAdminRequest extends FormRequest
                 'name.required' => 'Hãy Nhập Họ Và Tên Của Bạn',
                 'name.min' => 'Hãy Nhập Tên Sản Phẩm Lớn Hơn 3 Ký Tự',
                 'email.required' => 'Hãy Nhập Email Của Bạn',
+                'email.email' => 'Email Chưa Đúng Định Dạng',
                 'inputFile.required' => 'Hãy Chọn Ảnh Của Bạn',
                 'province_id.required' => 'Hãy Chọn Tỉnh/Thành Phó Của Bạn',
                 'district_id.required' => 'Hãy Chọn Quận/Huyện Của Bạn',

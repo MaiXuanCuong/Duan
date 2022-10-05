@@ -24,7 +24,7 @@ class StoreLoginRequest extends FormRequest
     public function rules()
     {
         $rules =[
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required|min:4',
             
            ];
@@ -33,6 +33,7 @@ class StoreLoginRequest extends FormRequest
         public function messages(){
             $messages =[
                 'email.required' => 'Hãy Nhập Email Của Bạn',
+                'email.email' => 'Email Chưa Đúng Định Dạng',
                 'password.required' => 'Hãy Nhập Mật Khẩu Của Bạn',
                 'password.min' => 'Hãy Nhập Mật Khẩu Phải Có ít Nhất 5 Ký Tự',
             ];

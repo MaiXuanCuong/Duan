@@ -58,7 +58,7 @@
                                                         @endif
                                                     @if ($user->id != 1)
                                                         @if (Auth::user()->hasPermission('Admin_delete'))
-                                                            <a href="{{ route('users.destroy', $user->id) }}"
+                                                            <a 
                                                                 data-url="{{ route('users.destroy', $user->id) }}"
                                                                 class="btn btn-danger ajax_delete">
                                                                 Cất Chức

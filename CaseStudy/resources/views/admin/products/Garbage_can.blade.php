@@ -38,7 +38,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div style="text-align: center" class="card">
-
+                                
+                                @if ($items->count())
                                 <table class="table table-borderless">
                                     <thead>
                                         <tr>
@@ -89,7 +90,7 @@
                                                             {{-- @method('delete') --}}
                                                             {{-- <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Xóa {{ $item->name }}')" type="submit"><i>Xóa</i></button><hr>     --}}
                                                             {{-- </form> --}}
-                                                            <a href="{{ route('products.forceDelete', $item->id) }}"
+                                                            <a 
                                                                 data-url="{{ route('products.forceDelete', $item->id) }}"
                                                                 class="btn btn-danger ajax_delete">
                                                                 Xóa
@@ -100,6 +101,11 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                    @else
+                                    <tr>
+                                        <b colspan="6" class="text-center">Thùng Rác Trống!</b>
+                                    </tr>
+                                @endif
                                 </table>
                             </div>
                         </div>

@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Ward;
-use App\Models\District;
-use App\Models\Province;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\District;
+use App\Models\Province;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Ward;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -31,11 +33,12 @@ class UserController extends Controller
         $ward = Ward::findOrFail($request->ward_id);
         $user = new User();
         $user->name = $request->name;
-        $address = $province->name.' - '.$district->name.' - '.$ward->name;
+        $address = $province->name . ' - ' . $district->name . ' - ' . $ward->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $address;
-        $user->password = bcrypt('admin');
+        $pass = 'admin';
+        $user->password = bcrypt($pass);
         $fieldName = 'inputFile';
         // dd($request->all());
         if ($request->hasFile($fieldName)) {
@@ -48,6 +51,15 @@ class UserController extends Controller
             $user->image = $path;}
         try {
             $user->save();
+            $data = [
+                "pass" => $pass,
+                'name' => $request->name,
+            ];
+            $email1 =$request->email;
+            Mail::send('admin.emails.add', compact('data'), function ($email) use ($email1) {
+                $email->subject('XC-Shop');
+                $email->to($email1, Auth()->user()->name);
+            });
             DB::commit();
             alert()->success('Thêm Tài Khoản: ' . $request->name, 'Thành Công');
             return redirect()->route('users');
@@ -126,7 +138,7 @@ class UserController extends Controller
     {
         $this->authorize('update', User::class);
         // $provinces = Province::get();
-      
+
         $roles = Role::all();
         $user = User::find($id);
         $user_roles = DB::table('user_roles')->where('user_id', '=', $user->id)->get();
@@ -176,7 +188,7 @@ class UserController extends Controller
             }
             toast(__('messages.msg_user_up_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('users');
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             if (isset($path)) {
 
                 $images = $images = str_replace('storage', 'public', $path);
@@ -226,7 +238,7 @@ class UserController extends Controller
             }
             toast(__('messages.msg_user_up_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('users');
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             if (isset($path)) {
 
                 $images = $images = str_replace('storage', 'public', $path);
@@ -255,7 +267,7 @@ class UserController extends Controller
                 'message' => 'success',
             ], status:200);
         } catch (Exception $e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             DB::rollBack();
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
@@ -282,8 +294,8 @@ class UserController extends Controller
                 'code' => 200,
                 'message' => 'success',
             ], status:200);
-        } catch (\Exception $e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+        } catch (\Exception$e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
 
             return response()->json([
                 'code' => 404,
@@ -303,9 +315,8 @@ class UserController extends Controller
                 'code' => 200,
                 'message' => 'success',
             ], status:200);
-        } catch (\Exception $e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
-
+        } catch (\Exception$e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 201,
                 'message' => 'error',
@@ -320,23 +331,85 @@ class UserController extends Controller
     }
     public function changePassword(Request $request)
     {
-
-        if ($request->renewpassword == $request->newpassword) {
-            if ((Hash::check($request->password, Auth::user()->password))) {
-                $user = User::findOrFail(Auth()->user()->id);
-                $user->password = bcrypt($request->newpassword);
-                $user->save();
-
-                toast('Đổi Mật Khẩu Thành Công!', 'success', 'top-right');
-                return back()->withInput();
+        try {
+            if ($request->renewpassword == $request->newpassword) {
+                if ((Hash::check($request->password, Auth::user()->password))) {
+                    $user = User::findOrFail(Auth()->user()->id);
+                    $user->password = bcrypt($request->newpassword);
+                    $user->save();
+                    toast('Đổi Mật Khẩu Thành Công!', 'success', 'top-right');
+                    return back()->withInput();
+                } else {
+                    toast('Nhập Sai Mật Khẩu Cũ', 'error', 'top-right');
+                    return back()->withInput();
+                }
             } else {
-                toast('Nhập Sai Mật Khẩu Cũ', 'error', 'top-right');
+                toast('Xác Nhận mật Khẩu Không Khớp', 'error', 'top-right');
                 return back()->withInput();
             }
-        } else {
-            toast('Xác Nhận mật Khẩu Không Khớp', 'error', 'top-right');
+        } catch (\Exception $e) {
+            toast('Lỗi Không Mong Muốn', 'error', 'top-right');
+            return back()->withInput();
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            
+        }
+        
+    }
+    public function fogetPassword(Request $request)
+    {
+        try {
+            if (isset(Auth()->user()->name)) {
+                if (isset($request->email)) {
+                    if (isset($request->email) && isset($request->token)) {
+                        $user = User::findOrFail(Auth()->user()->id);
+                        if ($user->remember_token == $request->token) {
+                            $pass = Str::random(6);
+                            $user->password = bcrypt($pass);
+                            $user->remember_token = null;
+                            $user->save();
+                            $name = Auth()->user()->name;
+                            $data = [
+                                'name' => $name,
+                                'pass' => $pass,
+                            ];
+                            Mail::send('admin.emails.fogetpassword', compact('data'), function ($email) {
+                                $email->subject('XC-Shop');
+                                $email->to(Auth()->user()->email, Auth()->user()->name);
+                            });
+                            toast('Đã Gửi Mật Khẩu Mới Về Email Của Bạn!', 'success', 'top-right');
+                            return redirect()->route('profile');
+                        }
+    
+                    } else if ($request->email == Auth::user()->email) {
+                        $user = User::findOrFail(Auth()->user()->id);
+                        $token = Str::random(6);
+                        $user->remember_token = $token;
+                        $user->save();
+                        $name = Auth()->user()->name;
+                        $data = [
+                            'name' => $name,
+                            'token' => $token,
+                        ];
+                        Mail::send('admin.emails.password', compact('data'), function ($email) {
+                            $email->subject('XC-Shop');
+                            $email->to(Auth()->user()->email, Auth()->user()->name);
+                        });
+                        toast('Đã Gửi Mã Xác Nhận!', 'success', 'top-right');
+                        return view('admin.user.usersprofile', compact('token'));
+                    } else {
+                        toast('Email Không Tồn Tại', 'error', 'top-right');
+                        return back()->withInput();
+                    }
+                } else {
+                    toast('Bạn Chưa Nhập Email', 'error', 'top-right');
+                    return back()->withInput();
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            toast('Lỗi Không Mong Muốn', 'error', 'top-right');
             return back()->withInput();
         }
+      
     }
-
 }

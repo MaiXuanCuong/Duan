@@ -36,6 +36,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div style="text-align: center" class="card">
+                                @if ($items->count())
                                 <table class="table table-borderless">
                                     <thead>
                                         <tr>
@@ -49,7 +50,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($items->count())
                                             @foreach ($items as $key => $user)
                                                 <tr>
                                                     <td> {{ $key + 1 }} </td>
@@ -75,10 +75,10 @@
                                                                 </a>
                                                             @endif
                                                             @if (Auth::user()->hasPermission('Admin_forceDelete'))
-                                                                <a href="{{ route('users.forceDelete', $user->id) }}"
+                                                                <a 
                                                                     data-url="{{ route('users.forceDelete', $user->id) }}"
                                                                     class="btn btn-danger ajax_delete">
-                                                                    ĐÌnh Chỉ VV
+                                                                    Đuổi Việc
                                                                 </a>
                                                             @endif
                                                             {{-- @csrf
@@ -91,7 +91,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <th colspan="4" class="text-center">Thùng Rác Trống!</th>
+                                                <b colspan="4" class="text-center">Không Có User Bị Cất Chức!</b>
                                             </tr>
                                         @endif
                                     </tbody>

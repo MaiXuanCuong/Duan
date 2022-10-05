@@ -25,14 +25,14 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/login', function(){
 //     return view('admin.customers.login');
 // });
-// Route::get('/register', function(){
-//     return view('admin.customers.register');
-// })->name('register');
+Route::get('/register', function(){
+    return view('admin.customers.register');
+})->name('register');
 
 Route::get('/login', [UserController::class, 'checkLogin'])->name('login');
-Route::get('/register', function () {
-    return view('admin.register');
-})->name('register');
+// Route::get('/register', function () {
+//     return view('admin.register');
+// })->name('register');
 Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
 Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
 Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login');
@@ -90,8 +90,9 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
         Route::post('/store', [UserController::class, 'store'])->name('users.store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::put('/update/{id}', [UserController::class, 'updateProfile'])->name('users.updateProfile');
+        Route::put('/update/profile/{id}', [UserController::class, 'updateProfile'])->name('users.updateProfile');
         Route::put('/updatepassword', [UserController::class, 'changePassword'])->name('users.updatepassword');
+        Route::put('/fogetpassword', [UserController::class, 'fogetPassword'])->name('users.fogetpassword');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
         Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         Route::get('/login', [UserController::class, 'logout'])->name('users.logout');
@@ -114,6 +115,9 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
 });
 
 Route::get('/', [ShopController::class, 'index'])->name('shop.home');
+// Route::get('/test',function(){
+//     return view('admin.emails.add');
+// } );
 
 Route::get('/lang/{language}', function ($language) {
     session(['language' => $language]);

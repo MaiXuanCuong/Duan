@@ -26,10 +26,15 @@ class Product extends Model
     public function scopeSearch($query)
     {
         if ($key = request()->key) {
-            $query = $query->where('name', 'like', '%' . $key . '%')
+            $query = $query->join('categories','categories.id','=','products.category_id')
+            ->join('users','users.id','=','products.user_id')
+            ->select('products.*','categories.name as name_category')
+            ->where('products.name', 'like', '%' . $key . '%')
             ->orwhere('price', 'like', '%' . $key . '%')
+            ->orwhere('categories.name', 'like', '%' . $key . '%')
             ->orwhere('color', 'like', '%' . $key . '%')
-            ->orwhere('quantity', 'like', '%' . $key . '%');
+            ->orwhere('quantity', 'like', '%' . $key . '%')
+            ->orwhere('users.name', 'like', '%' . $key . '%');
         }
         return $query;
     }

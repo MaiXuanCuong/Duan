@@ -61,7 +61,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($items as $key => $item)
-                                                <tr>
+                                                <tr class="item-{{ $item->id }}">
                                                     <td>
                                                         <i>{{ $key + 1 }} </i>
                                                     </td>
@@ -89,8 +89,8 @@
                                                 <i>Xóa</i></button> --}}
                                                             {{-- </form> --}}
                                                             @if (Auth::user()->hasPermission('Category_update'))
-                                                                <a href="{{ route('categories.destroy', $item->id) }}"
-                                                                    data-url="{{ route('categories.destroy', $item->id) }}"
+                                                                <a
+                                                                    data-url="{{ route('categories.destroy', $item->id) }}" id="{{ $item->id }}"
                                                                     class="btn btn-danger ajax_delete">
                                                                     Xóa
                                                                 </a>
