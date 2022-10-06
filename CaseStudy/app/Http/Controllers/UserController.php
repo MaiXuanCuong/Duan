@@ -56,9 +56,10 @@ class UserController extends Controller
                 'name' => $request->name,
             ];
             $email1 =$request->email;
-            Mail::send('admin.emails.add', compact('data'), function ($email) use ($email1) {
+            $name1 = $request->name;
+            Mail::send('admin.emails.add', compact('data'), function ($email) use ($email1,$name1) {
                 $email->subject('XC-Shop');
-                $email->to($email1, Auth()->user()->name);
+                $email->to($email1, $name1);
             });
             DB::commit();
             alert()->success('Thêm Tài Khoản: ' . $request->name, 'Thành Công');
