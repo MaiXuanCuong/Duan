@@ -200,9 +200,9 @@ class ProductsController extends Controller
                Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             DB::rollBack();
             return response()->json([
-                'code' => 201,
+                'code' => 404,
                 'message' => 'error',
-            ], status:200);
+            ], status:404);
         }
     }
 

@@ -115,9 +115,9 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
 });
 
 Route::get('/', [ShopController::class, 'index'])->name('shop.home');
-// Route::get('/test',function(){
-//     return view('admin.emails.add');
-// } );
+Route::get('/test',function(){
+    return view('admin.emails.add');
+} );
 
 Route::get('/lang/{language}', function ($language) {
     session(['language' => $language]);

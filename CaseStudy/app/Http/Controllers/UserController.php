@@ -373,7 +373,7 @@ class UserController extends Controller
                                 'name' => $name,
                                 'pass' => $pass,
                             ];
-                            Mail::send('admin.emails.fogetpassword', compact('data'), function ($email) {
+                            Mail::send('admin.emails.fogetpassword', compact('data'), function ($email){
                                 $email->subject('XC-Shop');
                                 $email->to(Auth()->user()->email, Auth()->user()->name);
                             });
