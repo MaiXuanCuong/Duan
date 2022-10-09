@@ -213,11 +213,11 @@
                 </a>
                 <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{ route('language','vi') }}">Vietnamese
+              {{-- <a class="dropdown-item d-flex align-items-center" href="{{ route('language','vi') }}">Vietnamese --}}
               </a>
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{ route('language','en') }}">English
+              {{-- <a class="dropdown-item d-flex align-items-center" href="{{ route('language','en') }}">English --}}
               </a>
             </li>
             </li>

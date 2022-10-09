@@ -11,28 +11,11 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
- */
-
-// Route::get('/login', function(){
-//     return view('admin.customers.login');
-// });
 Route::get('/register', function(){
     return view('admin.customers.register');
 })->name('register');
 
 Route::get('/login', [UserController::class, 'checkLogin'])->name('login');
-// Route::get('/register', function () {
-//     return view('admin.register');
-// })->name('register');
 Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
 Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
 Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login');
@@ -115,31 +98,3 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
 });
 
 Route::get('/', [ShopController::class, 'index'])->name('shop.home');
-Route::get('/test',function(){
-    return view('admin.emails.add');
-} );
-
-Route::get('/lang/{language}', function ($language) {
-    session(['language' => $language]);
-    return redirect("thanh_cong");
-})->name('language');
-Route::get("thanh_cong", function () {
-    $language = session()->get('language');
-    App::setlocale($language); // thay đổi ngôn ngữ
-    return redirect()->route('/');
-
-});
-
-// Route::get("thanh_cong", function(){
-//     $language = session()->get('language');
-//     App::setlocale($language);// thay đổi ngôn ngữ
-//     echo __('messages.msg_ok',['name' => '123']);
-//     echo '<br>';
-//     echo __('MSG_OK');
-//     echo '<br>';
-//     echo __('MSG_ERROR');
-// });
-// Route::get('change_lang/{language}', function ($language) {
-//     session(['language' => $language]);
-//     return redirect("thanh_cong");
-// });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,12 +32,14 @@ class ShopController extends Controller
         ->join('categories', 'categories.id', '=', 'products.category_id')
         ->where('categories.name','Xiaomi')
         ->get();
+        $categories =Category::all();
         $params = [
             'items' => $items,
             'Apple' => $Apple,
             'Realme' => $Realme,
             'SamSung' => $SamSung,
             'Xiaomi' => $Xiaomi,
+            'categories' => $categories,
         ];
         return view('shop.index', $params);
     }

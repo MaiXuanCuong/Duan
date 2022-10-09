@@ -162,7 +162,7 @@
 
     <!-- Slider -->
 
-    <div class="main_slider" style="background-image:url({{ asset('shop/images/bane1.jpg') }})">
+    <div class="main_slider" style="background-image:url({{ asset('shop/images/bane1.jpg') }}); height:400px">
         <div class="container fill_height">
             <div class="row align-items-center fill_height">
                 <div class="col">
@@ -177,34 +177,15 @@
     <div class="banner">
         <div class="container">
             <div class="row">
+                @foreach ($categories as $category)
                 <div class="col-md-3">
                     <div class="banner_item align-items-center"
-                        style="background-image:url({{ asset('shop/images/iphone.jpg') }})">
+                        style="background-image:url({{ asset($category->image) }})">
                         <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                            data-filter=".Apple">Iphone</li>
+                            data-filter=".{{ $category->name }}">{{ $category->name }}</li>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="banner_item align-items-center"
-                        style="background-image:url({{ asset('shop/images/samsung.jpg') }})">
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                            data-filter=".SamSung">Sam Sung</li>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="banner_item align-items-center"
-                        style="background-image:url({{ asset('shop/images/xiaomi.jpg') }})">
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                            data-filter=".Xiaomi">Xiaomi</li>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="banner_item align-items-center"
-                        style="background-image:url({{ asset('shop/images/Realme.jpg') }})">
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                            data-filter=".Realme">Realme</li>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -226,14 +207,10 @@
                         <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
                             <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"
                                 id="all" data-filter="*">Tất Cả</li>
+                                @foreach ($categories as $category)
                             <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".Apple">Apple</li>
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".SamSung">Sam Sung</li>
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".Xiaomi">Xiaomi</li>
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".Realme">Realme</li>
+                                data-filter=".{{ $category->name }}">{{ $category->name }}</li>
+                                @endforeach
                         </ul>
                     </div>
                 </div>
