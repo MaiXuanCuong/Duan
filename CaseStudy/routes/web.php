@@ -96,5 +96,9 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
         Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
     });
 });
+Route::get('/hi', [ShopController::class, 'index1'])->name('shop');
 
 Route::get('/', [ShopController::class, 'index'])->name('shop.home');
+Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
+Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
+Route::get('/singleproduct', [ShopController::class, 'singleproduct'])->name('shop.singleproduct');

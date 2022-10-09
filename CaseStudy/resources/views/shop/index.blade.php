@@ -94,7 +94,7 @@
                                                 </button>
                                             </div>&emsp;
                                             <li class="checkout">
-                                                <a href="#">
+                                                <a href="{{ route('shop.cart') }}">
                                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                     <span id="checkout_items" class="checkout_items">2</span>
                                                 </a>
