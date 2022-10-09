@@ -1,38 +1,83 @@
    
-    <div class="header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="user-menu">
-                        <ul>
-                            
-                            <li><a href="#"><i class="fa fa-heart"></i>Yêu Thích</a></li>
-                            <li><a href="{{ route('shop.cart') }}"><i class="fa fa-user"></i>Giỏ Hàng</a></li>
-                            
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="header-right">
-                        <ul class="list-unstyled list-inline">
-                           
+    <    <div class="super_container">
 
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key"><i class="fa fa-user"></i>Tài Khoản</span><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Đăng Nhập</a></li>
-                                    <li><a href="#">Cài Đặt Tài Khoản</a></li>
-                                    <li><a href="#">Đăng Xuất</a></li>
+        <!-- Header -->
+
+        <header class="header trans_300">
+            <div class="top_nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="top_nav_left">Miễn Phí Vận Chuyển Cho Đơn Hàng Trên 10.000.000 VNĐ</div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="top_nav_right">
+                                <ul class="top_nav_menu">
+
+
+                                    <li class="account">
+                                        <a href="#">
+                                            Tài Khoản Của Bạn
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="account_selection">
+                                            <li><a href="{{ route('register') }}"><i class="fa fa-sign-in"
+                                                        aria-hidden="true"></i>Login</a></li>
+                                            <li><a href="#"><i class="fa fa-user-plus"
+                                                        aria-hidden="true"></i>Register</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+
+            <!-- Main Navigation -->
+
+            <div class="main_nav_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <div class="logo_container">
+                                <div class="logo">
+                                    <h1><a href="{{ route('shop.home') }}"><img src="{{ asset('shop1/img/logo-search-grid-1x.png') }}"></a></h1>
+                                </div>
+                            </div>
+                            <nav class="navbar">
+                                <ul class="navbar_menu">
+                                    <li><a href="{{ route('shop.home') }}">Trang Chủ</a></li>
+                                    <li><a href="{{ route('shop.cart') }}">Giỏ Hàng</a></li>
+                                    
+                                    
+                                </ul> 
+                               
+                               
+                                <ul class="navbar_user">
+                              
+                                    <li class="checkout">
+                                        <a href="{{ route('shop.cart') }}">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="checkout_items" class="checkout_items">2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                        </div>
+                        </nav>
+                        
+                           
+                      
                     </div>
                 </div>
             </div>
-        </div>
-    </div> <!-- End header area -->
-      
+    </div>
+
+    </header>
+    <br>
+    <br>
+    <br>
+{{--       
     <div class="site-branding-area">
         <div class="container">
             <div class="row">
@@ -49,7 +94,8 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End site branding area -->
+    </div> <!-- End site branding area --> --}}
+    <br>
     
     <div class="mainmenu-area">
         <div class="container">

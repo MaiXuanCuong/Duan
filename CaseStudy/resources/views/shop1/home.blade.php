@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="{{ asset('shop1/css/responsive.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/bootstrap4/bootstrap.min.css') }}">
+ 
+    <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/main_styles.css') }}">
+
     @include('shop1.layouts.header')
 
             @yield('content')
