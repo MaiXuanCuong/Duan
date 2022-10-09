@@ -14,17 +14,17 @@
                     </div>
 
                     <div class="single-sidebar">
-                        <h2 class="sidebar-title">Sản Phẩm</h2>
+                        <h2 class="sidebar-title"><i>Sản Phẩm</i></h2>
                         @php($count = 0)
                         @foreach ($items as $item)
                             @if ($item->id != rand(0, $item->id) && $count < 5)
                                 @php($count++)
                                 <div class="thubmnail-recent">
                                     <img src="{{ asset($item->image) }}" class="recent-thumb" alt="">
-                                    <h2><a href="single-product.html">{{ $item->name }}</a></h2>
+                                    <b><a href="single-product.html"><i>{{ $item->name }}</i></a></b>
                                     <div class="product-sidebar-price">
-                                        <ins>{{ number_format($item->price) . ' VNĐ' }}</ins>
-                                        <del>{{ number_format($item->price * (100 / 80)) . ' VNĐ' }}</del>
+                                        <del><i>{{ number_format($item->price * (100 / 80)) . ' VNĐ' }}</i></del><br>
+                                        <ins><i>{{ number_format($item->price) . ' VNĐ' }}</i></ins>
                                     </div>
                                 </div>
                             @endif
@@ -39,12 +39,12 @@
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
-                                            <th class="product-remove">Mua</th>
-                                            <th class="product-thumbnail">Ảnh</th>
-                                            <th class="product-name">Sản Phẩm</th>
-                                            <th class="product-price">Giá</th>
-                                            <th class="product-quantity">Số Lượng</th>
-                                            <th class="product-subtotal">Tổng Tiền</th>
+                                            <th class="product-remove"><i>Mua</i></th>
+                                            <th class="product-thumbnail"><i>Ảnh</i></th>
+                                            <th class="product-name"><i>Sản Phẩm</i></th>
+                                            <th class="product-price"><i>Giá</i></th>
+                                            <th class="product-quantity"><i>Số Lượng</i></th>
+                                            <th class="product-subtotal"><i>Tổng Tiền</i></th>
                                         </tr>
                                     </thead>
                                     @if (isset($product_cart))
@@ -100,16 +100,19 @@
                                             </tr>
                                         </tbody>
                                     @else
-                                        <h2>Giỏ Hàng Trống!</h2>
+                                        <h2><i>Giỏ Hàng Trống!</i></h2>
                                     @endif
                                 </table>
+                                <br>
+                                <br>
+                                <br>
                             </form>
 
                             <div class="cart-collaterals">
 
 
-                                <div class="cross-sells">
-                                    <h2>Có Thể Bạn Quan Tâm</h2>
+                                <div class="hover">
+                                    <h2><i>Có Thể Bạn Quan Tâm</i></h2>
                                     <ul class="products">
                                         @php($count = 0)
                                         @foreach ($items as $item)
