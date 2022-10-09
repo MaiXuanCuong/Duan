@@ -55,9 +55,9 @@ class UserController extends Controller
                 "pass" => $pass,
                 'name' => $request->name,
             ];
-            $email1 =$request->email;
+            $email1 = $request->email;
             $name1 = $request->name;
-            Mail::send('admin.emails.add', compact('data'), function ($email) use ($email1,$name1) {
+            Mail::send('admin.emails.add', compact('data'), function ($email) use ($email1, $name1) {
                 $email->subject('XC-Shop');
                 $email->to($email1, $name1);
             });
@@ -101,8 +101,6 @@ class UserController extends Controller
             return view('admin.user.login');
         }
     }
-    //check mật khẩu
-    //Hash::check($request->password,$item->pasword)
     public function index()
     {
         $this->authorize('viewAny', User::class);
@@ -251,9 +249,6 @@ class UserController extends Controller
         }
 
     }
-    // public function show($id){
-
-    // }
     public function destroy($id)
     {
         $this->authorize('delete', User::class);
@@ -348,13 +343,13 @@ class UserController extends Controller
                 toast('Xác Nhận mật Khẩu Không Khớp', 'error', 'top-right');
                 return back()->withInput();
             }
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             toast('Lỗi Không Mong Muốn', 'error', 'top-right');
             return back()->withInput();
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
-            
+
         }
-        
+
     }
     public function fogetPassword(Request $request)
     {
@@ -373,14 +368,14 @@ class UserController extends Controller
                                 'name' => $name,
                                 'pass' => $pass,
                             ];
-                            Mail::send('admin.emails.fogetpassword', compact('data'), function ($email){
+                            Mail::send('admin.emails.fogetpassword', compact('data'), function ($email) {
                                 $email->subject('XC-Shop');
                                 $email->to(Auth()->user()->email, Auth()->user()->name);
                             });
                             toast('Đã Gửi Mật Khẩu Mới Về Email Của Bạn!', 'success', 'top-right');
                             return redirect()->route('profile');
                         }
-    
+
                     } else if ($request->email == Auth::user()->email) {
                         $user = User::findOrFail(Auth()->user()->id);
                         $token = Str::random(6);
@@ -406,11 +401,11 @@ class UserController extends Controller
                     return back()->withInput();
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             toast('Lỗi Không Mong Muốn', 'error', 'top-right');
             return back()->withInput();
         }
-      
+
     }
 }

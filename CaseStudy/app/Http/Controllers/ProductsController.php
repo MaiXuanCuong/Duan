@@ -1,14 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductsController extends Controller
 {
@@ -21,18 +20,19 @@ class ProductsController extends Controller
     public function productOutOfStock()
     {
         $this->authorize('viewAny', Product::class);
-        $items = Product::search()->where('quantity','<', 1)->paginate(3);
+        $items = Product::search()->where('quantity', '<', 1)->paginate(3);
         $params = [
             'items' => $items,
         ];
-        return view('admin.products.outofstock',$params);
+        return view('admin.products.outofstock', $params);
     }
     public function create()
-    {   $this->authorize('create', Product::class);
+    {$this->authorize('create', Product::class);
         $categories = Category::all();
         return view('admin.products.add', compact('categories'));
     }
-    public function show($id){
+    public function show($id)
+    {
         $this->authorize('view', Product::class);
         $items = Product::findOrFail($id);
         return view('admin.products.show', compact('items'));
@@ -70,18 +70,15 @@ class ProductsController extends Controller
         $products->category_id = $request->category_id;
         $products->user_id = Auth()->user()->id;
         try {
-           
+
             $products->save();
-            // alert()->success('Thêm Sản Phẩm: ' . $request->name, 'Thành Công');
-            toast(__('messages.msg_prd_add_ss',['name' => $request->name]),'success','top-right');
+            toast(__('messages.msg_prd_add_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('products');
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
-            // alert()->error('Thêm Sản Phẩm: ' . $request->name, 'Không Thành Công!');
-            // toast(__('messages.msg_prd_add_err',['name' => $request->name]),'error','top-right');
-            // return redirect()->route('products');
+            toast(__('messages.msg_prd_add_err', ['name' => $request->name]), 'error', 'top-right');
             return view('admin.products.add', $params);
         }
     }
@@ -121,19 +118,19 @@ class ProductsController extends Controller
         $products->category_id = $request->category_id;
         try {
             $products->save();
-            if(isset($path) && isset($images)){
+            if (isset($path) && isset($images)) {
                 Storage::delete($images);
             }
-            toast(__('messages.msg_prd_up_ss',['name' => $request->name]),'success','top-right');
+            toast(__('messages.msg_prd_up_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('products');
-        } catch (\Exception $e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
-            if(isset($path)){
+        } catch (\Exception$e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            if (isset($path)) {
                 $images = str_replace('storage', 'public', $path);
                 Storage::delete($images);
             }
-            toast(__('messages.msg_prd_up_err',['name' => $request->name]),'error','top-right');
-            return redirect()->route('products.edit',$products->id);
+            toast(__('messages.msg_prd_up_err', ['name' => $request->name]), 'error', 'top-right');
+            return redirect()->route('products.edit', $products->id);
         }
         return redirect()->route('products');
     }
@@ -148,20 +145,22 @@ class ProductsController extends Controller
                 'message' => 'success',
             ], status:200);
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 201,
                 'message' => 'error',
             ], status:200);
         }
     }
-    public function garbageCan(){
+    public function garbageCan()
+    {
         $this->authorize('viewgc', Product::class);
         $items = Product::search()->onlyTrashed()->paginate(5);
         return view('admin.products.Garbage_can', compact('items'));
-     
+
     }
-    public function restore($id){
+    public function restore($id)
+    {
         try {
             $this->authorize('restore', Product::class);
             $item = Product::withTrashed()->where('id', $id);
@@ -173,7 +172,7 @@ class ProductsController extends Controller
             ], status:200);
             return redirect()->route('products.garbageCan');
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 201,
                 'message' => 'error',
@@ -181,12 +180,13 @@ class ProductsController extends Controller
             return redirect()->route('products.garbageCan');
         }
     }
-    public function forceDelete($id){
+    public function forceDelete($id)
+    {
         $this->authorize('forceDelete', Product::class);
         DB::beginTransaction();
         $item = Product::onlyTrashed()->findOrFail($id);
         $images = str_replace('storage', 'public', $item->image);
-      
+
         $item = Product::withTrashed()->where('id', $id)->forceDelete();
         try {
             Storage::delete($images);
@@ -197,7 +197,7 @@ class ProductsController extends Controller
             ], status:200);
             return redirect()->route('products.garbageCan');
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             DB::rollBack();
             return response()->json([
                 'code' => 404,

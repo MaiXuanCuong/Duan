@@ -10,8 +10,4 @@ class OrderDetailController extends Controller
 {
     // $orderdetail = new OrderDetail();
    
-   
-
-
-   
 }

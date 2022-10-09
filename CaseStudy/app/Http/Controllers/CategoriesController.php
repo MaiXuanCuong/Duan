@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoriesController extends Controller
 {
-   
+
     public function index()
     {
         $this->authorize('viewAny', Category::class);
@@ -45,12 +45,12 @@ class CategoriesController extends Controller
             toast(__('messages.msg_cate_add_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('categories');
         } catch (\Exception$e) {
-            if(isset($path)){
+            if (isset($path)) {
 
                 $images = str_replace('storage', 'public', $path);
                 Storage::delete($images);
             }
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
 
             toast(__('messages.msg_cate_add_err', ['name' => $request->name]), 'error', 'top-right');
             return view('admin.categories.add', compact('request'));
@@ -89,7 +89,7 @@ class CategoriesController extends Controller
             toast(__('messages.msg_cate_up_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('categories');
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
 
             if (isset($path)) {
                 $images = str_replace('storage', 'public', $path);
@@ -113,7 +113,7 @@ class CategoriesController extends Controller
             ], status:200);
 
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 201,
                 'message' => 'success',
@@ -144,7 +144,7 @@ class CategoriesController extends Controller
                 'message' => 'success',
             ], status:200);
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 404,
                 'message' => 'failed',
@@ -164,7 +164,7 @@ class CategoriesController extends Controller
                 'message' => 'success',
             ], status:200);
         } catch (\Exception$e) {
-               Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 201,
                 'message' => 'error',
