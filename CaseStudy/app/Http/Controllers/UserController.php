@@ -28,19 +28,16 @@ class UserController extends Controller
         // dd( $request);
         $this->authorize('create', User::class);
         DB::beginTransaction();
-        $province = Province::findOrFail($request->province_id);
-        $district = District::findOrFail($request->district_id);
-        $ward = Ward::findOrFail($request->ward_id);
         $user = new User();
         $user->name = $request->name;
-        $address = $province->name . ' - ' . $district->name . ' - ' . $ward->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->address = $address;
+        $user->province_id = $request->province_id;
+        $user->district_id = $request->district_id;
+        $user->ward_id = $request->ward_id;
         $pass = 'admin';
         $user->password = bcrypt($pass);
         $fieldName = 'inputFile';
-        // dd($request->all());
         if ($request->hasFile($fieldName)) {
             $fullFileNameOrigin = $request->file($fieldName)->getClientOriginalName();
             $fileNameOrigin = pathinfo($fullFileNameOrigin, PATHINFO_FILENAME);
@@ -48,7 +45,8 @@ class UserController extends Controller
             $fileName = $fileNameOrigin . '-' . rand() . '_' . time() . '.' . $extenshion;
             $path = 'storage/' . $request->file($fieldName)->storeAs('public/images', $fileName);
             $path = str_replace('public/', '', $path);
-            $user->image = $path;}
+            $user->image = $path;
+        }
         try {
             $user->save();
             $data = [
@@ -64,7 +62,7 @@ class UserController extends Controller
             DB::commit();
             alert()->success('Thêm Tài Khoản: ' . $request->name, 'Thành Công');
             return redirect()->route('users');
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             $images = str_replace('storage', 'public', $path);
             Storage::delete($images);
             DB::rollBack();
@@ -136,8 +134,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $this->authorize('update', User::class);
-        // $provinces = Province::get();
-
+        $provinces = Province::get();
+        $districts = District::get();
+        $wards = Ward::get();
         $roles = Role::all();
         $user = User::find($id);
         $user_roles = DB::table('user_roles')->where('user_id', '=', $user->id)->get();
@@ -145,22 +144,21 @@ class UserController extends Controller
             'roles' => $roles,
             'user' => $user,
             'user_roles' => $user_roles,
-            // 'provinces' => $provinces,
+            'provinces' => $provinces,
+            'districts' => $districts,
+            'wards' => $wards,
         ];
         return view('admin.user.edit', $params);
     }
     public function update($id, UpdateUserRequest $request)
     {
-        // dd($request->all());
         $this->authorize('update', User::class);
-        // $province = Province::findOrFail($request->province_id);
-        // $district = District::findOrFail($request->district_id);
-        // $ward = Ward::findOrFail($request->ward_id);
-        // $address = $province->name.'-'.$district->name.'-'.$ward->name;
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->address = $request->address;
+        $user->province_id = $request->province_id;
+        $user->district_id = $request->district_id;
+        $user->ward_id = $request->ward_id;
         $user->phone = $request->phone;
         $fieldName = 'inputFile';
         if ($request->hasFile($fieldName)) {
@@ -187,7 +185,7 @@ class UserController extends Controller
             }
             toast(__('messages.msg_user_up_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('users');
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             if (isset($path)) {
 
                 $images = $images = str_replace('storage', 'public', $path);
@@ -197,20 +195,15 @@ class UserController extends Controller
             toast(__('messages.msg_user_up_err', ['name' => $request->name]), 'error', 'top-right');
             return back()->withInput();
         }
-
     }
     public function updateProfile($id, UpdateUserRequest $request)
     {
-        // dd($request->all());
-        // $this->authorize('update', User::class);
-        // $province = Province::findOrFail($request->province_id);
-        // $district = District::findOrFail($request->district_id);
-        // $ward = Ward::findOrFail($request->ward_id);
-        // $address = $province->name.'-'.$district->name.'-'.$ward->name;
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->address = $request->address;
+        $user->province_id = $request->province_id;
+        $user->district_id = $request->district_id;
+        $user->ward_id = $request->ward_id;
         $user->phone = $request->phone;
         $fieldName = 'inputFile';
         if ($request->hasFile($fieldName)) {
@@ -237,7 +230,7 @@ class UserController extends Controller
             }
             toast(__('messages.msg_user_up_ss', ['name' => $request->name]), 'success', 'top-right');
             return redirect()->route('users');
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             if (isset($path)) {
 
                 $images = $images = str_replace('storage', 'public', $path);
@@ -247,7 +240,6 @@ class UserController extends Controller
             toast(__('messages.msg_user_up_err', ['name' => $request->name]), 'error', 'top-right');
             return back()->withInput();
         }
-
     }
     public function destroy($id)
     {
@@ -261,7 +253,7 @@ class UserController extends Controller
             return response()->json([
                 'code' => 200,
                 'message' => 'success',
-            ], status:200);
+            ], status: 200);
         } catch (Exception $e) {
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             DB::rollBack();
@@ -269,7 +261,7 @@ class UserController extends Controller
             return response()->json([
                 'code' => 201,
                 'message' => 'error',
-            ], status:200);
+            ], status: 200);
         }
     }
     public function garbageCan()
@@ -277,7 +269,6 @@ class UserController extends Controller
         $this->authorize('viewgc', User::class);
         $items = User::search()->onlyTrashed()->paginate(3);
         return view('admin.user.Garbage_can', compact('items'));
-
     }
     public function restore($id)
     {
@@ -289,14 +280,14 @@ class UserController extends Controller
             return response()->json([
                 'code' => 200,
                 'message' => 'success',
-            ], status:200);
-        } catch (\Exception$e) {
+            ], status: 200);
+        } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
 
             return response()->json([
                 'code' => 404,
                 'message' => 'failed',
-            ], status:200);
+            ], status: 200);
         }
     }
     public function forceDelete($id)
@@ -310,20 +301,29 @@ class UserController extends Controller
             return response()->json([
                 'code' => 200,
                 'message' => 'success',
-            ], status:200);
-        } catch (\Exception$e) {
+            ], status: 200);
+        } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             return response()->json([
                 'code' => 201,
                 'message' => 'error',
-            ], status:200);
+            ], status: 200);
         }
     }
 
     public function profile()
     {
         $user = User::findOrFail(Auth()->user()->id);
-        return view("admin.user.usersprofile", compact('user'));
+        $provinces = Province::get();
+        $districts = District::get();
+        $wards = Ward::get();
+        $params = [
+            'user' => $user,
+            'provinces' => $provinces,
+            'districts' => $districts,
+            'wards' => $wards,
+        ];
+        return view("admin.user.usersprofile", $params);
     }
     public function changePassword(Request $request)
     {
@@ -343,13 +343,11 @@ class UserController extends Controller
                 toast('Xác Nhận mật Khẩu Không Khớp', 'error', 'top-right');
                 return back()->withInput();
             }
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             toast('Lỗi Không Mong Muốn', 'error', 'top-right');
             return back()->withInput();
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
-
         }
-
     }
     public function fogetPassword(Request $request)
     {
@@ -375,7 +373,6 @@ class UserController extends Controller
                             toast('Đã Gửi Mật Khẩu Mới Về Email Của Bạn!', 'success', 'top-right');
                             return redirect()->route('profile');
                         }
-
                     } else if ($request->email == Auth::user()->email) {
                         $user = User::findOrFail(Auth()->user()->id);
                         $token = Str::random(6);
@@ -401,11 +398,10 @@ class UserController extends Controller
                     return back()->withInput();
                 }
             }
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             toast('Lỗi Không Mong Muốn', 'error', 'top-right');
             return back()->withInput();
         }
-
     }
 }

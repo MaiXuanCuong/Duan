@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->string("address")->nullable();
-            $table->string("phone")->nullable();
-            $table->string("email")->unique();
-            $table->string("password");
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            //
+            $table->unsignedBigInteger('province_id');
+            $table->foreign('province_id')->references('id')->on('provinces');
         });
     }
 
@@ -31,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
+        Schema::table('carts', function (Blueprint $table) {
+            //
+            $table->unsignedBigInteger('product_cart');
+            $table->foreign('product_cart')->references('id')->on('products');
+            $table->unsignedBigInteger('customer_cart');
+            $table->foreign('customer_cart')->references('id')->on('customers');
         });
     }
 
@@ -26,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('carts', function (Blueprint $table) {
             //
         });
     }

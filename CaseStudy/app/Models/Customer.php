@@ -2,14 +2,31 @@
 
 namespace App\Models;
 
-use App\Models\Order;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
     use HasFactory;
-    function orders(){
-        return $this->hasMany(Order::class,'customer_id','id');
+    protected $table ='customers';
+    protected $fillable = [
+        'email', 'password',
+    ];
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    // protected $fillable = ['name'];
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+    public function scopeSearch($query)
+    {
+        if ($key = request()->key) {
+            $query = $query->where('name', 'like', '%' . $key . '%');
+        }
+        return $query;
     }
 }

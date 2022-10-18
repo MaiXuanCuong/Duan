@@ -1,138 +1,204 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <style type="text/css">.table&amp;amp;gt;tbody&amp;amp;gt;tr&amp;amp;gt;td, .table&amp;amp;gt;tfoot&amp;amp;gt;tr&amp;amp;gt;td {  
-        vertical-align: middle;
-        }
-         
-        @media screen and (max-width: 600px) { 
-        table#cart tbody td .form-control { 
-        width:20%; 
-        display: inline !important;
-        } 
-         
-        .actions .btn { 
-        width:36%; 
-        margin:1.5em 0;
-        } 
-         
-        .actions .btn-info { 
-        float:left;
-        } 
-         
-        .actions .btn-danger { 
-        float:right;
-        } 
-         
-        table#cart thead {
-        display: none;
-        } 
-         
-        table#cart tbody td {
-        display: block;
-        padding: .6rem;
-        min-width:320px;
-        } 
-         
-        table#cart tbody tr td:first-child {
-        background: #333;
-        color: #fff;
-        } 
-         
-        table#cart tbody td:before { 
-        content: attr(data-th);
-        font-weight: bold; 
-        display: inline-block;
-        width: 8rem;
-        } 
-         
-        table#cart tfoot td {
-        display:block;
-        } 
-        table#cart tfoot td .btn {
-        display:block;
-        }
-        }</style>
-</head>
-<body>
-    <h2 class="text-center">Hướng dẫn thiết giao diện trang giỏ hàng bằng Bootstrap</h2>
-<div class="container"> 
- <table id="cart" class="table table-hover table-condensed"> 
-  <thead> 
-   <tr> 
-    <th style="width:50%">Tên sản phẩm</th> 
-    <th style="width:10%">Giá</th> 
-    <th style="width:8%">Số lượng</th> 
-    <th style="width:22%" class="text-center">Thành tiền</th> 
-    <th style="width:10%"> </th> 
-   </tr> 
-  </thead> 
-  <tbody><tr> 
-   <td data-th="Product"> 
-    <div class="row"> 
-     <div class="col-sm-2 hidden-xs"><img src="http://hocwebgiare.com/thiet_ke_web_chuan_demo/shopping_cart/images/090.jpg" alt="Sản phẩm 1" class="img-responsive" width="100">
-     </div> 
-     <div class="col-sm-10"> 
-      <h4 class="nomargin">Sản phẩm 1</h4> 
-      <p>Mô tả của sản phẩm 1</p> 
-     </div> 
-    </div> 
-   </td> 
-   <td data-th="Price">200.000 đ</td> 
-   <td data-th="Quantity"><input class="form-control text-center" value="1" type="number">
-   </td> 
-   <td data-th="Subtotal" class="text-center">200.000 đ</td> 
-   <td class="actions" data-th="">
-    <button class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-    </button> 
-    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i>
-    </button>
-   </td> 
-  </tr> 
-  <tr> 
-   <td data-th="Product"> 
-    <div class="row"> 
-     <div class="col-sm-2 hidden-xs"><img src="http://hocwebgiare.com/thiet_ke_web_chuan_demo/shopping_cart/images/174.jpg" alt="Sản phẩm 1" class="img-responsive" width="100">
-     </div> 
-     <div class="col-sm-10"> 
-      <h4 class="nomargin">Sản phẩm 2</h4> 
-      <p>Mô tả của sản phẩm 2</p> 
-     </div> 
-    </div> 
-   </td> 
-   <td data-th="Price">300.000 đ</td> 
-   <td data-th="Quantity"><input class="form-control text-center" value="1" type="number">
-   </td> 
-   <td data-th="Subtotal" class="text-center">300.000 đ</td> 
-   <td class="actions" data-th="">
-    <button class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-    </button> 
-    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i>
-    </button>
-   </td> 
-  </tr> 
-  </tbody><tfoot> 
-   <tr class="visible-xs"> 
-    <td class="text-center"><strong>Tổng 200.000 đ</strong>
-    </td> 
-   </tr> 
-   <tr> 
-    <td><a href="http://hocwebgiare.com/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
-    </td> 
-    <td colspan="2" class="hidden-xs"> </td> 
-    <td class="hidden-xs text-center"><strong>Tổng tiền 500.000 đ</strong>
-    </td> 
-    <td><a href="http://hocwebgiare.com/" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
-    </td> 
-   </tr> 
-  </tfoot> 
- </table>
-</div>
-</body>
-</html>
+@extends('shop.home')
+@section('content')
+{{-- @php 
+dd($product_carts);
+@endphp --}}
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Tìm Kiếm</h2>
+                        <form action="">
+                            <input type="text" name='key' placeholder="TÌm Sản Phẩm">
+                            <input type="submit" value="Tìm Kiếm">
+                        </form>
+                    </div>
+
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title"><i>Sản Phẩm</i></h2>
+                        @php($count = 0)
+                        @foreach ($products as $item)
+                            @if ($item->id != rand(0, $item->id) && $count < 5)
+                                @php($count++)
+                                <div class="thubmnail-recent">
+                                    <img src="{{ asset($item->image) }}" class="recent-thumb" alt="">
+                                    <b><a href="single-product.html"><i>{{ $item->name }}</i></a></b>
+                                    <div class="product-sidebar-price">
+                                        <del><i>{{ number_format($item->price * (100 / 80)) . ' VNĐ' }}</i></del><br>
+                                        <ins><i>{{ number_format($item->price) . ' VNĐ' }}</i></ins>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+                            <form method="post" action="#">
+                                <table cellspacing="0" class="shop_table cart">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-remove"><i>Mua</i></th>
+                                            <th class="product-thumbnail"><i>Ảnh</i></th>
+                                            <th class="product-name"><i>Sản Phẩm</i></th>
+                                            <th class="product-price"><i>Giá</i></th>
+                                            <th class="product-quantity"><i>Số Lượng</i></th>
+                                            <th class="product-subtotal"><i>Tổng Tiền</i></th>
+                                        </tr>
+                                 
+                                    </thead>
+                                    @if (isset($product_carts))
+                                    @foreach ($product_carts as $product_cart)
+                                        <tbody>
+                                            <tr class="cart_item">
+                                                <td class="product-remove">
+                                                    <a title="Remove this item" class="remove" href="#">×</a>
+                                                </td>
+
+                                                <td class="product-thumbnail">
+                                                    <a href="single-product.html"><img width="145" height="145"
+                                                            alt="poster_1_up" class="shop_thumbnail"
+                                                            src="{{ asset($product_cart->image) }}"></a>
+                                                </td>
+
+                                                <td class="product-name">
+                                                    <a href="single-product.html">{{ $product_cart->name }}</a>
+                                                </td>
+
+                                                <td class="product-price">
+                                                    <span
+                                                        class="amount">{{ number_format($product_cart->price) . ' VNĐ' }}</span>
+                                                </td>
+
+                                                <td class="product-quantity">
+                                                    <div class="quantity buttons_added">
+                                                        {{-- <input type="button" class="minus" value="-"> --}}
+                                                        <input type="number" size="4" class="input-text qty text"
+                                                            title="Qty" value="1" min="0" step="1">
+                                                        {{-- <input type="button" class="plus" value="+"> --}}
+                                                    </div>
+                                                </td>
+
+                                                <td class="product-subtotal">
+                                                    <span
+                                                        class="amount">{{ number_format($product_cart->price) . ' VNĐ' }}</span>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            <tr>
+                                                <td class="actions" colspan="6">
+                                                    <div class="coupon">
+                                                        <label for="coupon_code">Giảm Giá:</label>
+                                                        <input type="text" placeholder="Mã Giảm Giá" value=""
+                                                            id="coupon_code" class="input-text" name="coupon_code">
+                                                        <input type="submit" value="Apply Coupon" name="apply_coupon"
+                                                            class="button">
+                                                    </div>
+                                                    <input type="submit" value="Update Cart" name="update_cart"
+                                                        class="button">
+                                                    <input type="submit" value="Checkout" name="proceed"
+                                                        class="checkout-button button alt wc-forward">
+                                                </td>
+                                            @else
+                                            <tr>
+                                                <td colspan="6">
+                                                    <h4><i>Giỏ Hàng Trống!</i></h4>
+                                                </td>
+                                            </tr>
+                                    @endif
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <br>
+                                <br>
+                            </form>
+
+                            <div class="cart-collaterals">
+
+
+                                <div class="hover">
+                                    <h2><i>Có Thể Bạn Quan Tâm</i></h2>
+                                    <ul class="products">
+                                        @php($count = 0)
+                                        @foreach ($products as $item)
+                                            @if ($item->id != rand(0, $item->id) && $count < 2)
+                                                @php($count++)
+                                                <li class="product">
+                                                    <a href="single-product.html">
+                                                        <img width="325" height="325" alt="T_4_front"
+                                                            class="attachment-shop_catalog wp-post-image"
+                                                            src="{{ asset($item->image) }}">
+                                                        <b>{{ $item->name }}</b>
+                                                        <span class="price"><span
+                                                                class="amount">{{ number_format($item->price) . ' VNĐ' }}</span></span>
+                                                    </a>
+
+                                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                                                        data-product_id="22" rel="nofollow" href="single-product.html">Xem
+                                                        Sản Phẩm</a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+
+                                <div class="cart_totals ">
+                                    <h2>Tổng Giỏ Hàng</h2>
+
+                                    <table cellspacing="0">
+                                        <tbody>
+                                            <tr class="cart-subtotal">
+                                                <th>Tổng Tiền</th>
+                                                <td><span class="amount">£15.00</span></td>
+                                            </tr>
+
+                                            <tr class="shipping">
+                                                <th>HÌnh Thức Vận Chuyển</th>
+                                                <td>Free Shipping</td>
+                                            </tr>
+
+                                            <tr class="order-total">
+                                                <th>Tổng Đơn Đặt</th>
+                                                <td><strong><span class="amount">£15.00</span></strong> </td>
+                                            </tr>
+                                        </tbody>
+                                 
+                                    </table>
+                                    
+                                </div>
+                                <form method="post" action="#" class="shipping_calculator">
+                                    <h2><a class="shipping-calculator-button" data-toggle="collapse" href="#calcalute-shipping-wrap" aria-expanded="false" aria-controls="calcalute-shipping-wrap">Đặt Hàng</a></h2>
+    
+                                    <section id="calcalute-shipping-wrap" class="shipping-calculator-form collapse in" style="">
+    
+                                    <p class="form-row form-row-wide">
+                                    <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
+                                        <option value="">Select a country…</option>
+                                      
+                                    </select>
+                                    </p>
+    
+                                    <p class="form-row form-row-wide"><input type="text" id="calc_shipping_state" name="calc_shipping_state" placeholder="State / county" value="" class="input-text"> </p>
+    
+                                    <p class="form-row form-row-wide"><input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Postcode / Zip" value="" class="input-text"></p>
+    
+    
+                                    <p><button class="button" value="1" name="calc_shipping" type="submit">Đặt Hàng</button></p>
+    
+                                    </section>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+@endsection

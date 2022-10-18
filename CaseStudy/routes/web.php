@@ -11,13 +11,9 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/register', function(){
-    return view('admin.customers.register');
-})->name('register');
+
 
 Route::get('/login', [UserController::class, 'checkLogin'])->name('login');
-Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
-Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
 Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login');
 
 Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function () {
@@ -96,9 +92,27 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
         Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
     });
 });
-Route::get('/hi', [ShopController::class, 'index1'])->name('shop');
 
-Route::get('/', [ShopController::class, 'index'])->name('shop.home');
-Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
-Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
-Route::get('/singleproduct', [ShopController::class, 'singleproduct'])->name('shop.singleproduct');
+// Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
+// Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
+Route::prefix('xcshop')->group(function(){
+    Route::get('/', [ShopController::class, 'index'])->name('shop.home');
+    Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
+    Route::get('/store/{id}',[ShopController::class,'store'])->name('shop.store');
+    Route::patch('/update-cart', [ShopController::class, 'update'])->name('update.cart');
+    Route::delete('/removecart/{id}', [ShopController::class, 'remove'])->name('remove.from.cart');
+    Route::get('/checkOuts', [ShopController::class, 'checkOuts'])->name('checkOuts');
+    Route::post('/order', [ShopController::class, 'order'])->name('order');
+    Route::get('/history', [ShopController::class, 'history'])->name('history');
+    Route::get('register', function(){
+        return view('shop.customers.register');
+    })->name('register');
+    Route::get('login', function(){
+        return view('shop.customers.login');
+    })->name('shop.login');
+    Route::get('product/{id}', [ShopController::class, 'view'])->name('shop.product');;
+
+    Route::get('logout', [CustomerController::class, 'logout'])->name('shop.logout');
+    Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
+    Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
+});

@@ -9,6 +9,8 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Request;
 
 class CustomerController extends Controller
 {
@@ -22,56 +24,43 @@ class CustomerController extends Controller
         return view('admin.customers.add');
     }
 
-    public function store(StoreCustomerRequest $request)
-    {
-        $customer = new Customer();
-        $customer->name = $request->name;
-        $customer->address = $request->address;
-        $customer->email = $request->email;
-        $customer->password = $request->password;
-        // Session::flash('success', 'Thêm thành công '.$request->name);
-        try {
-            $customer->save();
-            alert()->success('Thêm Customer: ' . $request->name, 'Thành Công');
-            return redirect()->route('customers');
-        } catch (\Exception$e) {
-            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
-            alert()->error('Thêm Customer: ' . $request->name, 'Không Thành Công!');
-            return view('admin.customers.add', compact('request'));
-        }
-    }
+ 
 
     public function register(StoreRegisterRequest $request)
     {
         $customer = new Customer();
         $customer->name = $request->name;
-        $customer->address = $request->address;
         $customer->email = $request->email;
-        $customer->password = $request->password;
+        $customer->password = bcrypt($request->password);
 
         // Session::flash('success', 'Thêm thành công '.$request->name);
         try {
             $customer->save();
-            alert()->success('Thêm Customer: ' . $request->name, 'Thành Công');
-            return redirect()->route('customers');
+            alert()->success('Đăng Ký Tài Khoản', 'Thành Công');
+            return redirect()->route('shop.login');
         } catch (\Exception$e) {
-            alert()->error('Thêm Customer: ' . $request->name, 'Không Thành Công!');
-            return view('admin.customers.add', compact('request'));
+            alert()->error('Email Đã Tồn Tại', 'Không Thành Công!');
+            return back()->withInput();
         }
     }
     public function login(StoreLoginRequest $request)
-    {
+    {  
         $arr = [
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => $request->password
         ];
-        if (Auth::attempt($arr)) {
-            alert()->success('Đăng Nhập Thành Công!', 'Chào ' . Auth()->user()->name . ' đến với Shop!');
-            return redirect()->route('/');
+        if (Auth::guard('customers')->attempt($arr)) {
+            toast('Đăng nhập thành công!', 'success', 'top-right');
+            return redirect()->route('shop.home');
         } else {
-            alert()->error('Đăng Nhập Không Thành Công!', 'Email hoặc mật khẩu không đúng!');
-            return redirect()->route('customer.login');
+            return redirect()->route('shop.login');
         }
+    }
+    public function logout()
+    {
+        Auth::guard('customers')->logout();
+        toast('Đăng Xuất Thành Công!', 'success', 'top-right');
+        return redirect()->route('shop.home');
     }
     public function edit($id)
     {

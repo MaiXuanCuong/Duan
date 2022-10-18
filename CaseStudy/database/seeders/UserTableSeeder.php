@@ -18,7 +18,6 @@ class UserTableSeeder extends Seeder
         //
         $user = new User();
         $user->name = 'Mai Xuân Cường';
-        $user->address = 'Cam Lộ' ;
         $user->phone = '0843442357' ;
         $user->email = 'maixuancuong@gmail.com' ;
         $user->password = bcrypt('admin');
