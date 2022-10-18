@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Order;
@@ -11,15 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
 class ShopController extends Controller
 {
-
-
-
-
-
-
     public function index()
     {
         $products = Product::all();
@@ -32,14 +23,12 @@ class ShopController extends Controller
     }
     
     public function view($id){
-        // $id=1;
         $products = Product::findOrFail($id);
         $params = [
             'product' => $products,
         ];
         return view('shop.product', $params);
     }
-
     public function cart()
     {
         $products = Product::all();
@@ -106,11 +95,6 @@ class ShopController extends Controller
             return response()->json(['status' => 'Xóa đơn hàng thành công']);
         }
     }
-    public function checkOuts()
-    {
-        return view('shop.checkout');
-    }
-
     public function order(Request $request)
     {
         if ($request->product_id == null) {
@@ -172,53 +156,4 @@ class ShopController extends Controller
         ->get();
         return view('shop.historyorder',compact('items'));
     }
-
-    // public function index(){
-    //     $items = Product::search()->paginate(100);
-    //     $Apple = DB::table('products')
-    //     ->select('products.*','categories.name as name_category')
-    //     ->join('categories', 'categories.id', '=', 'products.category_id')
-    //     ->where('categories.name','Apple')
-    //     ->get();
-    //     $Realme = DB::table('products')
-    //     ->select('products.*','categories.name as name_category')
-    //     ->join('categories', 'categories.id', '=', 'products.category_id')
-    //     ->where('categories.name','Realme')
-    //     ->get();
-    //     $SamSung = DB::table('products')
-    //     ->select('products.*','categories.name as name_category')
-    //     ->join('categories', 'categories.id', '=', 'products.category_id')
-    //     ->where('categories.name','SamSung')
-    //     ->get();
-    //     $Xiaomi = DB::table('products')
-    //     ->select('products.*','categories.name as name_category')
-    //     ->join('categories', 'categories.id', '=', 'products.category_id')
-    //     ->where('categories.name','Xiaomi')
-    //     ->get();
-    //     $categories =Category::all();
-    //     $params = [
-    //         'items' => $items,
-    //         'Apple' => $Apple,
-    //         'Realme' => $Realme,
-    //         'SamSung' => $SamSung,
-    //         'Xiaomi' => $Xiaomi,
-    //         'categories' => $categories,
-    //     ];
-    //     return view('shop1.index',$params);
-    // }
-    // public function cart(){
-    //     $items = Product::search()->paginate(100);
-    //     $params = [
-    //         'items' => $items,
-           
-    //     ];
-    //     return view('shop1.cart',$params);
-    // }
-    // public function checkout(){
-    //     return view('shop1.checkout');
-    // }
-  
- 
-
-    
 } 
