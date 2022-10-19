@@ -9,9 +9,9 @@ class Cart extends Model
 {
     use HasFactory;
     // public function products(){
-    //     return $this->belongsToMany(Product::class,'products','product_cart','id');
+    //     return $this->belongsToMany(Product::class,'product_cart','id');
     // }
     // public function customers(){
-    //     return $this->belongsToMany(Customer::class,'customers','customer_cart','id');
+    //     return $this->belongsToMany(Customer::class,'customer_cart','id');
     // }
 }

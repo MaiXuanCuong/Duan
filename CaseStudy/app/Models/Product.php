@@ -24,7 +24,7 @@ class Product extends Model
         return $this->belongsTo(User::class,'user_id','id');
     }
     public function customers(){
-        return $this->belongsToMany(Customer::class,'carts','product_cart','id');
+        return $this->belongsToMany(Customer::class,'carts','product_cart','customer_cart');
     }
     public function scopeSearch($query)
     {
