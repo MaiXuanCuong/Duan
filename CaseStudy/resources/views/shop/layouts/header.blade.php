@@ -8,14 +8,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
-
                             <div class="top_nav_left">Miễn Phí Vận Chuyển Cho Đơn Hàng Trên 10.000.000 VNĐ</div>
                         </div>
                         <div class="col-md-6 text-right">
                             <div class="top_nav_right">
                                 <ul class="top_nav_menu">
-
-
                                     <li class="account">
                                         <a href="#">
                                             Tài Khoản Của Bạn
@@ -30,13 +27,9 @@
                                         @else
                                         <li><a href="{{ route('shop.login') }}"><i class="fa fa-sign-in"
                                             aria-hidden="true"></i>Đăng Nhập</a></li>
+                                            <li><a href="{{ route('register') }}"><i class="fa fa-address-card-o" aria-hidden="true"></i></i>Đăng Ký</a></li>
                                         @endif
                                     </ul>
-                                       
-                                            {{-- <li><a href="{{ route('register') }}"><i class="fa fa-sign-in"
-                                                        aria-hidden="true"></i>Login</a></li>
-                                            <li><a href="#"><i class="fa fa-user-plus"
-                                                        aria-hidden="true"></i>Register</a></li> --}}
                                     </li>
                                 </ul>
                             </div>
@@ -69,7 +62,7 @@
                                     <li class="checkout">
                                         <a href="{{ route('shop.cart') }}">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
+                                            <span id="checkout_items" class="checkout_items"></span>
                                         </a>
                                     </li>
                                 </ul>

@@ -5,6 +5,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,37 +31,41 @@ class ShopController extends Controller
         return view('shop.product', $params);
     }
     public function cart()
-    {
-        $products = Product::all();
-        $categories = Category::all();
-        $param = [
-            'products' => $products,
-            'categories' => $categories,
-        ];
-        return view('shop.cart', $param);
+    {   
+        if(isset(Auth::guard('customers')->user()->id)){
+           
+            $products = Product::all();
+            $id_customer = Auth::guard('customers')->user()->id;
+            $carts = Customer::find($id_customer);
+            $carts->products;
+            $count = count($carts->products);
+            $param = [
+                'products' => $products,
+                'carts' => $carts->products,
+            ];
+            return view('shop.cart', $param);
+        } else {
+            return view('shop.customers.login');
+        }
     }
     public function store($id)
     {   
-      
-        $product = Product::findOrFail($id);
-        $cart = session()->get('cart', []);
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "nameVi" => $product->name,
-                "quantity" => 1,
-                "price" => $product->price,
-                'image' => $product->image,
-                'max' => $product->quantity,
-            ];
+        try {
+            $id_customer = Auth::guard('customers')->user()->id;
+            $carts = new Cart();
+            $carts->product_cart = $id;
+            $carts->customer_cart = $id_customer;
+            $carts->save();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success',
+            ], status:200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'code' => 303,
+                'message' => 'success',
+            ], status:200);
         }
-        session()->put('cart', $cart);
-        $data = [];
-        $data['cart'] = session()->has('cart');
-        return response()->json($data);
-        // return route('shop.cart',);
-
     }
     public function update(Request $request)
     {

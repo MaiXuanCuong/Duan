@@ -1,8 +1,5 @@
 @extends('shop.home')
 @section('content')
-{{-- @php 
-dd($product_carts);
-@endphp --}}
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -24,7 +21,7 @@ dd($product_carts);
                                 @php($count++)
                                 <div class="thubmnail-recent">
                                     <img src="{{ asset($item->image) }}" class="recent-thumb" alt="">
-                                    <b><a href="single-product.html"><i>{{ $item->name }}</i></a></b>
+                                    <b><a href="{{ route('shop.product',$item->id) }}"><i>{{ $item->name }}</i></a></b>
                                     <div class="product-sidebar-price">
                                         <del><i>{{ number_format($item->price * (100 / 80)) . ' VNĐ' }}</i></del><br>
                                         <ins><i>{{ number_format($item->price) . ' VNĐ' }}</i></ins>
@@ -51,8 +48,9 @@ dd($product_carts);
                                         </tr>
                                  
                                     </thead>
-                                    @if (isset($product_carts))
-                                    @foreach ($product_carts as $product_cart)
+                                    @if(isset(Auth()->guard('customers')->user()->name))
+                                    @if (isset($carts))
+                                    @foreach ($carts as $product_cart)
                                         <tbody>
                                             <tr class="cart_item">
                                                 <td class="product-remove">
@@ -110,6 +108,7 @@ dd($product_carts);
                                                 </td>
                                             </tr>
                                     @endif
+                                    @endif
                                     </tr>
                                     </tbody>
                                 </table>
@@ -129,7 +128,7 @@ dd($product_carts);
                                             @if ($item->id != rand(0, $item->id) && $count < 2)
                                                 @php($count++)
                                                 <li class="product">
-                                                    <a href="single-product.html">
+                                                    <a href="{{ route('shop.product',$item->id) }}">
                                                         <img width="325" height="325" alt="T_4_front"
                                                             class="attachment-shop_catalog wp-post-image"
                                                             src="{{ asset($item->image) }}">
@@ -138,9 +137,9 @@ dd($product_carts);
                                                                 class="amount">{{ number_format($item->price) . ' VNĐ' }}</span></span>
                                                     </a>
 
-                                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                                                    {{-- <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
                                                         data-product_id="22" rel="nofollow" href="single-product.html">Xem
-                                                        Sản Phẩm</a>
+                                                        Sản Phẩm</a> --}}
                                                 </li>
                                             @endif
                                         @endforeach

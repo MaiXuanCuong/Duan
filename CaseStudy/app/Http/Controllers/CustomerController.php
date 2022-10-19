@@ -53,7 +53,8 @@ class CustomerController extends Controller
             toast('Đăng nhập thành công!', 'success', 'top-right');
             return redirect()->route('shop.home');
         } else {
-            return redirect()->route('shop.login');
+            toast('Đăng nhập không thành công!', 'error', 'top-right');
+            return back()->withInput();
         }
     }
     public function logout()

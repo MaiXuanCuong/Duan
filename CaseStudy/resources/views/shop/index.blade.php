@@ -1,5 +1,6 @@
 @extends('shop.home')
 @section('content')
+@include('sweetalert::alert')
 <br>
     <br>
     <br>
@@ -21,7 +22,6 @@
 				</ul>
 			</div>
     </div>
-    
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -32,19 +32,14 @@
                         <div class="product-carousel">
                             @foreach ($products as $item)
                             <div class="single-product">
-                                <div  style="width: 115%" class="product-f-image">
+                                <div  class="product-f-image">
                                     <img src="{{ asset($item->image) }}" alt="">
                                     <div class="product-hover">
-                                        {{-- <li><a id="addToCart" href="{{route('shop.store',$item->id)}}" id="{{ $item->id }}"
-                                            ><i class="fa fa-shopping-cart"></i></a></li> --}}
-
-                                        <a id="addToCart" href="{{route('shop.store',$item->id)}}" id="{{ $item->id }}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
+                                        <a data-url="{{route('shop.store',$item->id)}}" id="{{ $item->id }}" class="add-to-cart-link addToCart"><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
                                         <a href="{{ route('shop.product',$item->id) }}" class="view-details-link"><i class="fa fa-link"></i>Xem Chi Tiết</a>
                                     </div>
                                 </div>
-                                
                                 <h2><a href="{{ route('shop.product',$item->id) }}">{{ $item->name }}</a></h2>
-                                
                                 <div class="product-carousel-price">
                                     <ins>{{ number_format($item->price)." VNĐ" }}</ins> <del>{{ number_format($item->price*(100/80))." VNĐ" }}</del>
                                 </div> 
@@ -263,22 +258,50 @@
     </div> <!-- End product widget area -->
     <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/main_styles.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{asset('AdminLTE/plugins/jquery/jquery.min.js')}}"></script>
 <script>
-    $(function() {
-        $(document).on('click', '#addToCart', function(e) {
-            e.preventDefault();
-            let id = $(this).attr('id');
-            let href = $(this).data('href');
+   function AddToCart(event){
+    event.preventDefault();
+    let urlRequest = $(this).data('url');
+    let tr = $(this);
+    Swal.fire({
+        title: 'Thêm Sản Phẩm',
+        text: "Vào Giỏ Hàng Của Bạn",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng Ý'
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
-                url: href,
-                method: "get",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                },
-                
+                url: urlRequest,
+                type: 'get',
+                success: function(data){
+                    if(data.code == 200){
+                        Swal.fire(
+                            'Thêm Sản Phẩm',
+                            'Thành Công Vào Giỏ Hàng',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Thêm Sản Phẩm Không Thành Công',
+                            'Vui Lòng Đăng Nhập',
+                            'error'
+                        );
+                    }
+                }
             });
-        });
+        }
     })
+}
+$(function () {
+    $(document).on('click', '.addToCart', AddToCart);
+});
+
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @endsection

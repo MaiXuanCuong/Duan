@@ -73,50 +73,50 @@ function actionRestore(event){
         }
     })
 }
-function actionUpdate(event){
-    event.preventDefault();
-    let urlRequest = $(this).data('url');
-    let tr = $(this);
-    Swal.fire({
-        title: 'Bạn Có Chắc Chắn Cập Nhật?',
-        text: "Bạn Sẽ Không Thể Hoàn Tác Sau Hành Động Này",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Đồng Ý'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: urlRequest,
-                type: 'PUT',
-                success: function(data){
-                    if(data.code == 200){
-                        tr.parent().parent().remove();
-                        Swal.fire(
-                            'Đã Cập Nhật!',
-                            'Tệp Của Bạn Đã Được Cập Nhật.',
-                            'success'
-                        );
-                    } else {
-                        // tr.parent().parent().remove();
-                        Swal.fire(
-                            'Không Thể Cập Nhật!',
-                            'Tệp Của Bạn Chưa Được Cập Nhật.',
-                            'error'
-                        );
-                    }
-                }
-            });
-        }
-    })
-}
+// function addToCart(event){
+//     event.preventDefault();
+//     let urlRequest = $(this).data('url');
+//     let tr = $(this);
+//     Swal.fire({
+//         title: 'Bạn Có Chắc Chắn Cập Nhật?',
+//         text: "Bạn Sẽ Không Thể Hoàn Tác Sau Hành Động Này",
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Đồng Ý'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 url: urlRequest,
+//                 type: 'PUT',
+//                 success: function(data){
+//                     if(data.code == 200){
+//                         tr.parent().parent().remove();
+//                         Swal.fire(
+//                             'Đã Cập Nhật!',
+//                             'Tệp Của Bạn Đã Được Cập Nhật.',
+//                             'success'
+//                         );
+//                     } else {
+//                         // tr.parent().parent().remove();
+//                         Swal.fire(
+//                             'Không Thể Cập Nhật!',
+//                             'Tệp Của Bạn Chưa Được Cập Nhật.',
+//                             'error'
+//                         );
+//                     }
+//                 }
+//             });
+//         }
+//     })
+// }
+// $(function () {
+//     $(document).on('click', '.addToCart', addToCart);
+// });
 $(function () {
     $(document).on('click', '.ajax_delete', actionDelete);
 });
 $(function () {
     $(document).on('click', '.ajax_restore', actionRestore);
-});
-$(function () {
-    $(document).on('click', '.ajax_update', actionUpdate);
 });

@@ -22,6 +22,9 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }
+    public function products(){
+        return $this->belongsToMany(Product::class,'carts','customer_cart','id');
+    }
     public function scopeSearch($query)
     {
         if ($key = request()->key) {
