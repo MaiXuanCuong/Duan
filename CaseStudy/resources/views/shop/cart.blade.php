@@ -45,11 +45,12 @@
                                             <th class="product-price"><i>Giá</i></th>
                                             <th class="product-quantity"><i>Số Lượng</i></th>
                                             <th class="product-subtotal"><i>Tổng Tiền</i></th>
+                                            <th class="product-delete"><i>Xóa</i></th>
                                         </tr>
                                  
                                     </thead>
                                     @if(isset(Auth()->guard('customers')->user()->name))
-                                    @if (isset($carts))
+                                    @if (isset($carts) && count($carts) > 0)
                                     @foreach ($carts as $product_cart)
                                         <tbody>
                                             <tr class="cart_item">
@@ -85,10 +86,13 @@
                                                     <span
                                                         class="amount">{{ number_format($product_cart->price) . ' VNĐ' }}</span>
                                                 </td>
+                                                <td class="product-delete">
+                                                    <a data-url="{{route('remove.cart',$product_cart->id)}}" id="{{ $product_cart->id }}" class="add-to-cart-link ajax_delete"><i class="fa fa-trash-o sidebar-title" aria-hidden="true"></i></a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                             <tr>
-                                                <td class="actions" colspan="6">
+                                                <td class="actions" colspan="8">
                                                     <div class="coupon">
                                                         <label for="coupon_code">Giảm Giá:</label>
                                                         <input type="text" placeholder="Mã Giảm Giá" value=""
@@ -199,5 +203,51 @@
             </div>
         </div>
     </div>
-    
+     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{asset('AdminLTE/plugins/jquery/jquery.min.js')}}"></script>
+<script>
+   function DeleteToCart(event){
+    event.preventDefault();
+    let urlRequest = $(this).data('url');
+    let tr = $(this);
+    Swal.fire({
+        title: 'Xóa Sản Phẩm',
+        text: "Khỏi Vào Giỏ Hàng Của Bạn",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng Ý'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: urlRequest,
+                type: 'get',
+                success: function(data){
+                    if(data.code == 200){
+                        tr.parent().parent().remove();
+                        Swal.fire(
+                            'Xóa Sản Phẩm',
+                            'Thành Công Khỏi Giỏ Hàng',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Xóa Sản Phẩm',
+                            'Không Thành Công Khỏi Giỏ Hàng',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
+    })
+}
+$(function () {
+    $(document).on('click', '.ajax_delete', DeleteToCart);
+});
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection

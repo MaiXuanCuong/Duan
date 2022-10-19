@@ -1,15 +1,17 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
-use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+
 class ShopController extends Controller
 {
     public function index()
@@ -22,8 +24,9 @@ class ShopController extends Controller
         ];
         return view('shop.index', $param);
     }
-    
-    public function view($id){
+
+    public function view($id)
+    {
         $products = Product::findOrFail($id);
         $params = [
             'product' => $products,
@@ -31,14 +34,14 @@ class ShopController extends Controller
         return view('shop.product', $params);
     }
     public function cart()
-    {   
-        if(isset(Auth::guard('customers')->user()->id)){
-           
+    {
+        if (isset(Auth::guard('customers')->user()->id)) {
+
             $products = Product::all();
             $id_customer = Auth::guard('customers')->user()->id;
             $carts = Customer::find($id_customer);
             $carts->products;
-            $count = count($carts->products);
+            // dd($carts->products);
             $param = [
                 'products' => $products,
                 'carts' => $carts->products,
@@ -49,7 +52,7 @@ class ShopController extends Controller
         }
     }
     public function store($id)
-    {   
+    {
         try {
             $id_customer = Auth::guard('customers')->user()->id;
             $carts = new Cart();
@@ -63,7 +66,7 @@ class ShopController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'code' => 303,
-                'message' => 'success',
+                'message' => 'error',
             ], status:200);
         }
     }
@@ -88,16 +91,25 @@ class ShopController extends Controller
             ]);
         }
     }
-    public function remove(Request $request)
+    public function remove($id)
     {
-        if ($request->id) {
-            $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
+        if (isset(Auth::guard('customers')->user()->id)) {
+            try {
+                $id_customer = Auth::guard('customers')->user()->id;
+                DB::table('carts')
+                ->where('product_cart', $id)
+                ->where('customer_cart', $id_customer)
+                ->delete();
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'success',
+                ], status:200);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'code' => 303,
+                    'message' => 'error',
+                ], status:200);
             }
-            session()->put('cart', $cart);
-            return response()->json(['status' => 'Xóa đơn hàng thành công']);
         }
     }
     public function order(Request $request)
@@ -111,9 +123,8 @@ class ShopController extends Controller
             $data->email = $request->email;
             $data->phone = $request->phone;
             $data->address = $request->address;
-            if(isset($request->note))
-            {
-                $data->note=$request->note;
+            if (isset($request->note)) {
+                $data->note = $request->note;
             }
             $data->save();
 
@@ -128,7 +139,7 @@ class ShopController extends Controller
                 $count_product = count($request->product_id);
                 for ($i = 0; $i < $count_product; $i++) {
                     $orderItem = new OrderDetail();
-                    $orderItem->order_id =  $order->id;
+                    $orderItem->order_id = $order->id;
                     $orderItem->product_id = $request->product_id[$i];
                     $orderItem->quantity = $request->quantity[$i];
                     $orderItem->total = $request->total[$i];
@@ -141,7 +152,7 @@ class ShopController extends Controller
                 toast('Đặt hàng thành công!', 'success', 'top-right');
                 return redirect()->route('shop.index');
             }
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             Log::error($e->getMessage());
             toast('Đặt hàng thấy bại!', 'error', 'top-right');
             return redirect()->route('shop.index');
@@ -149,16 +160,16 @@ class ShopController extends Controller
     }
     public function history()
     {
-        $id=Auth::guard('customers')->user()->id;
-        $items=DB::table('customers')
-        ->join('orders','customers.id','=','orders.customer_id')
-        ->join('orderdetail','orders.id','=','orderdetail.order_id')
-        ->join('products','orderdetail.product_id','=','products.id')
-        ->select('products.name','products.age','products.color','products.gender',
-        'products.price','products.image','orderdetail.quantity','orderdetail.total',
-        'orderdetail.created_at','customers.id','orders.id' )->where('customers.id','=',$id)
-        ->orderby('orders.id','DESC')
-        ->get();
-        return view('shop.historyorder',compact('items'));
+        $id = Auth::guard('customers')->user()->id;
+        $items = DB::table('customers')
+            ->join('orders', 'customers.id', '=', 'orders.customer_id')
+            ->join('orderdetail', 'orders.id', '=', 'orderdetail.order_id')
+            ->join('products', 'orderdetail.product_id', '=', 'products.id')
+            ->select('products.name', 'products.age', 'products.color', 'products.gender',
+                'products.price', 'products.image', 'orderdetail.quantity', 'orderdetail.total',
+                'orderdetail.created_at', 'customers.id', 'orders.id')->where('customers.id', '=', $id)
+            ->orderby('orders.id', 'DESC')
+            ->get();
+        return view('shop.historyorder', compact('items'));
     }
-} 
+}

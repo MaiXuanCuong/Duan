@@ -100,7 +100,7 @@ Route::prefix('xcshop')->group(function(){
     Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
     Route::get('/store/{id}',[ShopController::class,'store'])->name('shop.store');
     Route::patch('/update-cart', [ShopController::class, 'update'])->name('update.cart');
-    Route::delete('/removecart/{id}', [ShopController::class, 'remove'])->name('remove.from.cart');
+    Route::get('/removecart/{id}', [ShopController::class, 'remove'])->name('remove.cart');
     Route::get('/checkOuts', [ShopController::class, 'checkOuts'])->name('checkOuts');
     Route::post('/order', [ShopController::class, 'order'])->name('order');
     Route::get('/history', [ShopController::class, 'history'])->name('history');

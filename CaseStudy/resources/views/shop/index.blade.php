@@ -256,8 +256,8 @@
             </div>
         </div>
     </div> <!-- End product widget area -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/main_styles.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/main_styles.css') }}"> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('AdminLTE/plugins/jquery/jquery.min.js')}}"></script>
 <script>
