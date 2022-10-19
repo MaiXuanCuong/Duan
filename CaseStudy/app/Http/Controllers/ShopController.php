@@ -72,24 +72,7 @@ class ShopController extends Controller
     }
     public function update(Request $request)
     {
-        if ($request->id && $request->quantity) {
-            $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            $totalCart = number_format(($cart[$request->id]["price"]) * $cart[$request->id]["quantity"]);
-            $totalAllCart = 0;
-            $TotalAllRefreshAjax = 0;
-            foreach ($cart as $id => $details) {
-                $totalAllCart = $details['price'] * $details['quantity'];
-                $TotalAllRefreshAjax += $totalAllCart;
-            }
-            session()->put('cart', $cart);
-            session()->flash('message', 'Cart updated successfully');
-            return response()->json([
-                'status' => 'cập nhật thành công',
-                'totalCart' => '' . $totalCart,
-                'TotalAllRefreshAjax' => '' . number_format($TotalAllRefreshAjax),
-            ]);
-        }
+       
     }
     public function remove($id)
     {
@@ -114,62 +97,9 @@ class ShopController extends Controller
     }
     public function order(Request $request)
     {
-        if ($request->product_id == null) {
-            return redirect()->back();
-        } else {
-            $id = Auth::guard('customers')->user()->id;
-            $data = Customer::find($id);
-            $data->address = $request->address;
-            $data->email = $request->email;
-            $data->phone = $request->phone;
-            $data->address = $request->address;
-            if (isset($request->note)) {
-                $data->note = $request->note;
-            }
-            $data->save();
-
-            $order = new Order();
-            $order->customer_id = Auth::guard('customers')->user()->id;
-            $order->date_at = date('Y-m-d H:i:s');
-            $order->total = $request->totalAll;
-            $order->save();
-        }
-        try {
-            if ($order) {
-                $count_product = count($request->product_id);
-                for ($i = 0; $i < $count_product; $i++) {
-                    $orderItem = new OrderDetail();
-                    $orderItem->order_id = $order->id;
-                    $orderItem->product_id = $request->product_id[$i];
-                    $orderItem->quantity = $request->quantity[$i];
-                    $orderItem->total = $request->total[$i];
-                    $orderItem->save();
-                    session()->forget('cart');
-                    DB::table('products')
-                        ->where('id', '=', $orderItem->product_id)
-                        ->decrement('quantity', $orderItem->quantity);
-                }
-                toast('Đặt hàng thành công!', 'success', 'top-right');
-                return redirect()->route('shop.index');
-            }
-        } catch (\Exception$e) {
-            Log::error($e->getMessage());
-            toast('Đặt hàng thấy bại!', 'error', 'top-right');
-            return redirect()->route('shop.index');
-        }
+        
     }
     public function history()
     {
-        $id = Auth::guard('customers')->user()->id;
-        $items = DB::table('customers')
-            ->join('orders', 'customers.id', '=', 'orders.customer_id')
-            ->join('orderdetail', 'orders.id', '=', 'orderdetail.order_id')
-            ->join('products', 'orderdetail.product_id', '=', 'products.id')
-            ->select('products.name', 'products.age', 'products.color', 'products.gender',
-                'products.price', 'products.image', 'orderdetail.quantity', 'orderdetail.total',
-                'orderdetail.created_at', 'customers.id', 'orders.id')->where('customers.id', '=', $id)
-            ->orderby('orders.id', 'DESC')
-            ->get();
-        return view('shop.historyorder', compact('items'));
-    }
+        
 }
