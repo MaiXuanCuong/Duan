@@ -65,7 +65,7 @@
                                                 </td>
 
                                                 <td class="product-name">
-                                                    <a href="single-product.html">{{ $product_cart->name }}</a>
+                                                    <a href="{{ route('shop.product',$product_cart->id) }}">{{ $product_cart->name }}</a>
                                                 </td>
 
                                                 <td class="product-price">

@@ -43,7 +43,7 @@ class ShopController extends Controller
             // dd($carts->products);
             $param = [
                 'products' => $products,
-                'carts' => $carts->products,
+                'carts' => $carts->products->sortByDesc('id'),
             ];
             return view('shop.cart', $param);
         } else {
