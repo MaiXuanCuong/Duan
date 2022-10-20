@@ -26,9 +26,9 @@ class UpdateUserRequest extends FormRequest
         $rules =[
             'name' => 'required|min:3',
             'email' => 'required|email',
-            // 'province_id' => 'required',
-            // 'district_id' => 'required',
-            // 'ward_id' => 'required',
+            'province_id' => 'required',
+            'district_id' => 'required',
+            'ward_id' => 'required',
             'phone' => 'required|min:9',
             
            ];
@@ -40,9 +40,9 @@ class UpdateUserRequest extends FormRequest
                 'name.min' => 'Hãy Nhập Tên Sản Phẩm Lớn Hơn 3 Ký Tự',
                 'email.required' => 'Hãy Nhập Email Của Bạn',
                 'email.email' => 'Email Chưa Đúng Định Dạng',
-                // 'province_id.required' => 'Hãy Chọn Tỉnh/Thành Phó Của Bạn',
-                // 'district_id.required' => 'Hãy Chọn Quận/Huyện Của Bạn',
-                // 'ward_id.required' => 'Hãy Chọn Xã/Phường Của Bạn',
+                'province_id.required' => 'Hãy Chọn Tỉnh/Thành Phó Của Bạn',
+                'district_id.required' => 'Hãy Chọn Quận/Huyện Của Bạn',
+                'ward_id.required' => 'Hãy Chọn Xã/Phường Của Bạn',
                 'phone.required' => 'Hãy Nhập Số Điện Thoại Của Bạn',
                 'phone.min' => 'Hãy Nhập Số Điện Thoại Lớn Hơn 9 Ký Tự',
             ];
