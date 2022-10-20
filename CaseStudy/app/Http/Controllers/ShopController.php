@@ -40,7 +40,7 @@ class ShopController extends Controller
             $products = Product::all();
             $id_customer = Auth::guard('customers')->user()->id;
             $carts = Customer::find($id_customer);
-            // dd(Customer::find($id_customer));
+            // dd($carts->products);
             $param = [
                 'products' => $products,
                 'carts' => $carts->products,
@@ -79,7 +79,8 @@ class ShopController extends Controller
             try {
                 $id_customer = Auth::guard('customers')->user()->id;
                 DB::table('carts')
-                ->where(['product_cart', $id,'customer_cart', $id_customer])
+                ->where('product_cart', $id)
+                ->where('customer_cart', $id_customer)
                 ->delete();
                 return response()->json([
                     'code' => 200,

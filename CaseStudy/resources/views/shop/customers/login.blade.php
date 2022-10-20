@@ -55,7 +55,7 @@ height: 100%;
             <!-- Email input -->
             <div class="form-outline mb-4">
               <input type="email" name="email" id="form3Example3" class="form-control form-control-lg"
-                placeholder="Nhập Tài Khoản" />
+                placeholder="Nhập Tài Khoản" value="{{ old('email') }}"/>
               <label class="form-label" for="form3Example3">Tài Khoản</label>
               @error('email')
               <div class="alert alert-danger">{{ $message }}</div>
@@ -65,7 +65,7 @@ height: 100%;
             <!-- Password input -->
             <div class="form-outline mb-3">
               <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
-                placeholder="Nhập Mật Khẩu" />
+                placeholder="Nhập Mật Khẩu" value="{{ old('password') }}" />
               <label class="form-label" for="form3Example4">Mật Khẩu</label>
               @error('password')
               <div class="alert alert-danger">{{ $message }}</div>
