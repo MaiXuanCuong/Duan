@@ -38,7 +38,9 @@ class CustomerController extends Controller
             $customer->save();
             alert()->success('Đăng Ký Tài Khoản', 'Thành Công');
             return redirect()->route('shop.login');
+            return response()->json($customer, 200);
         } catch (\Exception$e) {
+            return response()->json($customer, 200);
             alert()->error('Email Đã Tồn Tại', 'Không Thành Công!');
             return back()->withInput();
         }

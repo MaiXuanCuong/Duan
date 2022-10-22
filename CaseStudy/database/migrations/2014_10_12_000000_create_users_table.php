@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('district_id')->nullable();
             $table->bigInteger('ward_id')->nullable();
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -43,6 +43,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '128GB;256GB;512GB;1TB';
         $role->category_id  = 2;
         $role->user_id = 1;
+        $role->image = 'storage/images/13prm.jpg';
         $role->save();
 
         $role = new Product();
@@ -67,6 +68,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '8GB/128GB;8GB/256GB';
         $role->category_id  = 1;
         $role->user_id = 1;
+        $role->image = 'storage/images/neo2t.jpg';
         $role->save();
 
         $role = new Product();
@@ -91,6 +93,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '8GB/128GB;8GB/256GB';
         $role->category_id  = 3;
         $role->user_id = 1;
+        $role->image = 'storage/images/zflip.jpg';
         $role->save();
 
         $role = new Product();
@@ -104,6 +107,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '8GB/128GB;12GB/128GB';
         $role->category_id  = 4;
         $role->user_id = 1;
+        $role->image = 'storage/images/k50.jpg';
         $role->save();
 
         $role = new Product();
@@ -128,6 +132,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '6GB/128GB;8GB/128GB';
         $role->category_id  = 1;
         $role->user_id = 1;
+        $role->image = 'storage/images/q5.jpg';
         $role->save();
 
         $role = new Product();
@@ -141,6 +146,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '64GB;128GB;256GB';
         $role->category_id  = 2;
         $role->user_id = 1;
+        $role->image = 'storage/images/12.jpg';
         $role->save();
 
         $role = new Product();
@@ -177,6 +183,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '128GB;256GB;512GB;1TB';
         $role->category_id  = 2;
         $role->user_id = 1;
+        $role->image = 'storage/images/14prm.jpg';
         $role->save();
 
         $role = new Product();
@@ -200,6 +207,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '8GB/256GB';
         $role->category_id  = 3;
         $role->user_id = 1;
+        $role->image = 'storage/images/note20.jpg';
         $role->save();
 
         $role = new Product();
@@ -223,6 +231,7 @@ class ProductTableSeeder extends Seeder
         $role->configuration = '8GB/256GB;12GB/256GB';
         $role->category_id  = 4;
         $role->user_id = 1;
+        $role->image = 'storage/images/bls5.jpg';
         $role->save();
     }
 }

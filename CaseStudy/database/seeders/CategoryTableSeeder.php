@@ -17,18 +17,22 @@ class CategoryTableSeeder extends Seeder
     {
         $category = new Category();
         $category->name = 'Realme';
+        $category->image = 'storage/images/realme.png';
         $category->save();
 
         $category = new Category();
         $category->name = 'Apple';
+        $category->image = 'storage/images/apple.png';
         $category->save();
 
         $category = new Category();
         $category->name = 'Sam Sung';
+        $category->image = 'storage/images/samsung.png';
         $category->save();
 
         $category = new Category();
         $category->name = 'Xiaomi';
+        $category->image = 'storage/images/xiaomi.png';
         $category->save();
     }
 }
