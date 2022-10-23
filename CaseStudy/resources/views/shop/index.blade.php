@@ -35,7 +35,7 @@
                                 <div  class="product-f-image">
                                     <img src="{{ asset($item->image) }}" alt="">
                                     <div class="product-hover">
-                                        <a data-url="{{route('shop.store',$item->id)}}" id="{{ $item->id }}" class="add-to-cart-link addToCart"><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
+                                        <a data-url="{{route('shop.store',$item->id)}}" id="{{ $item->image }}" class="add-to-cart-link addToCart"><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
                                         <a href="{{ route('shop.product',$item->id) }}" class="view-details-link"><i class="fa fa-link"></i>Xem Chi Tiết</a>
                                     </div>
                                 </div>
@@ -255,9 +255,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End product widget area -->
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/main_styles.css') }}"> --}}
+    </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('AdminLTE/plugins/jquery/jquery.min.js')}}"></script>
 <script>
