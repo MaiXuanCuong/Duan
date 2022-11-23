@@ -192,39 +192,37 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        
+                                        <div class="row mb-3">
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label"><br>Số Điện Thoại</label>
+                                            <div class="col-md-8 col-lg-9"><br>
+                                                <input name="phone" type="text" class="form-control" id="Phone"
+                                                    value="{{ Auth()->user()->phone }}">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                                        </div> 
                                     </div>
                             </div>
-                            <br>
-                            <div class="row mb-3">
-                                <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số Điện Thoại</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="phone" type="text" class="form-control" id="Phone"
-                                        value="{{ Auth()->user()->phone }}">
-                                </div>
-                            </div>
-
-                            {{-- <div class="row mb-3">
+                           
+                          
+{{-- 
+                          <div class="row mb-3">
                                 <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                 <div class="col-md-8 col-lg-9">
                                     <input name="email" type="email" class="form-control" id="Email"
                                         value="{{ Auth()->user()->email }}">
                                 </div>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Cập Nhật</button>
                             </div> --}}
+
+                           
                             </form><!-- End Profile Edit Form -->
 
                         </div>
 
-                        <div class="tab-pane fade pt-3" id="profile-settings">
 
-                            <!-- Settings Form -->
-
-                        </div>
-
-                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                        <div class="tab-pane pt-3" id="profile-change-password">
                             <!-- Change Password Form -->
                             <form class="mx-1 mx-md-4" method="post" action="{{ route('users.updatepassword') }}">
                                 @method('PUT')
