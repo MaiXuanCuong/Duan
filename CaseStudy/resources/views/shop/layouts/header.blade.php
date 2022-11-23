@@ -58,16 +58,13 @@
                                        <li class="checkout">
                                            <a href="{{ route('shop.cart') }}">
                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                               @if(isset($carts))
                                                @php
-                                                   use App\Models\Customer;
-                                                   if (isset(Auth::guard('customers')->user()->id)) {
-                                                       $id_customer = Auth::guard('customers')->user()->id;
-                                                       $carts = Customer::find($id_customer);
-                                                       $count = count($carts->products);
-                                                   }
+                                                $countCart = count($carts);
                                                @endphp
+                                               @endif
                                                <span id="checkout_items"
-                                                   class="checkout_items">{{ $count ?? 0 }}</span>
+                                                   class="checkout_items">{{ $countCart ?? 0 }}</span>
                                            </a>
                                        </li>
                                    </ul>

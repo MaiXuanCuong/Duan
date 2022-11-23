@@ -1,5 +1,8 @@
 @extends('shop.home')
 @section('content')
+@php
+// dd($carts[0]);
+@endphp
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -49,60 +52,57 @@
                                         </tr>
                                  
                                     </thead>
+                                  
                                     @if(isset(Auth()->guard('customers')->user()->name))
                                     @if (isset($carts) && count($carts) > 0)
+                                  
                                     @foreach ($carts as $product_cart)
                                         <tbody>
                                             <tr class="cart_item">
                                                 <td class="product-remove">
-                                                    <a title="Remove this item" class="remove" href="#">×</a>
+                                                    <a title="Remove this item" class="remove"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                                        <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                                        <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                                                      </svg></a>
                                                 </td>
 
                                                 <td class="product-thumbnail">
                                                     <a href="single-product.html"><img width="145" height="145"
                                                             alt="poster_1_up" class="shop_thumbnail"
-                                                            src="{{ asset($product_cart->image) }}"></a>
+                                                            src="{{ asset($product_cart['image']) }}"></a>
                                                 </td>
 
                                                 <td class="product-name">
-                                                    <a href="{{ route('shop.product',$product_cart->id) }}">{{ $product_cart->name }}</a>
+                                                    <a href="{{ route('shop.product',$product_cart['id']) }}">{{ $product_cart['name'] }}</a>
                                                 </td>
 
                                                 <td class="product-price">
                                                     <span
-                                                        class="amount">{{ number_format($product_cart->price) . ' VNĐ' }}</span>
+                                                        class="amount">{{ number_format($product_cart['price']) . ' VNĐ' }}</span>
                                                 </td>
 
                                                 <td class="product-quantity">
                                                     <div class="quantity buttons_added">
-                                                        {{-- <input type="button" class="minus" value="-"> --}}
-                                                        <input type="number" size="4" class="input-text qty text"
+                                                        <input type="number" size="4" class=""
                                                             title="Qty" value="1" min="0" step="1">
-                                                        {{-- <input type="button" class="plus" value="+"> --}}
                                                     </div>
                                                 </td>
 
                                                 <td class="product-subtotal">
                                                     <span
-                                                        class="amount">{{ number_format($product_cart->price) . ' VNĐ' }}</span>
+                                                        class="amount">{{ number_format($product_cart['price']) . ' VNĐ' }}</span>
                                                 </td>
                                                 <td class="product-delete">
-                                                    <a data-url="{{route('remove.cart',$product_cart->id)}}" id="{{ $product_cart->id }}" class="add-to-cart-link ajax_delete"><i class="fa fa-trash-o sidebar-title" aria-hidden="true"></i></a>
+                                                    <a data-url="{{route('remove.cart',$product_cart['id'])}}" id="{{ $product_cart['id'] }}" class="add-to-cart-link ajax_delete"><i class="fa fa-trash-o sidebar-title" aria-hidden="true"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach
                                             <tr>
                                                 <td class="actions" colspan="8">
-                                                    <div class="coupon">
-                                                        <label for="coupon_code">Giảm Giá:</label>
-                                                        <input type="text" placeholder="Mã Giảm Giá" value=""
-                                                            id="coupon_code" class="input-text" name="coupon_code">
-                                                        <input type="submit" value="Apply Coupon" name="apply_coupon"
-                                                            class="button">
-                                                    </div>
-                                                    <input type="submit" value="Update Cart" name="update_cart"
+                                                   
+                                                    <input type="submit" value="Cập nhật giỏ hàng" name="update_cart"
                                                         class="button">
-                                                    <input type="submit" value="Checkout" name="proceed"
+                                                    <input type="submit" value="Đặt hàng" name="proceed"
                                                         class="checkout-button button alt wc-forward">
                                                 </td>
                                             @else

@@ -20,6 +20,11 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'province_id' => mt_rand(1,63),
+            'district_id' => mt_rand(1,10),
+            'ward_id' => mt_rand(1,10),
+            'image'=> fake()->image(),
+            'phone'=> fake()->creditCardNumber(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

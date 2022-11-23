@@ -17,7 +17,7 @@ Route::get('/login', [UserController::class, 'checkLogin'])->name('login');
 Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login');
 
 Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function () {
-    Route::get('/home', [HomeController::class, 'home'])->name('/');
+    Route::get('/', [HomeController::class, 'home'])->name('/');
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoriesController::class, 'index'])->name('categories');
         Route::get('/add', [CategoriesController::class, 'create'])->name('categories.add');
