@@ -21,6 +21,22 @@ class CategoryTest extends TestCase
 
     //     $response->assertStatus(200);
     // }
+    //test route
+    // public function test_route_category()
+    // {
+    //     $this->get('categories/')->assertStatus(200);//kiem tra URL /category co ton tai voi method GET ko - xem tat ca
+    //     $this->get('categories/add')->assertStatus(200);//kiem tra URL /category/create co ton tai voi method GET ko - trang them moi
+    //     $this->post('categories/store')->assertStatus(200);//kiem tra URL /category co ton tai voi method POST ko - xu ly them moi
+    //     $this->get('categories/destroy/1')->assertStatus(200);//kiem tra URL /category/1 co ton tai voi method GET ko - trang xem chi tiet
+    //     $this->get('categories/edit/1')->assertStatus(200);//kiem tra URL /category/1/edit co ton tai voi method GET ko - trang chinh sua
+    //     $this->put('categories/garbageCan')->assertStatus(200);//kiem tra URL /category co ton tai voi method PUT ko - xu ly chinh sua
+    //     // $this->delete('categories/1')->assertStatus(200);//kiem tra URL /category co ton tai voi method GET ko - xu ly xoa
+    //     $this->get('categories/restore/1')->assertStatus(200);//kiem tra URL /category/create co ton tai voi method GET ko - trang them moi
+    //     $this->get('categories/update/1')->assertStatus(200);//kiem tra URL /category/create co ton tai voi method GET ko - trang them moi
+    //     $this->put('categories/forceDelete/1')->assertStatus(200);//kiem tra URL /category co ton tai voi method PUT ko - xu ly chinh sua
+    //     $this->put('categories/search')->assertStatus(200);//kiem tra URL /category co ton tai voi method PUT ko - xu ly chinh sua
+      
+    // }
     public function test_create_category_by_factory(){
         $category = Category::factory(Category::class)->create();//goi factory de tao moi du lieu
         $this->assertNotNull($category);//kiem tra ket qua tra ve co NULL hay khong
