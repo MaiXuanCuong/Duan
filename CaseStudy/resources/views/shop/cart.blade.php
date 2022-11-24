@@ -67,13 +67,13 @@
                                                 </td>
 
                                                 <td class="product-thumbnail">
-                                                    <a href="single-product.html"><img width="145" height="145"
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="chi tiết sản phẩm" href="{{ route('shop.product',$product_cart['id']) }}"><img width="145" height="145"
                                                             alt="poster_1_up" class="shop_thumbnail"
                                                             src="{{ asset($product_cart['image']) }}"></a>
                                                 </td>
 
                                                 <td class="product-name">
-                                                    <a href="{{ route('shop.product',$product_cart['id']) }}">{{ $product_cart['name'] }}</a>
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="chi tiết sản phẩm" href="{{ route('shop.product',$product_cart['id']) }}">{{ $product_cart['name'] }}</a>
                                                 </td>
 
                                                 <td class="product-price">
@@ -84,13 +84,13 @@
                                                 <td class="product-quantity">
                                                     <div class="quantity buttons_added">
                                                         <input type="number" size="4" class=""
-                                                            title="Qty" value="1" min="0" step="1">
+                                                            title="Qty" value="{{ $product_cart['quantity'] }}" min="0" step="1">
                                                     </div>
                                                 </td>
 
                                                 <td class="product-subtotal">
                                                     <span
-                                                        class="amount">{{ number_format($product_cart['price']) . ' VNĐ' }}</span>
+                                                        class="amount">{{ number_format($product_cart['price'] * $product_cart['quantity']) . ' VNĐ' }}</span>
                                                 </td>
                                                 <td class="product-delete">
                                                     <a data-url="{{route('remove.cart',$product_cart['id'])}}" id="{{ $product_cart['id'] }}" class="add-to-cart-link ajax_delete"><i class="fa fa-trash-o sidebar-title" aria-hidden="true"></i></a>
@@ -99,11 +99,8 @@
                                             @endforeach
                                             <tr>
                                                 <td class="actions" colspan="8">
-                                                   
-                                                    <input type="submit" value="Cập nhật giỏ hàng" name="update_cart"
-                                                        class="button">
-                                                    <input type="submit" value="Đặt hàng" name="proceed"
-                                                        class="checkout-button button alt wc-forward">
+                                                    <a type="button" href="{{ route('checkOuts')}}"
+                                                        class="checkout-button button alt wc-forward">Đặt hàng</a>
                                                 </td>
                                             @else
                                             <tr>
@@ -122,80 +119,26 @@
                             </form>
 
                             <div class="cart-collaterals">
+                                <div class="slider-area">
+                                    <div class="block-slider block-slider4">
+                                        <ul class="" id="bxslider-home4">
+                                            @foreach ($products as $item)
+                                            <li>
+                                                <img style="height: 200px; width: 200px" src="{{ asset($item->image) }}" alt="Slide">
+                                                <div class="caption-group">
+                                                    <b class="caption title">
+                                                        <span class="primary"><strong>{{ $item->name }}</strong></span>
+                                                    </b>
+                                                    <h4 class="caption subtitle"><strong>Giá Chỉ: </strong>{{ number_format($item->price)." VNĐ" }}</h4>
+                                                    <a class="caption button-radius" href="{{ route('shop.product',$item->id) }}"><span class="icon"></span>Mua Ngay</a>
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                            </div>
 
 
-                                <div class="hover">
-                                    <h2><i>Có Thể Bạn Quan Tâm</i></h2>
-                                    <ul class="products">
-                                        @php($count = 0)
-                                        @foreach ($products as $item)
-                                            @if ($item->id != rand(0, $item->id) && $count < 2)
-                                                @php($count++)
-                                                <li class="product">
-                                                    <a href="{{ route('shop.product',$item->id) }}">
-                                                        <img width="325" height="325" alt="T_4_front"
-                                                            class="attachment-shop_catalog wp-post-image"
-                                                            src="{{ asset($item->image) }}">
-                                                        <b>{{ $item->name }}</b>
-                                                        <span class="price"><span
-                                                                class="amount">{{ number_format($item->price) . ' VNĐ' }}</span></span>
-                                                    </a>
-
-                                                    {{-- <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                                        data-product_id="22" rel="nofollow" href="single-product.html">Xem
-                                                        Sản Phẩm</a> --}}
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-
-
-                                <div class="cart_totals ">
-                                    <h2>Tổng Giỏ Hàng</h2>
-
-                                    <table cellspacing="0">
-                                        <tbody>
-                                            <tr class="cart-subtotal">
-                                                <th>Tổng Tiền</th>
-                                                <td><span class="amount">£15.00</span></td>
-                                            </tr>
-
-                                            <tr class="shipping">
-                                                <th>HÌnh Thức Vận Chuyển</th>
-                                                <td>Free Shipping</td>
-                                            </tr>
-
-                                            <tr class="order-total">
-                                                <th>Tổng Đơn Đặt</th>
-                                                <td><strong><span class="amount">£15.00</span></strong> </td>
-                                            </tr>
-                                        </tbody>
-                                 
-                                    </table>
-                                    
-                                </div>
-                                <form method="post" action="#" class="shipping_calculator">
-                                    <h2><a class="shipping-calculator-button" data-toggle="collapse" href="#calcalute-shipping-wrap" aria-expanded="false" aria-controls="calcalute-shipping-wrap">Đặt Hàng</a></h2>
-    
-                                    <section id="calcalute-shipping-wrap" class="shipping-calculator-form collapse in" style="">
-    
-                                    <p class="form-row form-row-wide">
-                                    <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
-                                        <option value="">Select a country…</option>
-                                      
-                                    </select>
-                                    </p>
-    
-                                    <p class="form-row form-row-wide"><input type="text" id="calc_shipping_state" name="calc_shipping_state" placeholder="State / county" value="" class="input-text"> </p>
-    
-                                    <p class="form-row form-row-wide"><input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Postcode / Zip" value="" class="input-text"></p>
-    
-    
-                                    <p><button class="button" value="1" name="calc_shipping" type="submit">Đặt Hàng</button></p>
-    
-                                    </section>
-                                </form>
                             </div>
                         </div>
                     </div>

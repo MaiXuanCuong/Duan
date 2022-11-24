@@ -25,6 +25,9 @@
         "msg_user_up_err" => "Update user :name failed",
         "msg_user_dele_ss" => "Delete user :name successfully",
         "msg_user_dele_err" => "Delete user :name failed",
+
+        "messages.msg_add_order_ss" => "Add order successfully",
+        "messages.msg_add_order_err" => "Add order failed",
     ]
 
 

@@ -23,27 +23,23 @@ class StoreOderRequest extends FormRequest
      */
     public function rules()
     {
-      
-        
        $rules =[
-        'quantity' => 'required',
         'address' => 'required',
+        'province_id' => 'required',
+        'district_id' => 'required',
+        'ward_id' => 'required',
+        'name_customer' => 'required',
         'phone' => 'required',
-        'configuration' => 'required',
-        'quantity' => 'required',
-        'color' => 'required',
-        'name' => 'required|min:3',
        ];
         return $rules;
     }
     public function messages(){
         $messages =[
-            'name.required' => 'Hãy Nhập Tên Của Bạn',
             'address.required' => 'Hãy Nhập Địa Chỉ Giao Hàng',
-            'quantity.required' => 'Hãy Nhập Số Lượng Sản Phẩm',
-            'configuration.required' => 'Hãy Nhập Cấu Hình Sản Phẩm',
-            'color.required' => 'Hãy Nhập Màu Sản Phẩm',
-            'name.required' => 'Hãy Nhập Tên Người Đặt Hàng',
+            'province_id.required' => 'Hãy chọn tỉnh/thành phố',
+            'district_id.required' => 'Hãy chọn quận/huyện',
+            'ward_id.required' => 'Hãy chọn xã/phường',
+            'name_customer.required' => 'Hãy Nhập Tên Của Bạn',
             'phone.required' => 'Hãy Nhập Số Điện Thoại',
           
            

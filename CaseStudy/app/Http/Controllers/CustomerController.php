@@ -44,7 +44,7 @@ class CustomerController extends Controller
                 return redirect()->route('shop.home');
             }
         } catch (\Exception $e) {
-            return response()->json($customer, 200);
+            // return response()->json($customer, 200);
             alert()->error('Email Đã Tồn Tại', 'Không Thành Công!');
             return back()->withInput();
         }

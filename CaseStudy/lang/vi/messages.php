@@ -25,6 +25,9 @@
         "msg_user_up_err" => "Cập Nhật Nhân Viên :name Không Thành Công!",
         "msg_user_dele_ss" => "Xóa Nhân Viên :name Thành Công!",
         "msg_user_dele_err" => "Xóa Nhân Viên :name Không Thành Công!",
+
+        "messages.msg_add_order_ss" => "Đặt hàng thành công",
+        "messages.msg_add_order_err" => "Đặt hàng không thành công",
     ]
 
 

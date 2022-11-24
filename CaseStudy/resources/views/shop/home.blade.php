@@ -34,16 +34,6 @@
         <script src="{{ asset('shop/js/main.js') }}"></script>
         <script type="text/javascript" src="{{ asset('shop/js/bxslider.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('shop/js/script.slider.js') }}"></script>
-        <div
-            style="text-align:right;position:fixed;bottom:3px;right:3px;width:100%;z-index:999999;cursor:pointer;line-height:0;display:block;">
-            <a target="_blank" href="https://www.freewebhostingarea.com" title="Free Web Hosting with PHP5 or PHP7"><img
-                    alt="Free Web Hosting" src="https://www.freewebhostingarea.com/images/poweredby.png"
-                    style="border-width: 0px;width: 180px; height: 45px; float: right;"></a></div>
-                    <script src="{{ asset('shop/js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('shop/js/custom.js') }}"></script>
-
-   
-    
         </body>
 
     </html>

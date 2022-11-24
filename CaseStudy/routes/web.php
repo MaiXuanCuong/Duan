@@ -93,8 +93,6 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
     });
 });
 
-// Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
-// Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
 Route::prefix('xcshop')->group(function(){
     Route::get('/', [ShopController::class, 'index'])->name('shop.home');
     Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
@@ -104,6 +102,9 @@ Route::prefix('xcshop')->group(function(){
     Route::get('/checkOuts', [ShopController::class, 'checkOuts'])->name('checkOuts');
     Route::post('/order', [ShopController::class, 'order'])->name('order');
     Route::get('/history', [ShopController::class, 'history'])->name('history');
+    Route::get('customer/GetDistricts', [ShopController::class, 'GetDistricts'])->name('customer.GetDistricts');
+    Route::get('customer/getWards', [ShopController::class, 'getWards'])->name('customer.getWards');
+    
     Route::get('register', function(){
         return view('shop.customers.register');
     })->name('register');
@@ -115,4 +116,5 @@ Route::prefix('xcshop')->group(function(){
     Route::get('logout', [CustomerController::class, 'logout'])->name('shop.logout');
     Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
     Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
+    
 });

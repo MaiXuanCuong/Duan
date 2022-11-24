@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="submit" class="button " value="Đặt Hàng"><br><br><br>
+                                        <a type="submit" class="button" value="Đặt Hàng"><br><br><br>
                                         <div>
                                         </div>
                                     </td>

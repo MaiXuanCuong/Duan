@@ -726,6 +726,20 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     margin-bottom: 10px;
     width: 100%;
 }
+
+a[type=button] {
+    background: none repeat scroll 0 0 #ee5057;
+    border: medium none;
+    color: #fff;
+    padding: 11px 20px;
+    text-transform: uppercase;
+}
+a[type=button]:hover {background-color: #222}
+.single-sidebar input[type="text"] {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
 .thubmnail-recent {
     margin-bottom: 30px;
     overflow: hidden;
