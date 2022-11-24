@@ -15,7 +15,7 @@
 								<span class="primary"><strong>{{ $item->name }}</strong></span>
 							</h2>
 							<h4 class="caption subtitle"><strong>Giá Chỉ: </strong>{{ number_format($item->price)." VNĐ" }}</h4>
-							<a class="caption button-radius" href="{{ route('shop.product',$item->id) }}"><span class="icon"></span>Mua Ngay</a>
+                            <a data-url="{{route('shop.store',$item->id)}}" id="{{ $item->id}}" class="caption button-radius add-to-cart-link addToCart"><span class="icon"></span><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
 						</div>
 					</li>
                     @endforeach

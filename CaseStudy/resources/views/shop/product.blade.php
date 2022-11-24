@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a type="submit" class="button" value="Đặt Hàng"><br><br><br>
+                                        <a type="button" data-url="{{route('shop.store',$product->id)}}" id="{{ $product->id}}" class="add-to-cart-link addToCart"><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
                                         <div>
                                         </div>
                                     </td>
@@ -140,4 +140,49 @@
     </div>
     </div>
 </div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('AdminLTE/plugins/jquery/jquery.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function AddToCart(event){
+event.preventDefault();
+let urlRequest = $(this).data('url');
+let tr = $(this);
+Swal.fire({
+    title: 'Thêm Sản Phẩm',
+    text: "Vào Giỏ Hàng Của Bạn",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Đồng Ý'
+}).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+            url: urlRequest,
+            type: 'get',
+            success: function(data){
+                if(data.code == 200){
+                    Swal.fire(
+                        'Thêm Sản Phẩm',
+                        'Thành Công Vào Giỏ Hàng',
+                        'success'
+                    );
+                } else {
+                    Swal.fire(
+                        'Thêm Sản Phẩm Không Thành Công',
+                        'Vui Lòng Đăng Nhập',
+                        'error'
+                    );
+                }
+            }
+        });
+    }
+})
+}
+$(function () {
+$(document).on('click', '.addToCart', AddToCart);
+});
+
+</script>
     @endsection

@@ -728,7 +728,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
 }
 
 a[type=button] {
-    background: none repeat scroll 0 0 #ee5057;
+    background: none repeat scroll 0 0 #60afff;
     border: medium none;
     color: #fff;
     padding: 11px 20px;
