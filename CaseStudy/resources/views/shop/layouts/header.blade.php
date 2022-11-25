@@ -1,8 +1,7 @@
-   < <div class="super_container">
 
-       <!-- Header -->
-
-       <header class="header trans_300">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+   <div class="super_container">
+       <header>
            <div class="top_nav">
                <div class="container">
                    <div class="row">
@@ -13,23 +12,68 @@
                            <div class="top_nav_right">
                                <ul class="top_nav_menu">
                                    <li class="account">
-                                       <a href="#">
-                                           Tài Khoản Của Bạn
-                                           <i class="fa fa-angle-down"></i>
-                                       </a>
-                                       <ul class="account_selection">
+                                                                                                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Cài đặt tài khoản
+    <i class="fa fa-angle-down"></i>
 
-                                           @if (isset(Auth()->guard('customers')->user()->name))
-                                               <label>{{ Auth()->guard('customers')->user()->name }}</label>
-                                               <li><a href="{{ route('shop.logout') }}"><i class="fa fa-sign-in"
-                                                           aria-hidden="true"></i>Đăng Xuất</a></li>
-                                           @else
-                                               <li><a href="{{ route('shop.login') }}"><i class="fa fa-sign-in"
-                                                           aria-hidden="true"></i>Đăng Nhập</a></li>
-                                               <li><a href="{{ route('register') }}"><i class="fa fa-address-card-o"
-                                                           aria-hidden="true"></i></i>Đăng Ký</a></li>
-                                           @endif
-                                       </ul>
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        @if (isset(Auth()->guard('customers')->user()->name))
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thay đổi thông tin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="">
+        <div class="modal-body">
+        <input type="text" class="form-control" value="{{ Auth()->guard('customers')->user()->name }}" placeholder="Nhập họ và tên" required>
+        <input type="email" class="form-control" value="{{ Auth()->guard('customers')->user()->email }}" placeholder="Nhập email" disabled required><br>
+
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Đổi mật khẩu
+          </button>
+        <div class="collapse  text-center" id="collapseExample">
+          <div class="card card-body">
+        <input type="password" class="form-control " placeholder="Nhập mật khẩu cũ ">
+        <input type="password" class="form-control " placeholder="Nhập mật khẩu mới">
+        <input type="password" class="form-control " placeholder="Nhập lại mật khẩu mới">
+
+        
+            
+        </div>
+    </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+          
+          
+        </div>
+    </form>
+        @endif
+        <ul class="account_selection">
+
+            @if (isset(Auth()->guard('customers')->user()->name))
+                <label>{{ Auth()->guard('customers')->user()->name }}</label>
+                <li><a href="{{ route('shop.logout') }}"><i class="fa fa-sign-in"
+                            aria-hidden="true"></i>Đăng Xuất</a></li>
+
+        
+            @else
+                <li><a href="{{ route('shop.login') }}"><i class="fa fa-sign-in"
+                            aria-hidden="true"></i>Đăng Nhập</a></li>
+                <li><a href="{{ route('register') }}"><i class="fa fa-address-card-o"
+                            aria-hidden="true"></i></i>Đăng Ký</a></li>
+            @endif
+        </ul>
+      </div>
+    </div>
+  </div>
+
+                                   
                                    </li>
                                </ul>
                            </div>
@@ -79,18 +123,4 @@
        <br>
        <br>
        <br>
-       <div class="mainmenu-area">
-           <div class="container">
-               <div class="row">
-                   <div class="navbar-header">
-                       <button type="button" class="navbar-toggle" data-toggle="collapse"
-                           data-target=".navbar-collapse">
-                           <span class="sr-only">Toggle navigation</span>
-                           <span class="icon-bar"></span>
-                           <span class="icon-bar"></span>
-                           <span class="icon-bar"></span>
-                       </button>
-                   </div>
-               </div>
-           </div>
-       </div> <!-- End mainmenu area -->
+     
