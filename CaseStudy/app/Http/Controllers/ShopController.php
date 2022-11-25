@@ -79,7 +79,7 @@ class ShopController extends Controller
                     'image' => $product->image,
                     'quantity_product' => $product->quantity,
                 ];
-                $expiresAt = Carbon::now()->addMinutes(1);
+                $expiresAt = Carbon::now()->addMinutes(60);
             Cache::put('historyProducts'.$user, $historyProducts,$expiresAt);
         } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
@@ -211,9 +211,9 @@ class ShopController extends Controller
                     'order_id' => $order->id,
                 ]);
                 Product::where('id', $productId)->decrement('quantity', $cart['quantity']);
-                unset($cart);
+                
             }
-            Cache::put('carts'.$user, $carts);
+            Cache::forget('carts'.$user);
             $order->total= $order_total_price;
             $order->save();
             DB::commit();
