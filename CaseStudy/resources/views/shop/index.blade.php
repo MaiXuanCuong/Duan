@@ -79,7 +79,7 @@
                 <div class="col-lg-6 text-right deal_ofthe_week_col">
                     <div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
                         <div class="section_title">
-                            <h2>Deal Of The Week</h2>
+                            <h2>Deal hot</h2>
                         </div>
                         <ul class="timer">
                             <li class="d-inline-flex flex-column justify-content-center align-items-center">
@@ -99,7 +99,7 @@
                                 <div class="timer_unit">Sec</div>
                             </li>
                         </ul>
-                        <div class="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
+                        <div class="red_button deal_ofthe_week_button"><a href="#">Mua ngay</a></div>
                     </div>
                 </div>
             </div>
@@ -116,8 +116,9 @@
                         @if(isset($topProducts) && !empty($topProducts))
                         @foreach($topProducts as $top)
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="{{ asset($top->image) }}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">{{ $top->name }}</a></h2>
+                            <div class="product_bubble product_bubble_yellow d-flex flex-column align-items-center"><span>Hot</span></div>
+                            <a href="{{ route('shop.product',$top->id) }}"><img src="{{ asset($top->image) }}" alt="" class="product-thumb"></a>
+                            <h2><a href="{{ route('shop.product',$top->id) }}">{{ $top->name }}</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -144,8 +145,9 @@
                         @foreach($historyProducts as $history)
 
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="{{ asset($history['image']) }}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">{{ $history['name'] }}</a></h2>
+                            <div class="product_bubble product_bubble_orange d-flex flex-column align-items-center"><span>His</span></div>
+                            <a href="{{ route('shop.product',$history['id']) }}"><img src="{{ asset($history['image']) }}" alt="" class="product-thumb"></a>
+                            <h2><a href="{{ route('shop.product',$history['id']) }}">{{ $history['name'] }}</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -170,8 +172,10 @@
                         @if(isset($productsNew) && !empty($productsNew))
                         @foreach($productsNew as $new)
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="{{ asset($new->image) }}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">{{ $new->name }}</a></h2>
+                            <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>New</span></div>
+                        
+                            <a href="{{ route('shop.product',$new->id) }}"><img src="{{ asset($new->image) }}" alt="" class="product-thumb"></a>
+                            <h2><a href="{{ route('shop.product',$new->id) }}">{{ $new->name }}</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>

@@ -1087,7 +1087,7 @@ section
 .product_bubble
 {
 	position: absolute;
-	top: 15px;
+	top: 0px;
 	width: 50px;
 	height: 22px;
 	border-radius: 3px;
@@ -1097,7 +1097,7 @@ section
 {
 	font-size: 12px;
 	font-weight: 600;
-	color: #FFFFFF;
+	color: #ff0000;
 }
 .product_bubble_right::after
 {
@@ -1128,7 +1128,15 @@ section
 }
 .product_bubble_left::after
 {
-	border-color: #51a042 #51a042 transparent transparent;
+	border-color: #6ad754 #69cd55 transparent transparent;
+}
+.product_bubble_left_orangea::after
+{
+	border-color: #ff9e2f #ff9e2f transparent transparent;
+}
+.product_bubble_left_yellow::after
+{
+	border-color:#ffff00 #ffff00 transparent transparent;
 }
 .product_bubble_red
 {
@@ -1136,11 +1144,19 @@ section
 }
 .product_bubble_green
 {
-	background: #51a042;
+	background: #6dd159;
+}
+.product_bubble_orange
+{
+	background: #ff9e2f;
+}
+.product_bubble_yellow
+{
+	background: #ffff00;
 }
 .product_bubble_left
 {
-	left: 15px;
+	left: 0px;
 }
 .product_bubble_right
 {

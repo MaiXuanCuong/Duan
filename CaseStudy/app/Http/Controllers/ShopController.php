@@ -11,6 +11,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Province;
 use App\Models\Ward;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -23,16 +24,17 @@ class ShopController extends Controller
     public function index()
     {
         if (isset(Auth::guard('customers')->user()->id)) {
+            $user = Auth::guard('customers')->user()->id;
             $historyProducts = [];
-            $carts = Cache::get('carts');
-            $historyProduct = Cache::get('historyProducts');
+            $carts = Cache::get('carts'.$user);
+            $historyProduct = Cache::get('historyProducts'.$user);
             if (isset($carts[Auth::guard('customers')->user()->id])){
-                $carts = array_values($carts[Auth::guard('customers')->user()->id]);
+                $carts = array_values($carts);
             }
         
-            if (isset($historyProduct[Auth::guard('customers')->user()->id])) {
+            if (isset($historyProduct)) {
               
-               $historyProducts = array_values($historyProduct[Auth::guard('customers')->user()->id]);
+               $historyProducts = array_values($historyProduct);
                rsort($historyProducts);
             }
         } else {
@@ -42,14 +44,14 @@ class ShopController extends Controller
             
            
         $products = Product::all();
-        $productsNew = Product::orderBy('id','DESC')->get();
+        $productsNew = Product::orderBy('id','DESC')->take(6)->get();
         $categories = Category::all();
         $topProducts = DB::table('orders_detail')
         ->leftJoin('products', 'products.id', '=', 'orders_detail.product_id')
         ->selectRaw('products.*, sum(orders_detail.quantity) totalProduct, sum(orders_detail.total) totalPrice')
         ->groupBy('orders_detail.product_id')
         ->orderBy('totalProduct', 'desc')
-        // ->take(3)
+        ->take(6)
         ->get();
         $param = [
             'products' => $products,
@@ -67,8 +69,9 @@ class ShopController extends Controller
         $product = Product::findOrFail($id);
        
         try {
-            $historyProducts = Cache::get('historyProducts');
-                $historyProducts[Auth::guard('customers')->user()->id][$id] = [
+            $user = Auth::guard('customers')->user()->id;
+            $historyProducts = Cache::get('historyProducts'.$user);
+                $historyProducts[$id] = [
                     'id' => $id,
                     'quantity' => 1,
                     'name' => $product->name,
@@ -76,7 +79,8 @@ class ShopController extends Controller
                     'image' => $product->image,
                     'quantity_product' => $product->quantity,
                 ];
-            Cache::put('historyProducts', $historyProducts);
+                $expiresAt = Carbon::now()->addMinutes(1);
+            Cache::put('historyProducts'.$user, $historyProducts,$expiresAt);
         } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
         }
@@ -90,10 +94,11 @@ class ShopController extends Controller
         if (isset(Auth::guard('customers')->user()->id)) {
             try {
                 $products = Product::all();
-                $carts = Cache::get('carts');
-                if ($carts[Auth::guard('customers')->user()->id]) {
+                $user = Auth::guard('customers')->user()->id;
+                $carts = Cache::get('carts'.$user);
+                if ($carts) {
 
-                    $carts = array_values($carts[Auth::guard('customers')->user()->id]);
+                    $carts = array_values($carts);
                     $param = [
                         'products' => $products,
                         'carts' => $carts,
@@ -123,12 +128,14 @@ class ShopController extends Controller
     {
         try {
             $product = Product::find($id);
-            $carts = Cache::get('carts');
-            if (isset($carts[Auth::guard('customers')->user()->id][$id])) {
-                $carts[Auth::guard('customers')->user()->id][$id]['quantity']++;
-                $carts[Auth::guard('customers')->user()->id][$id]['price'] = $product->price;
-            } else {
-                $carts[Auth::guard('customers')->user()->id][$id] = [
+            if (isset(Auth::guard('customers')->user()->id)) {
+                $user = Auth::guard('customers')->user()->id;
+                $carts = Cache::get('carts'.$user);
+                if(isset($carts[$id])){
+                    $carts[$id]['quantity']++;
+                    $carts[$id]['price'] = $product->price;
+                }else {
+                $carts[$id] = [
                     'id' => $id,
                     'quantity' => 1,
                     'name' => $product->name,
@@ -137,7 +144,9 @@ class ShopController extends Controller
                     'quantity_product' => $product->quantity,
                 ];
             }
-            Cache::put('carts', $carts);
+            } 
+            $expiresAt = Carbon::now()->addDays(30);
+            Cache::put('carts'.$user, $carts, $expiresAt);
             return response()->json([
                 'code' => 200,
                 'message' => 'success',
@@ -157,13 +166,16 @@ class ShopController extends Controller
     public function remove($id)
     {
         try {
-            $carts = Cache::get('carts');
-            unset($carts[Auth::guard('customers')->user()->id][$id]);
-            Cache::put('carts', $carts);
-            return response()->json([
-                'code' => 200,
-                'message' => 'success',
-            ], status:200);
+            if (isset(Auth::guard('customers')->user()->id)) {
+                $user = Auth::guard('customers')->user()->id;
+                $carts = Cache::get('carts'.$user);
+                unset($carts[$id]);
+                Cache::put('carts'.$user, $carts);
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'success',
+                ], status:200);
+        }
         } catch (\Exception$e) {
             Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
             return response()->json([
@@ -176,6 +188,7 @@ class ShopController extends Controller
     {
         try{
             DB::beginTransaction();
+            $user = Auth::guard('customers')->user()->id;
             $order = new Order;
             $order->note = $request->note;
             $order->address = $request->address;
@@ -183,13 +196,13 @@ class ShopController extends Controller
             $order->district_id = $request->district_id;
             $order->ward_id = $request->ward_id;
             $order->name_customer = $request->name_customer;
-            $order->customer_id = Auth::guard('customers')->user()->id;
+            $order->customer_id = $user;
             $order->phone = $request->phone;
             $order->total = 0;
             $order->save();
-            $carts = Cache::get('carts');
+            $carts = Cache::get('carts'.$user);
             $order_total_price = 0;
-            foreach ($carts[Auth::guard('customers')->user()->id] as $productId => $cart) {
+            foreach ($carts as $productId => $cart) {
                 $order_total_price += $cart['price'] * $cart['quantity'];
                 OrderDetail::create([
                     'quantity' => $cart['quantity'],
@@ -198,7 +211,9 @@ class ShopController extends Controller
                     'order_id' => $order->id,
                 ]);
                 Product::where('id', $productId)->decrement('quantity', $cart['quantity']);
+                unset($cart);
             }
+            Cache::put('carts'.$user, $carts);
             $order->total= $order_total_price;
             $order->save();
             DB::commit();
@@ -218,10 +233,11 @@ class ShopController extends Controller
     }
     public function checkOuts(){
         if (isset(Auth::guard('customers')->user()->id)) {
-                $carts = Cache::get('carts');
+            $user = Auth::guard('customers')->user()->id;
+                $carts = Cache::get('carts'.$user);
                 $provinces = Province::get();
-                if ($carts[Auth::guard('customers')->user()->id]) {
-                    $carts = array_values($carts[Auth::guard('customers')->user()->id]);
+                if ($carts) {
+                    $carts = array_values($carts);
                     $params = [
                         'provinces' => $provinces,
                         'carts' => $carts,
