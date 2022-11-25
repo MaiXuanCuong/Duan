@@ -11,7 +11,7 @@
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Tìm Kiếm</h2>
                         <form action="">
-                            <input type="text" name='key' placeholder="TÌm Sản Phẩm">
+                            <input type="text" value="{{ request()->key }}" name='key' placeholder="TÌm Sản Phẩm">
                             <input type="submit" value="Tìm Kiếm">
                         </form>
                     </div>

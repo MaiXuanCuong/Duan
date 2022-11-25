@@ -93,7 +93,7 @@ class ShopController extends Controller
     {
         if (isset(Auth::guard('customers')->user()->id)) {
             try {
-                $products = Product::all();
+                $products = Product::search()->get();
                 $user = Auth::guard('customers')->user()->id;
                 $carts = Cache::get('carts'.$user);
                 if ($carts) {
