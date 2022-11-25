@@ -1,9 +1,6 @@
 @extends('shop.home')
 @section('content')
 @include('sweetalert::alert')
-@php
-// dd($historyProducts);
-@endphp
 <br>
     <br>
     <br>
