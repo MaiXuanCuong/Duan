@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePassWordByMailRequest;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreRegisterRequest;
@@ -10,8 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
-
+use Illuminate\Support\Str;
 class CustomerController extends Controller
 {
     public function index()
@@ -112,4 +115,39 @@ class CustomerController extends Controller
         }
         return redirect()->route('customers');
     }
+    public function changepassmail(ChangePassWordByMailRequest $request){
+        $customer = DB::table('customers')->where('email', $request->emails)->first();
+        if(!$customer){
+            toast('Email: ' . $request->emails.'<br> Không tồn tại', 'error', 'top-right');
+            return back()->withInput(); 
+        }
+        if($request->emails == $customer->email){
+            try {
+            $password = Str::random(6);
+            $item=Customer::find($customer->id);
+            $item->password= bcrypt($password);
+            $item->save();
+            $params = [
+                'name' => $customer->name,
+                'password' => $password,
+            ];
+            Mail::send('shop.emails.password', compact('params'), function ($email) use($customer) {
+                $email->subject('TCC-Shop');
+                $email->to($customer->email, $customer->name);
+            });
+            toast('Gửi yêu cầu mật khẩu!'.'<br>'.' Thành Công', 'success', 'top-right');
+            return back()->withInput();
+        } catch (\Exception $e) {
+            Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
+            toast('Gửi yêu cầu mật khẩu!'.'<br>'.' Không thành Công', 'error', 'top-right');
+           
+            return back()->withInput();
+        }
+        } else{
+         
+            toast('Email: ' . $request->emails. '<br> Không tồn tại', 'error', 'top-right');
+            return back()->withInput();
+            }
+    }
+    
 }

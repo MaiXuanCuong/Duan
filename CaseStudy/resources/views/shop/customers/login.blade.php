@@ -71,27 +71,29 @@ height: 100%;
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
             </div>
-  
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Checkbox -->
-              <div class="form-check mb-0">
-                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                <label class="form-check-label" for="form2Example3">
-                  Nhớ Tài khoản
-                </label>
-              </div>
-              <a href="#!" class="text-body">Quên Mật Khẩu?</a>
-            </div>
-  
             <div class="text-center text-lg-start mt-4 pt-2">
-              {{-- <button type="button" class="btn btn-primary btn-lg"
-                style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng Nhập</button> --}}
-                <input class="btn btn-primary btn-lg" type="submit" value="Đăng Nhập">
+              <div class="row"> <input class="btn btn-primary btn-lg" type="submit" value="Đăng Nhập">
               <p class="small fw-bold mt-2 pt-1 mb-0">Không Có Tài Khoản? <a href="{{ route('register') }}"
-                  class="link-danger">Đăng Ký</a></p>
+                  class="link-danger">Đăng Ký</a></p></div>
+               
             </div>
   
           </form>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Quên mật khẩu
+            </button>
+          <div class="collapse  text-center" id="collapseExample">
+            <div class="card card-body">
+              <form action="{{ route('customer.changepassmail') }}" method="POST">
+                @csrf
+              <input class="form-control" type="text" name="emails" value="{{ request()->emails }}" placeholder="Nhập email của bạn"><br>
+              @error('emails')
+              <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+              <input class="btn btn-primary" type="submit" value="Gửi mã xác nhận">
+            </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

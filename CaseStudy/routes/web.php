@@ -111,10 +111,11 @@ Route::prefix('xcshop')->group(function(){
     Route::get('login', function(){
         return view('shop.customers.login');
     })->name('shop.login');
-    Route::get('product/{id}', [ShopController::class, 'view'])->name('shop.product');;
+    Route::get('product/{id}', [ShopController::class, 'view'])->name('shop.product');
 
     Route::get('logout', [CustomerController::class, 'logout'])->name('shop.logout');
     Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
     Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
+    Route::post('/customer/changepassmail', [CustomerController::class, 'changepassmail'])->name('customer.changepassmail');
     
 });

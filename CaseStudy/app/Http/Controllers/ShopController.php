@@ -23,29 +23,70 @@ class ShopController extends Controller
     public function index()
     {
         if (isset(Auth::guard('customers')->user()->id)) {
+            $historyProducts = [];
             $carts = Cache::get('carts');
-            if ($carts) {
+            $historyProduct = Cache::get('historyProducts');
+            if (isset($carts[Auth::guard('customers')->user()->id])){
                 $carts = array_values($carts[Auth::guard('customers')->user()->id]);
-            }} else {
-                $carts = [];
             }
-
+        
+            if (isset($historyProduct[Auth::guard('customers')->user()->id])) {
+              
+               $historyProducts = array_values($historyProduct[Auth::guard('customers')->user()->id]);
+               rsort($historyProducts);
+            }
+        } else {
+                $carts = [];
+                $historyProducts = [];
+            }
+            
+           
         $products = Product::all();
+        $productsNew = Product::orderBy('id','DESC')->take(3)->get();
         $categories = Category::all();
-
+        $topProducts = DB::table('orders_detail')
+        ->leftJoin('products', 'products.id', '=', 'orders_detail.product_id')
+        ->selectRaw('products.*, sum(orders_detail.quantity) totalProduct, sum(orders_detail.total) totalPrice')
+        ->groupBy('orders_detail.product_id')
+        ->orderBy('totalProduct', 'desc')
+        ->take(3)
+        ->get();
         $param = [
             'products' => $products,
             'categories' => $categories,
             'carts' => $carts,
+            'topProducts' => $topProducts,
+            'productsNew' => $productsNew,
+            'historyProducts' => $historyProducts
         ];
         return view('shop.index', $param);
     }
 
     public function view($id)
     {
-        $products = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+       
+        try {
+            $historyProducts = Cache::get('historyProducts');
+            if (isset($historyProducts[Auth::guard('customers')->user()->id][$id])) {
+                $historyProducts[Auth::guard('customers')->user()->id][$id]['quantity']++;
+                $historyProducts[Auth::guard('customers')->user()->id][$id]['price'] = $product->price;
+            } else {
+                $historyProducts[Auth::guard('customers')->user()->id][$id] = [
+                    'id' => $id,
+                    'quantity' => 1,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'image' => $product->image,
+                    'quantity_product' => $product->quantity,
+                ];
+            }
+            Cache::put('historyProducts', $historyProducts);
+        } catch (\Exception $e) {
+            Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
+        }
         $params = [
-            'product' => $products,
+            'product' => $product,
         ];
         return view('shop.product', $params);
     }
@@ -106,9 +147,6 @@ class ShopController extends Controller
                 'code' => 200,
                 'message' => 'success',
             ], status:200);
-
-            Log::error('message:');
-
         } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
             return response()->json([

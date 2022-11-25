@@ -130,7 +130,7 @@
                                                         <span class="primary"><strong>{{ $item->name }}</strong></span>
                                                     </b>
                                                     <h4 class="caption subtitle"><strong>Giá Chỉ: </strong>{{ number_format($item->price)." VNĐ" }}</h4>
-                                                    <a class="caption button-radius" href="{{ route('shop.product',$item->id) }}"><span class="icon"></span>Mua Ngay</a>
+                                                    <a data-url="{{route('shop.store',$item->id)}}" id="{{ $item->id}}" class="caption button-radius add-to-cart-link addToCart"><span class="icon"></span><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ</a>
                                                 </div>
                                             </li>
                                             @endforeach
@@ -188,6 +188,45 @@
 }
 $(function () {
     $(document).on('click', '.ajax_delete', DeleteToCart);
+});
+function AddToCart(event){
+    event.preventDefault();
+    let urlRequest = $(this).data('url');
+    let tr = $(this);
+    Swal.fire({
+        title: 'Thêm Sản Phẩm',
+        text: "Vào Giỏ Hàng Của Bạn",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng Ý'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: urlRequest,
+                type: 'get',
+                success: function(data){
+                    if(data.code == 200){
+                        Swal.fire(
+                            'Thêm Sản Phẩm',
+                            'Thành Công Vào Giỏ Hàng',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Thêm Sản Phẩm Không Thành Công',
+                            'Vui Lòng Đăng Nhập',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
+    })
+}
+$(function () {
+    $(document).on('click', '.addToCart', AddToCart);
 });
 
 </script>
