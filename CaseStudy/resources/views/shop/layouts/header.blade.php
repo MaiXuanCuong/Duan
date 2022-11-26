@@ -161,27 +161,32 @@ if(isset(Auth::guard('customers')->user()->id)){
                                                 <div class="modal-body">
                                                     @if(isset($orders) && !empty($orders))
                                                     @foreach ($orders->orders as $order)
-                                                    <table class="table ">
+                                                    <table class="table">
                                                             <tr>
-                                                                <td style="width: 30%">Ảnh</td>
-                                                                <td style="width: 35%">Sản Phẩm</td>
-                                                                <td style="width: 35%">Số lượng</td>
+                                                                <td style="width: 25%; text-align: center">Ảnh</td>
+                                                                <td style="width: 25%">Sản Phẩm</td>
+                                                                <td style="width: 25%">Số lượng</td>
+                                                                <td style="width: 25%">Ngày đặt</td>
                                                             </tr>
                                                            @foreach($order->orderDetails as $orderDetails)
                                                             <tr>
-                                                                <td>
+                                                                <td style="width: 25%">
                                                                         <div class="flex-shrink-0">
                                                                             <img src="{{ asset($orderDetails->products->image) }}"
                                                                                 alt="" width="100px" height="80px" class="img-fluid">
                                                                         </div>
                                                                 </td>
-                                                                <td>
+                                                                <td style="width: 25%">
                                                                     
                                                                     <a data-bs-toggle="tooltip" data-bs-placement="top" title="chi tiết sản phẩm" href="{{ route('shop.product',$orderDetails->products->id) }}">{{$orderDetails->products->name}}</a>
                                                                  </td>
-                                                                <td>
+                                                                <td style="width: 25%">
                                                                         
                                                                         {{$orderDetails->quantity}}
+                                                                </td>
+                                                                <td style="width: 25%">
+                                                                        
+                                                                    {{date_format($order->created_at, "d-m-Y H:i:s")}}
                                                                 </td>
                                                                 
                                                               
