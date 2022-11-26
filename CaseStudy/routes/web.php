@@ -51,7 +51,6 @@ Route::prefix('/')->middleware(['auth', 'preventBackHistory'])->group(function (
         Route::post('/store', [CustomerController::class, 'store'])->name('customers.store');
         Route::delete('/delete/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
         Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
-        Route::put('/update/{id}', [CustomerController::class, 'update'])->name('customers.update');
     });
 
     Route::prefix('orders')->group(function () {
@@ -104,6 +103,7 @@ Route::prefix('xcshop')->group(function(){
     Route::get('/history', [ShopController::class, 'history'])->name('history');
     Route::get('customer/GetDistricts', [ShopController::class, 'GetDistricts'])->name('customer.GetDistricts');
     Route::get('customer/getWards', [ShopController::class, 'getWards'])->name('customer.getWards');
+    Route::put('/update', [CustomerController::class, 'update'])->name('customers.update');
     
     Route::get('register', function(){
         return view('shop.customers.register');

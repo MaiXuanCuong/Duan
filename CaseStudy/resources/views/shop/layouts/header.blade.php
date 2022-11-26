@@ -1,4 +1,19 @@
+@php
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+if(isset(Auth::guard('customers')->user()->id)){
 
+    $user = Auth::guard('customers')->user()->id;
+            $orders =  Customer::with(['orders' => function ($query) {
+                return $query->with(['orderDetails' => function ($query) {
+                    return $query->with('products');
+                }]);
+            }])->find($user); 
+}
+@endphp
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
 </script>
@@ -32,11 +47,16 @@
                                                         <h5 class="modal-title" id="exampleModalLabel">Thay đổi thông
                                                             tin</h5>
                                                     </div>
-                                                    <form action="">
+                                                    <form action="{{ route('customers.update') }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
                                                         <div class="modal-body">
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" name="name"
                                                                 value="{{ Auth()->guard('customers')->user()->name }}"
-                                                                placeholder="Nhập họ và tên" required>
+                                                                placeholder="Nhập họ và tên">
+                                                                @error('name')
+                                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                            @enderror
                                                             <input type="email" class="form-control"
                                                                 value="{{ Auth()->guard('customers')->user()->email }}"
                                                                 placeholder="Nhập email" disabled required><br>
@@ -49,12 +69,21 @@
                                                             </button>
                                                             <div class="collapse  text-center" id="collapseExample">
                                                                 <div class="card card-body">
-                                                                    <input type="password" class="form-control "
+                                                                    <input type="password" class="form-control" value="{{ request()->passwordOld }}" name="passwordOld"
                                                                         placeholder="Nhập mật khẩu cũ ">
-                                                                    <input type="password" class="form-control "
+                                                                        @error('passwordOld')
+                                                                        <div class="alert alert-danger">{{ $errors->has('passwordOld') }}</div>
+                                                                    @enderror
+                                                                    <input type="password" class="form-control" value="{{ request()->passwordNew }}" name="passwordNew"
                                                                         placeholder="Nhập mật khẩu mới">
-                                                                    <input type="password" class="form-control "
+                                                                        @error('passwordNew')
+                                                                        <div class="alert alert-danger">{{ $errors->has('passwordNew') }}</div>
+                                                                    @enderror
+                                                                    <input type="password" class="form-control" value="{{ request()->passwordConfirm }}" name="passwordConfirm"
                                                                         placeholder="Nhập lại mật khẩu mới">
+                                                                        @error('name')
+                                                                        <div class="alert alert-danger">{{ $errors->has('passwordConfirm') }}</div>
+                                                                    @enderror
 
 
 
@@ -63,7 +92,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Hủy</button>
-                                                                <button type="button"
+                                                                <button type="submit"
                                                                     class="btn btn-primary">Lưu</button>
 
 
@@ -126,6 +155,8 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="staticBackdropLabel">Lịch sử mua hàng</h5>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Đóng</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     @if(isset($orders) && !empty($orders))
@@ -162,7 +193,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
+                                                        data-bs-dismiss="modal">Đóng</button>
                                                 </div>
                                             </div>
                                         </div>

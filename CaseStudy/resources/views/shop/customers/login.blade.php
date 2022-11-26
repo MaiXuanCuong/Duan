@@ -35,7 +35,9 @@ height: calc(100% - 73px);
 .h-custom {
 height: 100%;
 }
+
 }
+
 </style>
 <section class="vh-100">
   @include('sweetalert::alert')
@@ -90,6 +92,7 @@ height: 100%;
               @error('emails')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
+                
               <input class="btn btn-primary" type="submit" value="Gửi mã xác nhận">
             </form>
             </div>

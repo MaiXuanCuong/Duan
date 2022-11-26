@@ -23,12 +23,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $user = Auth::guard('customers')->user()->id;
-        $orders =  Customer::with(['orders' => function ($query) {
-            return $query->with(['orderDetails' => function ($query) {
-                return $query->with('products');
-            }]);
-        }])->find($user); 
+        
         if (isset(Auth::guard('customers')->user()->id)) {
             $user = Auth::guard('customers')->user()->id;
             $historyProducts = [];
@@ -58,7 +53,6 @@ class ShopController extends Controller
         ->take(6)
         ->get();
         $param = [
-            'orders' => $orders,
             'products' => $products,
             'categories' => $categories,
             'carts' => $carts,

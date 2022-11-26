@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-md-3 col-sm-6">
                 <div class="footer-about-us">
-                    <h2>u<span>Stora</span></h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                    <h2>XC<span>Shop</span></h2>
+                    <p>Nơi mang đến những chiếc điện thoại chất lượng với giá cả hợp lý</p>
                     <div class="footer-social">
-                        <a href="https://www.facebook.com/hihihihi.cuong" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="https://www.facebook.com/mxc.dev" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="https://www.youtube.com/channel/UCmsfeXLNWevNxmcDrNqBsiw" target="_blank"><i class="fa fa-youtube"></i></a>
                     </div>
                 </div>
@@ -15,38 +15,39 @@
             
             <div class="col-md-3 col-sm-6">
                 <div class="footer-menu">
-                    <h2 class="footer-wid-title">User Navigation </h2>
+                    <h2 class="footer-wid-title">Trải nghiệm</h2>
                     <ul>
-                        <li><a href="#">My account</a></li>
-                        <li><a href="#">Order history</a></li>
-                        <li><a href="#">Wishlist</a></li>
-                        <li><a href="#">Vendor contact</a></li>
-                        <li><a href="#">Front page</a></li>
+                        <li>Xem sản phẩm chi tiết</li>
+                        <li>Mua hàng</li>
+                        <li>Xem lịch sử đặt hàng</li>
+                        <li>Xem sản phẩm bán chạy</li>
+                        <li>Xem lịch sử xem sản phẩm</li>
+                        <li>Xem sản phẩm mới nhất</li>
                     </ul>                        
                 </div>
             </div>
             
             <div class="col-md-3 col-sm-6">
                 <div class="footer-menu">
-                    <h2 class="footer-wid-title">Categories</h2>
+                    <h2 class="footer-wid-title">Thể loại</h2>
                     <ul>
-                        <li><a href="#">Mobile Phone</a></li>
-                        <li><a href="#">Home accesseries</a></li>
-                        <li><a href="#">LED TV</a></li>
-                        <li><a href="#">Computer</a></li>
-                        <li><a href="#">Gadets</a></li>
+                        <li>Apple</li>
+                        <li>Realme</li>
+                        <li>SamSung</li>
+                        <li>Xiaomi</li>
+                       
                     </ul>                        
                 </div>
             </div>
             
             <div class="col-md-3 col-sm-6">
                 <div class="footer-newsletter">
-                    <h2 class="footer-wid-title">Newsletter</h2>
-                    <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
+                    <h2 class="footer-wid-title">Thông báo mới</h2>
+                    <p>Đăng ký nhận bản tin của chúng tôi và nhận các ưu đãi độc quyền mà bạn sẽ không tìm thấy ở bất kỳ nơi nào khác ngay trong hộp thư đến của mình!</p>
                     <div class="newsletter-form">
                         <form action="#">
-                            <input type="email" placeholder="Type your email">
-                            <input type="submit" value="Subscribe">
+                            <input type="email" placeholder="Nhập email">
+                            <input type="submit" value="Đăng ký">
                         </form>
                     </div>
                 </div>
@@ -60,7 +61,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="copyright">
-                    <p>&copy; 2022 Đã Đăng Ký Bản Quyền </p>
+                    <p>&copy; 2022 Đã Đăng Ký Bản Quyền XC-Shop</p>
                 </div>
             </div>
             

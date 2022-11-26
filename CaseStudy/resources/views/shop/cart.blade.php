@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="single-sidebar">
-                        <h2 class="sidebar-title">Tìm Kiếm</h2>
+                        {{-- <h2 class="sidebar-title">Tìm Kiếm</h2> --}}
                         <form action="">
                             <input type="text" value="{{ request()->key }}" name='key' placeholder="TÌm Sản Phẩm">
                             <input type="submit" value="Tìm Kiếm">
