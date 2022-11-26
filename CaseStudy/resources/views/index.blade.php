@@ -93,8 +93,8 @@
                   @if(isset($topProducts))
                   @foreach($topProducts as $product)
                   <tr>
-                    <th scope="row"><a href="{{ route('product.show',$product->id) }}"><img src="{{ asset('storage/images/product/' . $product->image) }}" alt=""></a></th>
-                    <td><a data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết Sản Phẩm" href="{{ route('product.show',$product->id) }}" class="text-primary fw-bold">{{ $product->name }}</a></td>
+                    <th scope="row"><a href="{{ route('products.show',$product->id) }}"><img src="{{ asset($product->image) }}" alt=""></a></th>
+                    <td><a data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết Sản Phẩm" href="{{ route('products.show',$product->id) }}" class="text-primary fw-bold">{{ $product->name }}</a></td>
                     <td><i data-bs-toggle="tooltip" data-bs-placement="top" title="Giá Sản Phẩm">{{ number_format($product->price) }} <span class="badge bg-success rounded-pill">VNĐ</span></i></td>
                     <td class="fw-bold"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Số Lượng"><span class="badge bg-success rounded-pill">{{$product->totalProduct}} Chiếc</span></i></td>
                     <td><i data-bs-toggle="tooltip" data-bs-placement="top" title="Doanh Thu">{{number_format($product->totalPrice)}} <span class="badge bg-success rounded-pill">VNĐ</span></i></td>
@@ -126,7 +126,7 @@
             <div class="activity-item d-flex">
               <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
               <div class="activity-content">
-               <a style="text-decoration: none" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết Khách Hàng" href="{{ route('customer.show',$customer->id) }}" class="fw-bold text-dark"> {{ $customer->name }} </a> Thanh Toán <b data-bs-toggle="tooltip" data-bs-placement="top" title="Khách Hàng Đã Thanh Toán">{{ number_format($customer->totalOrder) }}</b><span class="badge bg-success rounded-pill">VNĐ</span>
+               {{ $customer->name }} Thanh Toán <b data-bs-toggle="tooltip" data-bs-placement="top" title="Khách Hàng Đã Thanh Toán">{{ number_format($customer->totalOrder) }}</b><span class="badge bg-success rounded-pill">VNĐ</span>
               </div>
             </div><!-- End activity item-->
             @endforeach

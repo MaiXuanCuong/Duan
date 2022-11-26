@@ -115,16 +115,16 @@
                     <i class="bi bi-circle"></i><span>Danh Sách Khác Hàng</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="charts-apexcharts.html">
                     <i class="bi bi-circle"></i><span>Khách Hàng Vi Phạm</span>
                 </a>
-            </li>
-            <li>
-                <a href="charts-echarts.html">
+            </li> --}}
+            {{-- <li>
+                <a href="{{ route('customers') }}">
                     <i class="bi bi-circle"></i><span>Khách Hàng Thân Thiết</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </li><!-- End Charts Nav -->
 
@@ -134,11 +134,11 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-                <a href="icons-bootstrap.html">
-                    <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+                <a href="{{ route('shop.home') }}">
+                    <i class="bi bi-circle"></i><span>Đến shop</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="icons-remix.html">
                     <i class="bi bi-circle"></i><span>Remix Icons</span>
                 </a>
@@ -147,7 +147,7 @@
                 <a href="icons-boxicons.html">
                     <i class="bi bi-circle"></i><span>Boxicons</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </li><!-- End Icons Nav -->
     </ul>
