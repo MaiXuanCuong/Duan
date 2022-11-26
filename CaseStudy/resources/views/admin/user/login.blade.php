@@ -81,18 +81,29 @@ height: 100%;
                   Nhớ Tài khoản
                 </label>
               </div>
-              <a href="#!" class="text-body">Quên Mật Khẩu?</a>
+              
             </div>
   
             <div class="text-center text-lg-start mt-4 pt-2">
               <button type="submit" class="btn btn-primary btn-lg"
                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng Nhập</button>
-              {{-- <p class="small fw-bold mt-2 pt-1 mb-0">Không Có Tài Khoản? <a href="{{ route('register') }}" --}}
-                  {{-- class="link-danger">Đăng Ký</a></p> --}}
             </div>
   
           </form>
         </div>
+        <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Quên mật khẩu
+        </button>
+      <div class="collapse  text-center" id="collapseExample">
+        <div class="card card-body">
+          <form action="{{ route('users.changepassmail') }}" method="POST">
+            @csrf
+          <input class="form-control" type="text" name="emails" value="{{ request()->emails }}" placeholder="Nhập email của bạn"><br>
+          @error('emails')
+          <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
+          <input class="btn btn-primary" type="submit" value="Gửi mã xác nhận">
+        </form>
       </div>
     </div>
    

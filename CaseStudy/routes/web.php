@@ -117,5 +117,6 @@ Route::prefix('xcshop')->group(function(){
     Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
     Route::post('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
     Route::post('/customer/changepassmail', [CustomerController::class, 'changepassmail'])->name('customer.changepassmail');
+    Route::post('/user/changepassmail', [UserController::class, 'changepassmail'])->name('users.changepassmail');
     
 });
