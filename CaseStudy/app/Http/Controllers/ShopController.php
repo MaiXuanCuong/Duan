@@ -23,6 +23,12 @@ class ShopController extends Controller
 {
     public function index()
     {
+        $user = Auth::guard('customers')->user()->id;
+        $orders =  Customer::with(['orders' => function ($query) {
+            return $query->with(['orderDetails' => function ($query) {
+                return $query->with('products');
+            }]);
+        }])->find($user); 
         if (isset(Auth::guard('customers')->user()->id)) {
             $user = Auth::guard('customers')->user()->id;
             $historyProducts = [];
@@ -40,9 +46,7 @@ class ShopController extends Controller
         } else {
                 $carts = [];
                 $historyProducts = [];
-            }
-            
-           
+            } 
         $products = Product::all();
         $productsNew = Product::orderBy('id','DESC')->take(6)->get();
         $categories = Category::all();
@@ -54,12 +58,14 @@ class ShopController extends Controller
         ->take(6)
         ->get();
         $param = [
+            'orders' => $orders,
             'products' => $products,
             'categories' => $categories,
             'carts' => $carts,
             'topProducts' => $topProducts,
             'productsNew' => $productsNew,
-            'historyProducts' => $historyProducts
+            'historyProducts' => $historyProducts,
+
         ];
         return view('shop.index', $param);
     }

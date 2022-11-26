@@ -12,5 +12,7 @@ class OrderDetail extends Model
     ];
     protected $table = 'orders_detail';
     use HasFactory;
-    
+    function products(){
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 }
