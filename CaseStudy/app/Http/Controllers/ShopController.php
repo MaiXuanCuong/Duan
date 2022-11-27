@@ -69,6 +69,7 @@ class ShopController extends Controller
         $product = Product::findOrFail($id);
        
         try {
+            if(isset(Auth::guard('customers')->user()->id)){
             $user = Auth::guard('customers')->user()->id;
             $historyProducts = Cache::get('historyProducts'.$user);
                 $historyProducts[$id] = [
@@ -81,6 +82,7 @@ class ShopController extends Controller
                 ];
                 $expiresAt = Carbon::now()->addMinutes(60);
             Cache::put('historyProducts'.$user, $historyProducts,$expiresAt);
+                }
         } catch (\Exception $e) {
             Log::error('message: ' . $e->getMessage() . 'line: ' . $e->getLine() . 'file: ' . $e->getFile());
         }
