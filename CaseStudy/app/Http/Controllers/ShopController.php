@@ -36,7 +36,6 @@ class ShopController extends Controller
             if (isset($historyProduct)) {
               
                $historyProducts = array_values($historyProduct);
-               sort($historyProducts);
             }
         } else {
                 $carts = [];
